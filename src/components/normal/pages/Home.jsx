@@ -5,6 +5,7 @@ const Home = ({ isAuthenticated, handleLogout }) => {
   return (
     <div className="text-center mt-5">
       <h1>Hello, Welcome to Sonic Touch</h1>
+      <h2>Here is the link for the Normal people website</h2>
     </div>
   );
 };
