@@ -1,25 +1,18 @@
 import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
 
 const About = ({ isAuthenticated }) => {
   return (
-    <>
-      <Container className="my-5">
-        <Row className="justify-content-center">
-          <Col md={10}>
-            <Card className="shadow-lg border-0">
-              <Card.Body className="p-5">
-                <h1 className="text-center fw-bold mb-4">About Sonic Touch</h1>
-                <p className="lead text-muted text-center">
-                  {/* Add your content here */}
-                  What Sonic Touch is...
-                </p>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-5">
+      <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
+        <h1 className="text-center text-3xl font-bold mb-6 text-gray-900">
+          About Sonic Touch
+        </h1>
+        <p className="text-center text-lg text-gray-600">
+          {/* Add your content here */}
+          What Sonic Touch is...
+        </p>
+      </div>
+    </div>
   );
 };
 

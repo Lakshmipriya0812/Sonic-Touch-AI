@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import HeaderBeforeLogin from "./components/normal/components/headers/HeaderBeforeLogin";
 import HeaderAfterLogin from "./components/normal/components/headers/HeaderAfterLogin";
@@ -16,11 +16,13 @@ function App() {
 
   return (
     <Router>
-      {" "}
-      {/* ✅ Router should only be here */}
-      {isAuthenticated ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
-      <RoutesConfig />
-      <Footer />
+      <div className="min-h-screen flex flex-col">
+        {isAuthenticated ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
+        <main className="flex-1 mt-24">
+          <RoutesConfig />
+        </main>{" "}
+        <Footer />
+      </div>
     </Router>
   );
 }

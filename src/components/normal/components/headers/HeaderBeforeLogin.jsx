@@ -1,23 +1,13 @@
-import React, { useState } from "react";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Form,
-  FormControl,
-  Button,
-  Modal,
-  Dropdown,
-  InputGroup,
-} from "react-bootstrap";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
 const Header = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Handle modal toggles
   const handleShowSignup = () => {
     setShowSignup(true);
     setShowLogin(false);
@@ -33,217 +23,243 @@ const Header = () => {
     setShowLogin(false);
   };
 
+  // ✅ Close Explore when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      <Navbar expand="lg" className="bg-white shadow-sm py-3 navbar">
-        <Container
-          fluid
-          className="d-flex align-items-center justify-content-between"
-        >
-          {/* 🔹 Right: Navigation Links */}
-          <Nav className="d-flex align-items-center">
-            <Dropdown>
-              <Dropdown.Toggle
-                variant="white"
-                className="mx-3 text-dark fw-medium border-0 shadow-none"
+      {/* 🔹 Navbar */}
+      <nav className="bg-gray-200 shadow-md hover:shadow-lg transition-shadow duration-300 py-4 font-lato w-full relative">
+        <div className="container mx-auto flex justify-between items-center px-6 h-20">
+          {/* 🔹 Left: Explore Dropdown & Navigation Links */}
+          <div className="flex items-center space-x-6">
+            {/* Explore Dropdown (Fixed Click Outside Behavior) */}
+            <div className="relative z-50" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="text-gray-800 font-medium focus:outline-none"
               >
                 Explore
-              </Dropdown.Toggle>
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2">
+                  <h3 className="px-4 py-2 text-gray-700 font-semibold">
+                    Clothing
+                  </h3>
+                  <Link
+                    to="/clothing"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    All Clothing
+                  </Link>
+                  <Link
+                    to="/clothing/men"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Men
+                  </Link>
+                  <Link
+                    to="/clothing/women"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Women
+                  </Link>
+                  <Link
+                    to="/clothing/baby"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Baby
+                  </Link>
 
-              <Dropdown.Menu>
-                <Dropdown.Header className="fw-bold">Clothing</Dropdown.Header>
-                <Dropdown.Item as={Link} to="/clothing">
-                  All Clothing
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/clothing/men">
-                  Men
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/clothing/women">
-                  Women
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/clothing/kids">
-                  Kids
-                </Dropdown.Item>
+                  <div className="border-t my-2"></div>
 
-                <Dropdown.Divider />
+                  <h3 className="px-4 py-2 text-gray-700 font-semibold">
+                    Pet Supplies
+                  </h3>
+                  <Link
+                    to="/pets"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    All Pet Supplies
+                  </Link>
+                  <Link
+                    to="/pets/cats"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Cats
+                  </Link>
+                  <Link
+                    to="/pets/dogs"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Dogs
+                  </Link>
+                  <Link
+                    to="/pets/birds"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Birds
+                  </Link>
+                </div>
+              )}
+            </div>
 
-                <Dropdown.Header className="fw-bold">
-                  Pet Supplies
-                </Dropdown.Header>
-                <Dropdown.Item as={Link} to="/pets">
-                  All Pet Supplies
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/pets/cat">
-                  Cat
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/pets/dog">
-                  Dog
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/pets/parrots">
-                  Parrots
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Nav.Link
-              as={Link}
+            {/* Navigation Links */}
+            <Link
               to="/about"
-              className="mx-3 text-dark fw-medium"
+              className="text-gray-700 font-medium hover:text-gray-900 transition"
             >
               About
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
+            </Link>
+            <Link
               to="/contact"
-              className="mx-3 text-dark fw-medium"
+              className="text-gray-700 font-medium hover:text-gray-900 transition"
             >
               Contact
-            </Nav.Link>
-          </Nav>
-          {/* 🔹 Center: Logo */}
-          <Navbar.Brand
-            as={Link}
-            to="/"
-            className="mx-auto fw-bold text-dark fs-3"
-          >
-            <img src="/icon.jpg" alt="SonicTouch Logo" className="logo" />
-          </Navbar.Brand>
+            </Link>
+          </div>
 
-          {/* 🔹 Left: Search Bar + Cart + Sign Up */}
-          <div className="d-flex align-items-center">
+          {/* 🔹 Middle: Logo */}
+          <Link to="/" className="mx-auto">
+            <img
+              src="/icon.jpg"
+              alt="SonicTouch Logo"
+              className="h-28 w-auto"
+            />
+          </Link>
+
+          {/* 🔹 Right: Search Bar + Cart + Sign Up */}
+          <div className="flex items-center space-x-4">
             {/* Search Bar */}
-            <Form className="search-bar-container me-3">
-              <InputGroup>
-                <FormControl
-                  type="search"
-                  placeholder="What are you looking for?"
-                  className="form-control"
-                />
-                <Button variant="outline-secondary">
-                  <FaSearch />
-                </Button>
-              </InputGroup>
-            </Form>
+            <div className="relative w-56 flex items-center border rounded-md bg-gray-100 px-3">
+              <input
+                type="search"
+                placeholder="What are you looking for?"
+                className="bg-transparent w-full border-none focus:outline-none py-2 px-1"
+              />
+              <FaSearch className="text-gray-500" />
+            </div>
 
             {/* Cart Icon */}
             <Link
               to="/cart"
-              className="btn btn-outline-primary rounded-circle position-relative p-2 me-3"
+              className="relative text-gray-700 text-xl hover:text-gray-900 transition"
             >
-              <FaShoppingCart className="fs-4" />
+              <FaShoppingCart />
             </Link>
 
             {/* Sign Up Button */}
-            <Button variant="primary" onClick={handleShowSignup}>
+            <button
+              onClick={handleShowSignup}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+            >
               Sign Up
-            </Button>
+            </button>
           </div>
-        </Container>
-      </Navbar>
+        </div>
+      </nav>
 
-      {/* 🔹 Sign-Up Modal */}
-      <Modal show={showSignup} onHide={handleClose} centered>
-        <Modal.Body
-          className="d-flex justify-content-center align-items-center vh-100"
-          style={{ backgroundColor: "#1e3a8a" }}
+      {/* 🔹 Login & Signup Modals (Same Functionality) */}
+      {showSignup && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={handleClose}
         >
-          <div className="form-card p-4 shadow-lg bg-white rounded">
-            <h3 className="text-center fw-bold mb-3">Sign Up</h3>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="text"
-                  placeholder="Name"
-                  className="form-control-lg"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="email"
-                  placeholder="Email"
-                  className="form-control-lg"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  className="form-control-lg"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="password"
-                  placeholder="Confirm password"
-                  className="form-control-lg"
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit" className="w-100 btn-lg">
+          <div
+            className="bg-white p-6 rounded-lg w-96 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold text-center">Sign Up</h3>
+            <form>
+              <input
+                type="text"
+                placeholder="Name"
+                className="w-full border p-2 mt-3 rounded-md"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full border p-2 mt-3 rounded-md"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full border p-2 mt-3 rounded-md"
+              />
+              <input
+                type="password"
+                placeholder="Confirm password"
+                className="w-full border p-2 mt-3 rounded-md"
+              />
+              <button className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-blue-700">
                 Sign Up
-              </Button>
-            </Form>
-            <div className="text-center mt-3">
-              <span>
+              </button>
+              <p className="text-center mt-3">
                 Already have an account?{" "}
-                <a
-                  href="#"
+                <button
                   onClick={handleShowLogin}
-                  className="fw-bold text-primary"
+                  className="text-blue-600 font-bold"
                 >
                   Sign In
-                </a>
-              </span>
-            </div>
+                </button>
+              </p>
+            </form>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      )}
 
-      {/* 🔹 Login Modal */}
-      <Modal show={showLogin} onHide={handleClose} centered>
-        <Modal.Body
-          className="d-flex justify-content-center align-items-center vh-100"
-          style={{ backgroundColor: "#1e3a8a" }}
+      {showLogin && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={handleClose}
         >
-          <div className="form-card p-4 shadow-lg bg-white rounded">
-            <h3 className="text-center fw-bold mb-3">Login</h3>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="text"
-                  placeholder="User name"
-                  className="form-control-lg"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  className="form-control-lg"
-                />
-              </Form.Group>
-              <div className="mb-3 text-end">
-                <a href="#" className="text-decoration-none">
+          <div
+            className="bg-white p-6 rounded-lg w-96 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold text-center">Login</h3>
+            <form>
+              <input
+                type="text"
+                placeholder="Username"
+                className="w-full border p-2 mt-3 rounded-md"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full border p-2 mt-3 rounded-md"
+              />
+              <div className="text-right mt-2">
+                <a href="#" className="text-blue-600 text-sm">
                   Forgot Password?
                 </a>
               </div>
-              <Button variant="primary" type="submit" className="w-100 btn-lg">
+              <button className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-blue-700">
                 Login
-              </Button>
-            </Form>
-            <div className="text-center mt-3">
-              <span>
+              </button>
+              <p className="text-center mt-3">
                 Don't have an account?{" "}
-                <a
-                  href="#"
+                <button
                   onClick={handleShowSignup}
-                  className="fw-bold text-primary"
+                  className="text-blue-600 font-bold"
                 >
                   Sign Up
-                </a>
-              </span>
-            </div>
+                </button>
+              </p>
+            </form>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      )}
     </>
   );
 };

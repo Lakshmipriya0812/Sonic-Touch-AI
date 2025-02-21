@@ -1,61 +1,105 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-light py-4">
-      <Container>
-        <Row className="text-center text-md-start">
-          <Col md={3} sm={6} className="mb-3">
-            <h5>Contact</h5>
-            <p>Email: support@sonictouch.com</p>
-            <p>Phone: +1 267 261 2987</p>
-          </Col>
-          <Col md={3} sm={6} className="mb-3">
-            <h5>FAQ</h5>
-            <Link to="/faq" className="footer-link">
-              Help Center
-            </Link>
-            <br />
-            <Link to="/faq" className="footer-link">
-              Shipping & Delivery
-            </Link>
-            <br />
-            <Link to="/faq" className="footer-link">
-              Returns Policy
-            </Link>
-          </Col>
-          <Col md={3} sm={6} className="mb-3">
-            <h5>Support</h5>
-            <Link to="/support" className="footer-link">
-              Customer Support
-            </Link>
-            <br />
-            <Link to="/support" className="footer-link">
-              Technical Help
-            </Link>
-          </Col>
-          <Col md={3} sm={6} className="mb-3">
-            <h5>Admin</h5>
-            <Link to="/admin" className="footer-link">
-              Admin Dashboard
-            </Link>
-            <br />
-            <Link to="/admin/login" className="footer-link">
-              Admin Login
-            </Link>
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col className="text-center">
-            <p className="mb-0">
-              &copy; {new Date().getFullYear()} SonicTouch. All Rights Reserved.
-            </p>
-          </Col>
-        </Row>
-      </Container>
+    <footer className="bg-gray-100 text-gray-800 py-8 mt-auto w-full font-lato border-t border-gray-300">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
+        {/* Logo & About Section */}
+        <div className="flex flex-col items-center text-center space-y-3">
+          <img src="/logo.png" alt="Company Logo" className="w-32" />
+          <p className="text-sm text-gray-600 max-w-md">
+            We provide high-quality services with the best customer experience.
+            Your satisfaction is our priority.
+          </p>
+        </div>
+
+        {/* Navigation Links - Centered */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-sm mt-6 w-full max-w-2xl text-center">
+          {/* Help Section */}
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-2">Help</h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-blue-600 transition duration-300 block"
+                >
+                  Shipping & Delivery
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-blue-600 transition duration-300 block"
+                >
+                  Help Center
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-blue-600 transition duration-300 block"
+                >
+                  Returns Policy
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Support Section */}
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-2">
+              Support
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-blue-600 transition duration-300 block"
+                >
+                  Customer Care
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-blue-600 transition duration-300 block"
+                >
+                  Technical Help
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Admin Section */}
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-2">Admin</h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-blue-600 transition duration-300 block"
+                >
+                  Admin Dashboard
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-blue-600 transition duration-300 block"
+                >
+                  Admin Login
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Divider & Copyright */}
+      <div className="border-t border-gray-300 mt-6 pt-4 text-center text-gray-600 text-sm">
+        © {new Date().getFullYear()} Your Company. All rights reserved.
+      </div>
     </footer>
   );
 };

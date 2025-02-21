@@ -1,71 +1,62 @@
 import React from "react";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 
 const Contact = () => {
   return (
-    <Container className="my-5">
-      <Row className="justify-content-center">
-        <Col md={10}>
-          <Card className="shadow-lg border-0">
-            <Row className="g-0">
-              {/* Left Side - Form */}
-              <Col md={6} className="p-5">
-                <h2 className="fw-bold mb-4">Contact Us</h2>
-                <Form>
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      type="text"
-                      placeholder="Name"
-                      className="p-3"
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      type="email"
-                      placeholder="Email"
-                      className="p-3"
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      type="text"
-                      placeholder="Phone Number"
-                      className="p-3"
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      as="textarea"
-                      rows={3}
-                      placeholder="Message"
-                      className="p-3"
-                    />
-                  </Form.Group>
-                  <Button variant="primary" className="w-100 py-3">
-                    Send Message
-                  </Button>
-                </Form>
-              </Col>
-
-              {/* Right Side - Illustration & Contact Details */}
-              <Col
-                md={6}
-                className="d-flex flex-column justify-content-center align-items-center bg-light p-5"
-              >
-                <img
-                  src="/contact-illustration.svg"
-                  alt="Contact Illustration"
-                  className="img-fluid mb-3"
+    <div className="container mx-auto my-10 px-4">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left Side - Form */}
+          <div className="p-6">
+            <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+            <form>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="w-full p-3 border rounded-lg"
                 />
-                <p className="text-muted text-center">
-                  Need help? Get in touch with us today!
-                </p>
-              </Col>
-            </Row>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+              </div>
+              <div className="mb-3">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full p-3 border rounded-lg"
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  className="w-full p-3 border rounded-lg"
+                />
+              </div>
+              <div className="mb-3">
+                <textarea
+                  rows="3"
+                  placeholder="Message"
+                  className="w-full p-3 border rounded-lg"
+                ></textarea>
+              </div>
+              <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+                Send Message
+              </button>
+            </form>
+          </div>
+
+          {/* Right Side - Illustration & Contact Details */}
+          <div className="flex flex-col justify-center items-center bg-gray-100 p-6">
+            <img
+              src="/contact-illustration.svg"
+              alt="Contact Illustration"
+              className="w-48 mb-3"
+            />
+            <p className="text-gray-600 text-center">
+              Need help? Get in touch with us today!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

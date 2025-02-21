@@ -4,24 +4,24 @@ import HeroSection from "../../../components/HeroSection";
 import CategoryList from "../../../components/CategoryList";
 import ProductGrid from "../../../components/ProductGrid";
 
-const Women = () => {
+const Birds = () => {
   const { subcategory } = useParams(); // Get subcategory if clicked
 
   return (
     <div className="container mx-auto px-4">
-      {/* Hero Section for Women */}
+      {/* Hero Section for Birds */}
       <HeroSection
-        title="Women's Clothing"
-        subtitle="Discover the latest trends in Women's fashion!"
+        title="Bird Supplies"
+        subtitle="Find everything your feathered friend needs!"
       />
 
-      {/* Category Section (Shirts, Pants, etc.) */}
-      <CategoryList categoryType="women" />
+      {/* Category Section (Food, Toys, Accessories, etc.) */}
+      <CategoryList categoryType="birds" />
 
-      {/* Product Grid: Show all Women clothing by default */}
-      <ProductGrid categoryType={subcategory ? subcategory : "women"} />
+      {/* Product Grid: Show all bird products by default */}
+      <ProductGrid categoryType={subcategory ? subcategory : "birds"} />
     </div>
   );
 };
 
-export default Women;
+export default Birds;
