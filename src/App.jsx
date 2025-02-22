@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import HeaderBeforeLogin from "./components/normal/components/headers/HeaderBeforeLogin";
-import HeaderAfterLogin from "./components/normal/components/headers/HeaderAfterLogin";
-import Footer from "./components/normal//components/Footer";
+import HeaderBeforeLogin from "./components/headers/HeaderBeforeLogin";
+import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
+import Footer from "./components/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     <Router>
       <div className="min-h-screen flex flex-col">
         {isAuthenticated ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
-        <main className="flex-1 mt-24">
+        <main>
           <RoutesConfig />
         </main>{" "}
         <Footer />

@@ -1,7 +1,7 @@
 import React from "react";
-import HeroSection from "../../../components/HeroSection";
-import CategoryList from "../../../components/CategoryList";
-import ProductGrid from "../../../components/ProductGrid";
+import HeroSection from "../../../HeroSection";
+import CategoryList from "../../../CategoryList";
+import ProductGrid from "../../../ProductGrid";
 
 const Pets = () => {
   return (

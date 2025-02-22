@@ -6,7 +6,6 @@ const LoggedInHeader = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // ✅ Close Explore when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -22,12 +21,10 @@ const LoggedInHeader = () => {
   return (
     <nav className="bg-gray-200 shadow-md hover:shadow-lg transition-shadow duration-300 py-4 font-lato w-full relative">
       <div className="container mx-auto flex justify-between items-center px-6 h-20">
-        {/* 🔹 Left: Logo */}
         <Link to="/" className="flex-shrink-0">
           <img src="/icon.jpg" alt="SonicTouch Logo" className="h-28 w-auto" />
         </Link>
 
-        {/* 🔹 Middle: Navigation Links & Explore Dropdown */}
         <div className="flex space-x-6 items-center">
           <Link
             to="/"
@@ -42,7 +39,6 @@ const LoggedInHeader = () => {
             About
           </Link>
 
-          {/* Explore Dropdown (Fixed Click Outside Behavior) */}
           <div className="relative z-50" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -111,7 +107,6 @@ const LoggedInHeader = () => {
           </div>
         </div>
 
-        {/* 🔹 Right: Search, Icons, User Menu */}
         <div className="flex items-center space-x-4">
           <div className="relative w-56 flex items-center border rounded-md bg-gray-100 px-3">
             <input
@@ -134,8 +129,6 @@ const LoggedInHeader = () => {
           >
             <FaShoppingCart />
           </Link>
-
-          {/* User Dropdown */}
           <div className="relative group">
             <button className="text-gray-700 text-xl focus:outline-none">
               <FaUser />

@@ -67,26 +67,42 @@ const ProductGrid = ({ categoryType }) => {
   );
 
   return (
-    <div className="container mx-auto py-10">
-      <h2 className="text-center text-2xl font-bold mb-6">All Products</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-xl transition"
-            onClick={() => navigate(`/product/${product.id}`)}
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-48 object-cover rounded-md"
-            />
-            <div className="mt-4">
-              <h5 className="font-medium text-lg">{product.name}</h5>
-              <p className="text-gray-600">${product.price.toFixed(2)}</p>
+    <div className="bg-gray-100 py-12 mt-4">
+      {" "}
+      {/* Matches Navbar, Hero & Footer */}
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Title */}
+        <h2 className="text-center text-3xl font-bold text-gray-900 mb-8 font-lato">
+          Explore Our Products
+        </h2>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white shadow-md rounded-lg p-5 cursor-pointer transition-transform transform hover:shadow-lg hover:scale-105"
+              onClick={() => navigate(`/product/${product.id}`)}
+            >
+              {/* Product Image */}
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-52 object-cover rounded-md"
+              />
+
+              {/* Product Details */}
+              <div className="mt-4 text-center">
+                <h5 className="font-semibold text-lg text-gray-900">
+                  {product.name}
+                </h5>
+                <p className="text-gray-600 text-lg mt-2">
+                  ${product.price.toFixed(2)}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

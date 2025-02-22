@@ -1,7 +1,7 @@
 import React from "react";
-import HeroSection from "../../../components/HeroSection";
-import ProductGrid from "../../../components/ProductGrid";
-import CategoryList from "../../../components/CategoryList";
+import HeroSection from "../../../HeroSection";
+import ProductGrid from "../../../ProductGrid";
+import CategoryList from "../../../CategoryList";
 
 const Clothing = () => {
   return (
