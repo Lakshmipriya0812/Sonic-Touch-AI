@@ -38,4 +38,4 @@ def t2s():
     return output
 
 if __name__ == "__main__":
-    app.run(debug=False, port=2024, host='0.0.0.0')
+    app.run(debug=False, port=2026, host='0.0.0.0')
