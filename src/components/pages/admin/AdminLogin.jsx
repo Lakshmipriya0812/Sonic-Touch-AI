@@ -24,12 +24,11 @@ const AdminLogin = ({ setIsAuthenticated }) => {
       const data = await response.json();
 
       if (response.ok && data.user.isAdmin) {
-        // ✅ Store authentication details
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        setIsAuthenticated(true); // Update auth state
+        setIsAuthenticated(true);
 
-        navigate("/admin/dashboard"); // ✅ Redirect to Admin Dashboard
+        navigate("/admin/dashboard");
         window.location.reload();
       } else {
         setError(data.message || "Invalid admin credentials.");
@@ -55,8 +54,9 @@ const AdminLogin = ({ setIsAuthenticated }) => {
             placeholder="Admin Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            autoComplete="username"
           />
 
           <input
@@ -64,8 +64,9 @@ const AdminLogin = ({ setIsAuthenticated }) => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            autoComplete="username"
           />
 
           <button

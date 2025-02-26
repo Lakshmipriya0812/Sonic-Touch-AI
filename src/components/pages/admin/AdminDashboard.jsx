@@ -9,7 +9,7 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("isAdmin");
 
-    setIsAuthenticated(false); // ✅ Update authentication state
+    setIsAuthenticated(false);
     navigate("/admin/login", { replace: true });
     window.location.reload();
   };

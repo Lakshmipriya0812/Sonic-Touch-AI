@@ -5,7 +5,7 @@ import CategoryList from "../../../CategoryList";
 import ProductGrid from "../../../ProductGrid";
 
 const Birds = () => {
-  const { subcategory } = useParams(); // Get subcategory if clicked
+  const { subcategory } = useParams();
 
   return (
     <div className="container mx-auto px-4">

@@ -10,7 +10,7 @@ const Signup = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
-    e.preventDefault(); // ✅ Prevent page reload
+    e.preventDefault();
     setError(null);
 
     try {
@@ -19,8 +19,8 @@ const Signup = ({ setIsAuthenticated }) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        setIsAuthenticated(true); // ✅ Update authentication state
-        navigate("/"); // ✅ Redirect to home
+        setIsAuthenticated(true);
+        navigate("/");
       } else {
         setError(data.message || "Signup failed. Try again.");
       }
@@ -31,44 +31,77 @@ const Signup = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-blue-900">
-      <div className="bg-white p-6 shadow-lg rounded-lg w-80">
-        <h3 className="text-center text-xl font-bold">Sign Up</h3>
-        {error && <p className="text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleSignup}>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-          >
-            Sign Up
-          </button>
-        </form>
+    <>
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
+        <div className="bg-white p-8 shadow-md rounded-xl w-96">
+          <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">
+            Create an Account
+          </h3>
+
+          {error && <p className="text-green-600 text-center">{error}</p>}
+
+          <form onSubmit={handleSignup} className="space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            />
+
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+              autoComplete="username"
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+              autoComplete="new-password"
+            />
+            {/* 
+            <input
+              type="password"
+              placeholder="rewrite-Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+              autoComplete="new-password"
+            />
+*/}
+            <button
+              type="submit"
+              className="w-full bg-gray-700 text-white py-3 rounded-md font-semibold hover:bg-gray-900 transition"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          <div className="text-center mt-4">
+            <p className="text-gray-600">
+              Already have an account?{" "}
+              <a
+                href="/login"
+                className="text-gray-800 font-bold hover:underline"
+              >
+                Login
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

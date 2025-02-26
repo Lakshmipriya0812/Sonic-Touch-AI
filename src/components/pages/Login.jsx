@@ -9,8 +9,8 @@ const Login = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent page reload
-    setError(null); // Clear previous errors
+    e.preventDefault();
+    setError(null);
 
     try {
       const data = await loginUser(email, password);
@@ -18,8 +18,8 @@ const Login = ({ setIsAuthenticated }) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        setIsAuthenticated(true); // ✅ Update authentication state
-        navigate("/"); // ✅ Redirect to home
+        setIsAuthenticated(true);
+        navigate("/");
       } else {
         setError(data.message || "Invalid email or password.");
       }
@@ -30,34 +30,63 @@ const Login = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-blue-900">
-      <div className="bg-white p-6 shadow-lg rounded-lg w-80">
-        <h3 className="text-center text-xl font-bold">Login</h3>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
+      <div className="bg-white p-8 shadow-md rounded-xl w-96">
+        <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">
+          Welcome Back
+        </h3>
+
         {error && <p className="text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleLogin}>
+
+        <form onSubmit={handleLogin} className="space-y-4">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            autoComplete="username"
           />
+
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            autoComplete="current-password"
           />
+          {/* 
+          <div className="text-right">
+            <a
+              href="/forgot-password"
+              className="text-blue-600 text-sm hover:underline"
+            >
+              Forgot Password?
+            </a>
+          </div>
+*/}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+            className="w-full bg-gray-700 text-white py-3 rounded-md font-semibold hover:bg-gray-900 transition"
           >
             Login
           </button>
         </form>
+
+        <div className="text-center mt-4">
+          <p className="text-gray-600">
+            Don't have an account?{" "}
+            <a
+              href="/signup"
+              className="text-gray-800 font-bold hover:underline"
+            >
+              Sign Up
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

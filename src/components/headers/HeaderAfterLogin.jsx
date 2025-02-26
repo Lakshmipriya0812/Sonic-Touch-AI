@@ -28,88 +28,163 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    setIsAuthenticated(false); // ✅ Update state instead of reloading
+    setIsAuthenticated(false);
   };
 
   return (
-    <nav className="bg-gray-200 shadow-md py-4 font-lato w-full">
-      <div className="container mx-auto flex justify-between items-center px-6 h-20">
-        <Link to="/" className="flex-shrink-0">
-          <img src="/icon.jpg" alt="SonicTouch Logo" className="h-28 w-auto" />
-        </Link>
-        <div className="flex space-x-6 items-center">
-          <Link
-            to="/"
-            className="text-gray-700 font-medium hover:text-gray-900"
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className="text-gray-700 font-medium hover:text-gray-900"
-          >
-            About
-          </Link>
-        </div>
-        <div className="flex items-center space-x-4">
-          <div className="relative w-56 flex items-center border rounded-md bg-gray-100 px-3">
-            <input
-              type="search"
-              placeholder="What are you looking for?"
-              className="bg-transparent w-full border-none focus:outline-none py-2 px-1"
-            />
-            <FaSearch className="text-gray-500" />
-          </div>
-          <Link
-            to="/wishlist"
-            className="text-gray-700 text-xl hover:text-gray-900"
-          >
-            <FaHeart />
-          </Link>
-          <Link
-            to="/cart"
-            className="text-gray-700 text-xl hover:text-gray-900"
-          >
-            <FaShoppingCart />
-          </Link>
-          <div className="relative group">
-            <button className="text-gray-700 text-xl focus:outline-none">
-              <FaUser />
-            </button>
-            <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              {user ? (
-                <>
-                  <p className="text-blue-400 block px-4 py-2">{user.name}</p>
+    <>
+      <nav className="bg-gray-100 text-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 py-4 font-lato w-full relative">
+        <div className="container mx-auto flex justify-between items-center px-6 h-20">
+          <div className="flex items-center space-x-6">
+            <div className="relative z-50" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="text-gray-800 font-medium focus:outline-none"
+              >
+                Explore
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2">
                   <Link
-                    to="/account"
+                    to="/clothing"
                     className="block px-4 py-2 hover:bg-gray-100"
                   >
-                    My Account
+                    All Clothing
                   </Link>
                   <Link
-                    to="/orders"
+                    to="/clothing/men"
                     className="block px-4 py-2 hover:bg-gray-100"
                   >
-                    My Orders
+                    Men
                   </Link>
-                  <hr />
-                  <button
-                    onClick={handleLogout}
-                    className="block px-4 py-2 hover:bg-gray-100 w-full text-left"
+                  <Link
+                    to="/clothing/women"
+                    className="block px-4 py-2 hover:bg-gray-100"
                   >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <Link to="/login" className="block px-4 py-2 hover:bg-gray-100">
-                  Login
-                </Link>
+                    Women
+                  </Link>
+                  <Link
+                    to="/clothing/baby"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Baby
+                  </Link>
+                  <div className="border-t my-2"></div>
+                  <h3 className="px-4 py-2 text-gray-700 font-semibold">
+                    Pet Supplies
+                  </h3>
+                  <Link
+                    to="/pets"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    All Pet Supplies
+                  </Link>
+                  <Link
+                    to="/pets/cats"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Cats
+                  </Link>
+                  <Link
+                    to="/pets/dogs"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Dogs
+                  </Link>
+                  <Link
+                    to="/pets/birds"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Birds
+                  </Link>
+                </div>
               )}
+            </div>
+
+            <Link
+              to="/about"
+              className="text-gray-700 font-medium hover:text-gray-900 transition"
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="text-gray-700 font-medium hover:text-gray-900 transition"
+            >
+              Contact
+            </Link>
+          </div>
+
+          <Link to="/" className="mx-auto">
+            <img
+              src="/icon.jpg"
+              alt="SonicTouch Logo"
+              className="h-28 w-auto"
+            />
+          </Link>
+          <div className="flex items-center space-x-4">
+            <div className="relative w-56 flex items-center border rounded-md bg-gray-100 px-3">
+              <input
+                type="search"
+                placeholder="What are you looking for?"
+                className="bg-transparent w-full border-none focus:outline-none py-2 px-1"
+              />
+              <FaSearch className="text-gray-500" />
+            </div>
+            <Link
+              to="/wishlist"
+              className="text-gray-700 text-xl hover:text-gray-900"
+            >
+              <FaHeart />
+            </Link>
+            <Link
+              to="/cart"
+              className="text-gray-700 text-xl hover:text-gray-900"
+            >
+              <FaShoppingCart />
+            </Link>
+            <div className="relative group">
+              <button className="text-gray-700 text-xl focus:outline-none">
+                <FaUser />
+              </button>
+              <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                {user ? (
+                  <>
+                    <p className="text-blue-400 block px-4 py-2">{user.name}</p>
+                    <Link
+                      to="/account"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      My Account
+                    </Link>
+                    <Link
+                      to="/orders"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      My Orders
+                    </Link>
+                    <hr />
+                    <button
+                      onClick={handleLogout}
+                      className="block px-4 py-2 hover:bg-gray-100 w-full text-left"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Login
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 

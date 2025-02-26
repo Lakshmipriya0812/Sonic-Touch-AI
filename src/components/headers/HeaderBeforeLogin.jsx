@@ -8,12 +8,10 @@ const HeaderBeforeLogin = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Close dropdown on navigation change
   useEffect(() => {
     setIsDropdownOpen(false);
   }, [location.pathname]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -30,9 +28,7 @@ const HeaderBeforeLogin = () => {
     <>
       <nav className="bg-gray-100 text-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 py-4 font-lato w-full relative">
         <div className="container mx-auto flex justify-between items-center px-6 h-20">
-          {/* Left Navigation */}
           <div className="flex items-center space-x-6">
-            {/* Explore Dropdown */}
             <div className="relative z-50" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -46,13 +42,53 @@ const HeaderBeforeLogin = () => {
                     to="/clothing"
                     className="block px-4 py-2 hover:bg-gray-100"
                   >
-                    Clothing
+                    All Clothing
                   </Link>
+                  <Link
+                    to="/clothing/men"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Men
+                  </Link>
+                  <Link
+                    to="/clothing/women"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Women
+                  </Link>
+                  <Link
+                    to="/clothing/baby"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Baby
+                  </Link>
+                  <div className="border-t my-2"></div>
+                  <h3 className="px-4 py-2 text-gray-700 font-semibold">
+                    Pet Supplies
+                  </h3>
                   <Link
                     to="/pets"
                     className="block px-4 py-2 hover:bg-gray-100"
                   >
-                    Pet Supplies
+                    All Pet Supplies
+                  </Link>
+                  <Link
+                    to="/pets/cats"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Cats
+                  </Link>
+                  <Link
+                    to="/pets/dogs"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Dogs
+                  </Link>
+                  <Link
+                    to="/pets/birds"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Birds
                   </Link>
                 </div>
               )}
@@ -72,7 +108,6 @@ const HeaderBeforeLogin = () => {
             </Link>
           </div>
 
-          {/* Logo */}
           <Link to="/" className="mx-auto">
             <img
               src="/icon.jpg"
@@ -81,41 +116,40 @@ const HeaderBeforeLogin = () => {
             />
           </Link>
 
-          {/* Right Section: Search, Cart, Sign Up/Login */}
           <div className="flex items-center space-x-4">
-            {/* Search Bar */}
             <div className="relative w-56 flex items-center border rounded-md bg-gray-100 px-3">
               <input
                 type="search"
-                placeholder="Search"
+                placeholder="What are you looking for?"
                 className="bg-transparent w-full border-none focus:outline-none py-2 px-1"
               />
               <FaSearch className="text-gray-500" />
             </div>
 
-            {/* Cart */}
             <Link
               to="/cart"
-              className="text-gray-500 text-xl hover:text-gray-900 transition"
+              className="relative text-gray-500 text-xl hover:text-gray-900 transition duration-300"
             >
-              <FaShoppingCart />
+              <div className="relative p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300 transition duration-300">
+                <FaShoppingCart className="text-gray-700 text-2xl" />
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5"></span>
+              </div>
             </Link>
 
-            {/* ✅ Navigate to Login Page */}
             <button
               onClick={() => navigate("/login")}
               className="bg-gray-500 text-white px-4 py-2 rounded-md font-medium hover:bg-gray-900 transition duration-300 shadow-md"
             >
               Sign In
             </button>
-
-            {/* ✅ Navigate to Signup Page */}
+            {/* 
             <button
               onClick={() => navigate("/signup")}
               className="bg-blue-500 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300 shadow-md"
             >
               Sign Up
             </button>
+          */}
           </div>
         </div>
       </nav>
