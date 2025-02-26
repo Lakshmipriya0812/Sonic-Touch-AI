@@ -15,6 +15,7 @@ import Birds from "../components/pages/Explore/Pets/Birds";
 import Baby from "../components/pages/Explore/Clothing/Baby";
 import AdminLogin from "../components/pages/admin/AdminLogin";
 import AdminDashboard from "../components/pages/admin/AdminDashboard";
+import AdminProductManagement from "../components/pages/admin/AdminProductManagement";
 
 const RoutesConfig = ({ setIsAuthenticated }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -56,6 +57,12 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
           ) : (
             <Navigate to="/admin/login" />
           )
+        }
+      />
+      <Route
+        path="/admin/products"
+        element={
+          isAdmin ? <AdminProductManagement /> : <Navigate to="/admin/login" />
         }
       />
     </Routes>

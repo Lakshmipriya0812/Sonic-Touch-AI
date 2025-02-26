@@ -1,108 +1,80 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-const allProducts = [
-  {
-    id: 1,
-    name: "Adicolor Classics Joggers",
-    category: "clothing",
-    price: 63.85,
-    image: "/images/joggers.jpg",
-  },
-  {
-    id: 2,
-    name: "Nike Sportswear Futura Luxe",
-    category: "clothing",
-    price: 130.0,
-    image: "/images/bag.jpg",
-  },
-  {
-    id: 3,
-    name: "Geometric Print Scarf",
-    category: "clothing",
-    price: 53.0,
-    image: "/images/scarf.jpg",
-  },
-  {
-    id: 4,
-    name: "Yellow Reserved Hoodie",
-    category: "clothing",
-    price: 155.0,
-    image: "/images/hoodie.jpg",
-  },
-  {
-    id: 5,
-    name: "Dogs Food Premium",
-    category: "pets",
-    price: 29.99,
-    image: "/images/dogs-food.jpg",
-  },
-  {
-    id: 6,
-    name: "Cat Scratching Post",
-    category: "pets",
-    price: 45.0,
-    image: "/images/cat-scratcher.jpg",
-  },
-  {
-    id: 7,
-    name: "Bird Cage Large",
-    category: "pets",
-    price: 120.0,
-    image: "/images/bird-cage.jpg",
-  },
-  {
-    id: 8,
-    name: "Fish Tank 20L",
-    category: "pets",
-    price: 89.99,
-    image: "/images/fish-tank.jpg",
-  },
-];
+import axios from "axios"; // Import axios for API requests
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const ProductGrid = ({ categoryType }) => {
   const navigate = useNavigate();
-  const filteredProducts = allProducts.filter(
-    (product) => product.category === categoryType
-  );
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch products from backend
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${API_URL}/api/products?category=${categoryType}`
+        );
+        setProducts(response.data.products);
+      } catch (err) {
+        setError("Failed to fetch products.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [categoryType]); // Runs when categoryType changes
 
   return (
     <div className="bg-gray-100 py-12 mt-4">
-      {" "}
-      {/* Matches Navbar, Hero & Footer */}
       <div className="max-w-7xl mx-auto px-6">
-        {/* Title */}
         <h2 className="text-center text-3xl font-bold text-gray-900 mb-8 font-lato">
           Explore Our Products
         </h2>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white shadow-md rounded-lg p-5 cursor-pointer transition-transform transform hover:shadow-lg hover:scale-105"
-              onClick={() => navigate(`/product/${product.id}`)}
-            >
-              {/* Product Image */}
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-52 object-cover rounded-md"
-              />
+        {/* Show loading state */}
+        {loading && (
+          <p className="text-center text-gray-500">Loading products...</p>
+        )}
 
-              {/* Product Details */}
-              <div className="mt-4 text-center">
-                <h5 className="font-semibold text-lg text-gray-900">
-                  {product.name}
-                </h5>
-                <p className="text-gray-600 text-lg mt-2">
-                  ${product.price.toFixed(2)}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Show error message if fetching fails */}
+        {error && <p className="text-center text-red-500">{error}</p>}
+
+        {/* Product Grid */}
+        {!loading && !error && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {products.length > 0 ? (
+              products.map((product) => (
+                <div
+                  key={product._id}
+                  className="bg-white shadow-md rounded-lg p-5 cursor-pointer transition-transform transform hover:shadow-lg hover:scale-105"
+                  onClick={() => navigate(`/product/${product._id}`)}
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-52 object-cover rounded-md"
+                  />
+                  <div className="mt-4 text-center">
+                    <h5 className="font-semibold text-lg text-gray-900">
+                      {product.name}
+                    </h5>
+                    <p className="text-gray-600 text-lg mt-2">
+                      ${product.price.toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-500">
+                No products found in this category.
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
