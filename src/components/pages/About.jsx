@@ -4,16 +4,13 @@ const About = ({ isAuthenticated }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-10">
       <div className="w-full max-w-7xl bg-white shadow-xl rounded-lg p-10 relative">
-        {/* Image (Floating to the right, affecting only nearby text) */}
         <div className="w-[250px] h-[250px] bg-gray-200 rounded-lg overflow-hidden float-right ml-6 mb-4">
           <img
-            src="path/to/your/logo.png" // Replace with your actual logo path
+            src="path/to/your/logo.png"
             alt="Sonic Touch Logo"
             className="w-full h-full object-contain"
           />
         </div>
-
-        {/* Text Content */}
         <h1 className="text-4xl font-bold text-gray-900 mb-4 font-lato">
           About Us
         </h1>
@@ -34,8 +31,6 @@ const About = ({ isAuthenticated }) => {
           <li>"Tell me about the Samsung Galaxy."</li>
           <li>"Add this to my cart."</li>
         </ul>
-
-        {/* Clears float to prevent layout breakage */}
         <div className="clear-right"></div>
 
         <p className="text-lg text-gray-600 mb-6 font-lato">
@@ -43,8 +38,6 @@ const About = ({ isAuthenticated }) => {
           personalized recommendations and secure, voice-confirmed checkouts.
           Accessibility is at the core of everything we do.
         </p>
-
-        {/* Additional Content */}
         <p className="text-lg text-gray-600 mb-6 font-lato">
           As technology evolves, we continue to enhance our platform's
           functionality, ensuring that all users—regardless of their

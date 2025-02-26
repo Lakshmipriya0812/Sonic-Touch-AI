@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
 
 const HeaderAfterLogin = ({ setIsAuthenticated }) => {
   const [user, setUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -29,6 +31,12 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
     localStorage.removeItem("user");
     setUser(null);
     setIsAuthenticated(false);
+  };
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && searchQuery.trim() !== "") {
+      navigate(`/search?q=${searchQuery}`);
+    }
   };
 
   return (
@@ -128,6 +136,9 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
                 type="search"
                 placeholder="What are you looking for?"
                 className="bg-transparent w-full border-none focus:outline-none py-2 px-1"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
               />
               <FaSearch className="text-gray-500" />
             </div>

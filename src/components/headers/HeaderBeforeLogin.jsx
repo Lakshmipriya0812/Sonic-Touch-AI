@@ -4,6 +4,7 @@ import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
 const HeaderBeforeLogin = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,7 +24,11 @@ const HeaderBeforeLogin = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && searchQuery.trim() !== "") {
+      navigate(`/search?q=${searchQuery}`);
+    }
+  };
   return (
     <>
       <nav className="bg-gray-100 text-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 py-4 font-lato w-full relative">
@@ -122,6 +127,9 @@ const HeaderBeforeLogin = () => {
                 type="search"
                 placeholder="What are you looking for?"
                 className="bg-transparent w-full border-none focus:outline-none py-2 px-1"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
               />
               <FaSearch className="text-gray-500" />
             </div>

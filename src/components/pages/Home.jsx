@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const Home = ({ isAuthenticated, handleLogout }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      {/* Hero Section */}
       <div className="text-center">
         <h1 className="text-5xl font-extrabold text-gray-900 leading-tight">
           Welcome to <span className="text-blue-600">Sonic Touch</span>
@@ -14,8 +13,6 @@ const Home = ({ isAuthenticated, handleLogout }) => {
           everything in between. Shop with confidence and style!
         </p>
       </div>
-
-      {/* Action Buttons */}
       <div className="mt-8 flex space-x-6">
         <Link
           to="/clothing"

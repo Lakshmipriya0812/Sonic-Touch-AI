@@ -1,20 +1,32 @@
 const Product = require("../models/Product");
 
-// ✅ Get all products (with optional category filtering)
 exports.getAllProducts = async (req, res) => {
   try {
     let query = {};
-    if (req.query.category) query.category = req.query.category;
-    if (req.query.subcategory) query.subcategory = req.query.subcategory;
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+    if (req.query.subcategory) {
+      query.subcategory = req.query.subcategory;
+    }
+    if (req.query.search) {
+      query.name = { $regex: new RegExp(req.query.search, "i") };
+    }
 
-    const products = await Product.find(query);
+    let sortOption = {};
+    if (req.query.sort === "price_asc") {
+      sortOption.price = 1;
+    } else if (req.query.sort === "price_desc") {
+      sortOption.price = -1;
+    }
+    const products = await Product.find(query).sort(sortOption);
     res.status(200).json({ success: true, products });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Error fetching products:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
-// ✅ Get a single product by ID
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -29,7 +41,6 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-// ✅ Create a new product
 exports.createProduct = async (req, res) => {
   try {
     const { name, price, image, category, description, stock } = req.body;
@@ -57,7 +68,6 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// ✅ Update an existing product
 exports.updateProduct = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(

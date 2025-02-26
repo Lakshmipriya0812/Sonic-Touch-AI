@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
-const ProductGrid = ({ categoryType }) => {
+const SearchResults = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const queryParams = new URLSearchParams(location.search);
+  const searchQuery = queryParams.get("q") || "";
+
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchSearchResults = async () => {
+      if (!searchQuery.trim()) return;
       try {
         setLoading(true);
         const response = await axios.get(
-          `${API_URL}/api/products?category=${categoryType}`
+          `${API_URL}/api/products?search=${searchQuery}`
         );
         setProducts(response.data.products);
       } catch (err) {
@@ -24,19 +30,21 @@ const ProductGrid = ({ categoryType }) => {
       }
     };
 
-    fetchProducts();
-  }, [categoryType]);
+    fetchSearchResults();
+  }, [searchQuery]);
 
   return (
     <div className="bg-gray-100 py-12 mt-4">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-center text-3xl font-bold text-gray-900 mb-8 font-lato">
-          Explore Our Products
+          Search Results for "{searchQuery}"
         </h2>
+
         {loading && (
           <p className="text-center text-gray-500">Loading products...</p>
         )}
         {error && <p className="text-center text-red-500">{error}</p>}
+
         {!loading && !error && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {products.length > 0 ? (
@@ -62,9 +70,7 @@ const ProductGrid = ({ categoryType }) => {
                 </div>
               ))
             ) : (
-              <p className="text-center text-gray-500">
-                No products found in this category.
-              </p>
+              <p className="text-center text-gray-500">No products found.</p>
             )}
           </div>
         )}
@@ -73,4 +79,4 @@ const ProductGrid = ({ categoryType }) => {
   );
 };
 
-export default ProductGrid;
+export default SearchResults;

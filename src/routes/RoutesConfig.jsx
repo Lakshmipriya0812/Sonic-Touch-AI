@@ -16,7 +16,8 @@ import Baby from "../components/pages/Explore/Clothing/Baby";
 import AdminLogin from "../components/pages/admin/AdminLogin";
 import AdminDashboard from "../components/pages/admin/AdminDashboard";
 import AdminProductManagement from "../components/pages/admin/AdminProductManagement";
-
+import SearchResults from "../components/pages/SearchResults";
+import ProductDetails from "../components/pages/ProductDetails";
 const RoutesConfig = ({ setIsAuthenticated }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const isAdmin = user?.isAdmin;
@@ -42,13 +43,10 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       <Route path="/pets/dogs" element={<Dogs />} />
       <Route path="/pets/cats" element={<Cats />} />
       <Route path="/pets/birds" element={<Birds />} />
-
-      {/* ✅ Admin Login */}
       <Route
         path="/admin/login"
         element={<AdminLogin setIsAuthenticated={setIsAuthenticated} />}
       />
-
       <Route
         path="/admin/dashboard"
         element={
@@ -65,6 +63,8 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
           isAdmin ? <AdminProductManagement /> : <Navigate to="/admin/login" />
         }
       />
+      <Route path="/search" element={<SearchResults />} />
+      <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>
   );
 };

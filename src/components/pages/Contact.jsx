@@ -5,7 +5,6 @@ const Contact = () => {
     <div className="container mx-auto my-10 px-4">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Left Side - Form */}
           <div className="p-6">
             <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
             <form>
@@ -43,7 +42,6 @@ const Contact = () => {
             </form>
           </div>
 
-          {/* Right Side - Illustration & Contact Details */}
           <div className="flex flex-col justify-center items-center bg-gray-100 p-6">
             <img
               src="/contact-illustration.svg"

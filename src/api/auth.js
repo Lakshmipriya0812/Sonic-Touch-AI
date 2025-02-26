@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"; // ✅ Use .env
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const signupUser = async (name, email, password) => {
   try {
@@ -15,7 +15,6 @@ export const signupUser = async (name, email, password) => {
   }
 };
 
-// ✅ Ensure both login and signup are exported
 export const loginUser = async (email, password) => {
   try {
     const response = await fetch(`${API_URL}/api/auth/login`, {
