@@ -1,19 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AdminLogin = () => {
+const AdminLogin = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError(null);
 
-    if (email === "admin@example.com" && password === "admin123") {
-      localStorage.setItem("isAdmin", "true");
-      navigate("/admin/dashboard");
-    } else {
-      alert("Invalid credentials!");
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/auth/admin/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok && data.user.isAdmin) {
+        // ✅ Store authentication details
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setIsAuthenticated(true); // Update auth state
+
+        navigate("/admin/dashboard"); // ✅ Redirect to Admin Dashboard
+        window.location.reload();
+      } else {
+        setError(data.message || "Invalid admin credentials.");
+      }
+    } catch (err) {
+      console.error("Admin login error:", err);
+      setError("Something went wrong. Please try again.");
     }
   };
 
@@ -24,6 +47,8 @@ const AdminLogin = () => {
           Admin Login
         </h2>
 
+        {error && <p className="text-red-500 text-center">{error}</p>}
+
         <form onSubmit={handleLogin} className="space-y-4">
           <input
             type="email"
@@ -31,6 +56,7 @@ const AdminLogin = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            required
           />
 
           <input
@@ -39,6 +65,7 @@ const AdminLogin = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            required
           />
 
           <button

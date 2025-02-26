@@ -10,17 +10,21 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("isAuthenticated") === "true";
+    const loggedIn = localStorage.getItem("token") !== null;
     setIsAuthenticated(loggedIn);
   }, []);
 
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        {isAuthenticated ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
+        {isAuthenticated ? (
+          <HeaderAfterLogin setIsAuthenticated={setIsAuthenticated} />
+        ) : (
+          <HeaderBeforeLogin setIsAuthenticated={setIsAuthenticated} />
+        )}
         <main>
-          <RoutesConfig />
-        </main>{" "}
+          <RoutesConfig setIsAuthenticated={setIsAuthenticated} />
+        </main>
         <Footer />
       </div>
     </Router>
