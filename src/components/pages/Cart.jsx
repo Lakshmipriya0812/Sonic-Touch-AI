@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cart, removeFromCart, incrementQuantity, decrementQuantity } =
+    useContext(CartContext);
+
+  if (!cart) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -22,7 +26,7 @@ const Cart = () => {
             >
               <div className="flex items-center space-x-4">
                 <img
-                  src={item.image || "/default-image.jpg"} // ✅ Use a default image if missing
+                  src={item.image || "/default-image.jpg"}
                   alt={item.name || "Product"}
                   className="w-20 h-20 object-cover rounded-md"
                 />
@@ -31,19 +35,24 @@ const Cart = () => {
                     {item.name || "Unknown Product"}
                   </h3>
                   <p className="text-gray-600">
-                    ${item.price ? item.price.toFixed(2) : "0.00"}{" "}
+                    ${item.price ? item.price.toFixed(2) : "0.00"}
                   </p>
-
-                  {/* ✅ Display Size, Color, and Material if applicable */}
-                  {item.size && (
-                    <p className="text-gray-500">Size: {item.size}</p>
-                  )}
-                  {item.color && (
-                    <p className="text-gray-500">Color: {item.color}</p>
-                  )}
-                  {item.material && (
-                    <p className="text-gray-500">Material: {item.material}</p>
-                  )}
+                  {/* Display quantity */}
+                  <div className="flex items-center gap-2 mt-2">
+                    <button
+                      className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
+                      onClick={() => decrementQuantity(item.productId)}
+                    >
+                      -
+                    </button>
+                    <span className="text-lg">{item.quantity}</span>
+                    <button
+                      className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
+                      onClick={() => incrementQuantity(item.productId)}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
               <button
@@ -59,11 +68,9 @@ const Cart = () => {
 
       {cart.length > 0 && (
         <div className="mt-6 text-center">
-          <Link to="/checkout">
-            <button className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition">
-              Proceed to Checkout
-            </button>
-          </Link>
+          <button className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition">
+            Proceed to Checkout
+          </button>
         </div>
       )}
     </div>

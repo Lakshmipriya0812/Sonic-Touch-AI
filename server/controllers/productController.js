@@ -17,11 +17,7 @@ exports.getAllProducts = async (req, res) => {
       query.name = { $regex: new RegExp(req.query.search, "i") };
     }
 
-    console.log("Backend Filtering Criteria:", query);
-
     const products = await Product.find(query);
-    console.log("Found Products:", products);
-
     res.status(200).json({ success: true, products });
   } catch (error) {
     console.error("Error fetching products:", error);

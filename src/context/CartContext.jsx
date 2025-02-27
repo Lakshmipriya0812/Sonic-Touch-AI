@@ -1,12 +1,12 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import CartModal from "../components/CartModal";
 
 export const CartContext = createContext();
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const CartProvider = ({ children, navigate }) => {
+  // Now we can access navigate here
   const [cart, setCart] = useState([]);
   const token = localStorage.getItem("token");
   const [isModalOpen, setModalOpen] = useState(false);
@@ -25,15 +25,12 @@ const CartProvider = ({ children, navigate }) => {
       const response = await axios.get(`${API_URL}/api/cart`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      console.log("Cart API Response:", response.data);
       setCart(response.data.items);
     } catch (error) {
       console.error("Error fetching cart:", error);
     }
   };
 
-  // ✅ Add to cart (Handles both guest & logged-in users)
   const addToCart = async (product, selectedSize, selectedColor) => {
     if (!token) {
       const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
@@ -74,26 +71,112 @@ const CartProvider = ({ children, navigate }) => {
           },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
         setCart(response.data.cart.items);
         setModalOpen(true);
       } catch (error) {
-        console.error(
-          "Error adding to cart:",
-          error.response?.data || error.message
-        );
+        console.error("Error adding to cart:", error);
       }
     }
   };
 
+  const removeFromCart = async (productId) => {
+    if (!token) {
+      const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+      const updatedCart = localCart.filter(
+        (item) => item.productId !== productId
+      );
+      localStorage.setItem("guestCart", JSON.stringify(updatedCart));
+      setCart(updatedCart);
+    } else {
+      try {
+        const response = await axios.delete(
+          `${API_URL}/api/cart/remove/${productId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setCart(response.data.cart.items);
+      } catch (error) {
+        console.error("Error removing from cart:", error);
+      }
+    }
+  };
+
+  const incrementQuantity = (productId) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) =>
+        item.productId === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+      return updatedCart;
+    });
+  };
+
+  const decrementQuantity = (productId) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) =>
+        item.productId === productId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      );
+      return updatedCart;
+    });
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        incrementQuantity,
+        decrementQuantity,
+        closeModal,
+      }}
+    >
       {children}
-      <CartModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        navigate={navigate}
-      />
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center relative">
+            <h2 className="text-xl font-bold mb-4">✅ Added to Cart!</h2>
+            <p className="text-gray-600">
+              Your item has been added to the cart.
+            </p>
+
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                onClick={() => {
+                  navigate("/cart");
+                  closeModal();
+                }}
+              >
+                🛒 Go to Cart
+              </button>
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+                onClick={() => {
+                  navigate("/checkout");
+                  closeModal();
+                }}
+              >
+                ✅ Proceed to Checkout
+              </button>
+            </div>
+
+            <button
+              className="absolute top-3 right-4 text-gray-600 hover:text-gray-900 text-xl"
+              onClick={closeModal}
+            >
+              ❌
+            </button>
+          </div>
+        </div>
+      )}
     </CartContext.Provider>
   );
 };
