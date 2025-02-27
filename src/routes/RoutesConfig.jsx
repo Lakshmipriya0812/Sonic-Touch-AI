@@ -19,6 +19,7 @@ import AdminProductManagement from "../components/pages/admin/AdminProductManage
 import SearchResults from "../components/pages/SearchResults";
 import ProductDetails from "../components/pages/ProductDetails";
 import Cart from "../components/pages/Cart";
+import SubsubcategoryPage from "../components/pages/Explore/SubsubcategoryPage";
 
 const RoutesConfig = ({ setIsAuthenticated }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -45,6 +46,11 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       <Route path="/pets/dogs" element={<Dogs />} />
       <Route path="/pets/cats" element={<Cats />} />
       <Route path="/pets/birds" element={<Birds />} />
+      <Route
+        path="/:category/:subcategory/:subsubcategory"
+        element={<SubsubcategoryPage />}
+      />
+
       <Route
         path="/admin/login"
         element={<AdminLogin setIsAuthenticated={setIsAuthenticated} />}

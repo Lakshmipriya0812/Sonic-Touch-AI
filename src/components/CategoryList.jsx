@@ -1,17 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { categoryData } from "./data/categoryData";
 
 const CategoryList = ({ categoryType }) => {
   const navigate = useNavigate();
+  const { category, subcategory } = useParams();
   const categories = categoryData[categoryType] || [];
-
-  // ✅ Helper function to format category case correctly
-  const formatCategory = (path) => {
-    return path.replace(
-      /\/([a-z])/g,
-      (_, letter) => `/${letter.toUpperCase()}`
-    );
+  const handleNavigation = (path) => {
+    let formattedPath = path.toLowerCase();
+    if (subcategory) {
+      formattedPath = `/${category}/${subcategory}${path.replace(
+        `/${categoryType}`,
+        ""
+      )}`;
+    }
+    navigate(formattedPath);
   };
 
   return (
@@ -28,7 +31,7 @@ const CategoryList = ({ categoryType }) => {
             <button
               key={index}
               className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md transition-all duration-300 transform hover:shadow-lg hover:scale-105"
-              onClick={() => navigate(formatCategory(category.path))} // ✅ Fix case before navigating
+              onClick={() => handleNavigation(category.path)}
             >
               <div className="text-4xl text-gray-800">{category.icon}</div>
               <p className="mt-3 font-medium text-gray-700 text-lg">

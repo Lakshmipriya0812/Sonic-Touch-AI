@@ -4,7 +4,7 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const ProductGrid = ({ categoryType }) => {
+const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,16 +14,31 @@ const ProductGrid = ({ categoryType }) => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-
-        // ✅ Format categoryType to match database case
         const formattedCategory =
-          categoryType.charAt(0).toUpperCase() + categoryType.slice(1);
+          categoryType && categoryType.length > 0
+            ? categoryType.charAt(0).toUpperCase() + categoryType.slice(1)
+            : "";
+
+        const formattedSubcategory =
+          subcategoryProp && subcategoryProp.length > 0
+            ? subcategoryProp.charAt(0).toUpperCase() + subcategoryProp.slice(1)
+            : "";
+
+        const formattedSubsubcategory =
+          subsubcategory && subsubcategory.length > 0
+            ? subsubcategory.charAt(0).toUpperCase() + subsubcategory.slice(1)
+            : "";
+        const queryParams = new URLSearchParams();
+        if (formattedCategory)
+          queryParams.append("category", formattedCategory);
+        if (formattedSubcategory)
+          queryParams.append("subcategory", formattedSubcategory);
+        if (formattedSubsubcategory)
+          queryParams.append("subsubcategory", formattedSubsubcategory);
 
         const response = await axios.get(
-          `${API_URL}/api/products?category=${formattedCategory}`
+          `${API_URL}/api/products?${queryParams.toString()}`
         );
-
-        console.log("Fetched Products:", response.data.products); // ✅ Debugging Line
         setProducts(response.data.products);
       } catch (err) {
         console.error("Failed to fetch products:", err);
@@ -34,7 +49,7 @@ const ProductGrid = ({ categoryType }) => {
     };
 
     fetchProducts();
-  }, [categoryType]);
+  }, [categoryType, subcategoryProp, subsubcategory]);
 
   return (
     <div className="bg-gray-100 py-12 mt-4">

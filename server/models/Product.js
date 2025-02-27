@@ -7,62 +7,61 @@ const productSchema = new mongoose.Schema(
     image: { type: String, required: true },
     description: { type: String },
     stock: { type: Number, default: 1 },
-
-    // ✅ Categories with hierarchical subcategories
     category: {
       type: String,
       enum: ["Clothing", "PetSupplies"],
       required: true,
     },
-
     subcategory: {
       type: String,
-      enum: ["Men", "Women", "Baby", "Teens", "Dog", "Cat", "Bird"],
       required: true,
+      enum: function () {
+        return this.category === "Clothing"
+          ? ["Men", "Women", "Baby", "Teens"]
+          : ["Dog", "Cat", "Bird"];
+      },
     },
 
     subsubcategory: {
       type: String,
-      enum: [
-        // ✅ Clothing → Men
-        "Shirts",
-        "T-Shirts",
-        "Pants",
-        "Trousers",
-        "Coats",
-        "Blazers",
-        // ✅ Clothing → Women
-        "Dresses",
-        "Tops",
-        "T-Shirts",
-        "Bottoms",
-        "Sleepwear",
-        "WinterWear",
-        // ✅ Clothing → Baby
-        "Boy",
-        "Girl",
-        "Unisex",
-        // ✅ Clothing → Teens
-        "Boy",
-        "Girl",
-        // ✅ Pet Supplies → Dog, Cat, Bird
-        "Food",
-        "Toys",
-      ],
       required: false,
+      enum: function () {
+        if (this.subcategory === "Men")
+          return [
+            "Shirts",
+            "T-Shirts",
+            "Pants",
+            "Trousers",
+            "Coats",
+            "Blazers",
+          ];
+        if (this.subcategory === "Women")
+          return [
+            "Dresses",
+            "Tops",
+            "T-Shirts",
+            "Bottoms",
+            "Sleepwear",
+            "WinterWear",
+          ];
+        if (this.subcategory === "Baby") return ["Boy", "Girl", "Unisex"];
+        if (this.subcategory === "Teens") return ["Boy", "Girl"];
+        if (["Dog", "Cat", "Bird"].includes(this.subcategory))
+          return ["Food", "Toys"];
+        return [];
+      },
     },
 
-    // ✅ Clothing-specific fields (only applicable if `category` is "Clothing")
     size: {
-      type: [String], // ✅ Array of available sizes
+      type: [String],
       enum: ["XS", "S", "M", "L", "XL", "XXL"],
       required: function () {
         return this.category === "Clothing";
-      }, // ✅ Required only for Clothing
+      },
     },
 
     color: {
-      type: [String], // ✅ Array for multiple color options
+      type: [String],
       required: function () {
         return this.category === "Clothing";
       },

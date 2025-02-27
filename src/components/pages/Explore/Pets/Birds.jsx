@@ -5,7 +5,7 @@ import CategoryList from "../../../CategoryList";
 import ProductGrid from "../../../ProductGrid";
 
 const Birds = () => {
-  const { subcategory } = useParams();
+  const { subsubcategory } = useParams();
 
   return (
     <div className="container mx-auto px-4">
@@ -14,7 +14,11 @@ const Birds = () => {
         subtitle="Find everything your feathered friend needs!"
       />
       <CategoryList categoryType="birds" />
-      <ProductGrid categoryType={subcategory ? subcategory : "birds"} />
+      <ProductGrid
+        categoryType="PetSupplies"
+        subcategoryProp="Bird"
+        subsubcategory={subsubcategory}
+      />
     </div>
   );
 };

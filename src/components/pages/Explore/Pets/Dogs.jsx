@@ -5,18 +5,20 @@ import CategoryList from "../../../CategoryList";
 import ProductGrid from "../../../ProductGrid";
 
 const Dogs = () => {
-  const { subcategory } = useParams();
+  const { subsubcategory } = useParams();
 
   return (
     <div className="container mx-auto px-4">
       <HeroSection
         title="Dog Supplies"
-        subtitle="Find everything your furry friend needs!"
+        subtitle="Find everything your dog needs!"
       />
-
       <CategoryList categoryType="dogs" />
-
-      <ProductGrid categoryType={subcategory ? subcategory : "dogs"} />
+      <ProductGrid
+        categoryType="PetSupplies"
+        subcategoryProp="Dog"
+        subsubcategory={subsubcategory}
+      />
     </div>
   );
 };

@@ -5,27 +5,22 @@ exports.getAllProducts = async (req, res) => {
     let query = {};
 
     if (req.query.category) {
-      query.category = { $regex: new RegExp(`^${req.query.category}$`, "i") }; // ✅ Case-insensitive match
+      query.category = req.query.category;
     }
     if (req.query.subcategory) {
-      query.subcategory = {
-        $regex: new RegExp(`^${req.query.subcategory}$`, "i"),
-      };
+      query.subcategory = req.query.subcategory;
     }
     if (req.query.subsubcategory) {
-      query.subsubcategory = {
-        $regex: new RegExp(`^${req.query.subsubcategory}$`, "i"),
-      };
+      query.subsubcategory = req.query.subsubcategory;
     }
     if (req.query.search) {
       query.name = { $regex: new RegExp(req.query.search, "i") };
     }
 
-    console.log("Product Query:", query); // ✅ Debugging Line
+    console.log("Backend Filtering Criteria:", query);
 
     const products = await Product.find(query);
-
-    console.log("Found Products:", products); // ✅ Debugging Line
+    console.log("Found Products:", products);
 
     res.status(200).json({ success: true, products });
   } catch (error) {

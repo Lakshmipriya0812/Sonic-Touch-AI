@@ -5,7 +5,7 @@ import CategoryList from "../../../CategoryList";
 import ProductGrid from "../../../ProductGrid";
 
 const Women = () => {
-  const { subcategory } = useParams();
+  const { subcategory, subsubcategory } = useParams();
 
   return (
     <div className="container mx-auto px-4">
@@ -13,8 +13,12 @@ const Women = () => {
         title="Women's Clothing"
         subtitle="Discover the latest trends in Women's fashion!"
       />
-      <CategoryList categoryType="women" />{" "}
-      <ProductGrid categoryType={subcategory ? subcategory : "women"} />
+      <CategoryList categoryType="women" />
+      <ProductGrid
+        categoryType="Clothing"
+        subcategoryProp={subcategory || "Women"}
+        subsubcategory={subsubcategory}
+      />
     </div>
   );
 };
