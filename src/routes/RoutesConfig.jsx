@@ -18,6 +18,8 @@ import AdminDashboard from "../components/pages/admin/AdminDashboard";
 import AdminProductManagement from "../components/pages/admin/AdminProductManagement";
 import SearchResults from "../components/pages/SearchResults";
 import ProductDetails from "../components/pages/ProductDetails";
+import Cart from "../components/pages/Cart";
+
 const RoutesConfig = ({ setIsAuthenticated }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const isAdmin = user?.isAdmin;
@@ -65,6 +67,7 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       />
       <Route path="/search" element={<SearchResults />} />
       <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="/cart" element={<Cart />} />
     </Routes>
   );
 };

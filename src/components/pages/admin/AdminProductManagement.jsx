@@ -10,9 +10,14 @@ const AdminProductManagement = () => {
     name: "",
     price: "",
     category: "",
+    subcategory: "",
+    subsubcategory: "",
     image: "",
     description: "",
     stock: "",
+    size: [],
+    color: [],
+    material: "",
   });
 
   useEffect(() => {
@@ -53,9 +58,14 @@ const AdminProductManagement = () => {
         name: "",
         price: "",
         category: "",
+        subcategory: "",
+        subsubcategory: "",
         image: "",
         description: "",
         stock: "",
+        size: [],
+        color: [],
+        material: "",
       });
     } catch (error) {
       console.error(
@@ -65,60 +75,12 @@ const AdminProductManagement = () => {
     }
   };
 
-  const handleDeleteProduct = async (id) => {
-    try {
-      const token = localStorage.getItem("token");
-
-      await axios.delete(`${API_URL}/api/products/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setProducts(products.filter((product) => product._id !== id));
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  };
-  const handleEditProduct = (product) => {
-    setEditingProduct(product._id);
-    setNewProduct(product);
-  };
-
-  const handleUpdateProduct = async () => {
-    if (!editingProduct) return;
-
-    try {
-      const token = localStorage.getItem("token");
-
-      const response = await axios.put(
-        `${API_URL}/api/products/${editingProduct}`,
-        newProduct,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      setProducts(
-        products.map((p) =>
-          p._id === editingProduct ? response.data.product : p
-        )
-      );
-      setEditingProduct(null);
-      setNewProduct({
-        name: "",
-        price: "",
-        category: "",
-        image: "",
-        description: "",
-        stock: "",
-      });
-    } catch (error) {
-      console.error("Error updating product:", error);
-    }
-  };
-
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Admin - Product Management
       </h1>
+
       <div className="mb-6 border p-6 rounded-md shadow-sm">
         <h2 className="text-xl font-semibold mb-4 text-gray-700">
           {editingProduct ? "Edit Product" : "Add New Product"}
@@ -127,133 +89,65 @@ const AdminProductManagement = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-600">
-              Product Name
+              Size (comma-separated)
             </label>
             <input
               type="text"
-              placeholder="Enter product name"
-              value={newProduct.name}
+              placeholder="Enter sizes (e.g. S,M,L)"
+              value={newProduct.size.join(",")}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, name: e.target.value })
+                setNewProduct({
+                  ...newProduct,
+                  size: e.target.value.split(","),
+                })
               }
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+              className="w-full p-2 border rounded-md"
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-600">
-              Price ($)
-            </label>
-            <input
-              type="number"
-              placeholder="Enter price"
-              value={newProduct.price}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, price: e.target.value })
-              }
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-600">
-              Category
+              Color (comma-separated)
             </label>
             <input
               type="text"
-              placeholder="Enter category"
-              value={newProduct.category}
+              placeholder="Enter colors (e.g. Red,Blue)"
+              value={newProduct.color.join(",")}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, category: e.target.value })
+                setNewProduct({
+                  ...newProduct,
+                  color: e.target.value.split(","),
+                })
               }
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+              className="w-full p-2 border rounded-md"
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-600">
-              Image URL
+              Material
             </label>
             <input
               type="text"
-              placeholder="Enter image URL"
-              value={newProduct.image}
+              placeholder="Enter material (e.g. Cotton, Polyester)"
+              value={newProduct.material}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, image: e.target.value })
+                setNewProduct({ ...newProduct, material: e.target.value })
               }
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
-            />
-          </div>
-          <div className="col-span-2">
-            <label className="block text-sm font-medium text-gray-600">
-              Description
-            </label>
-            <textarea
-              placeholder="Enter product description"
-              value={newProduct.description}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, description: e.target.value })
-              }
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-600">
-              Stock Quantity
-            </label>
-            <input
-              type="number"
-              placeholder="Enter stock quantity"
-              value={newProduct.stock}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, stock: e.target.value })
-              }
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+              className="w-full p-2 border rounded-md"
             />
           </div>
         </div>
+
         <div className="flex justify-end mt-4">
-          {editingProduct ? (
-            <button
-              onClick={handleUpdateProduct}
-              className="bg-yellow-500 text-white px-5 py-2 rounded-md hover:bg-yellow-600 transition"
-            >
-              Update Product
-            </button>
-          ) : (
-            <button
-              onClick={handleAddProduct}
-              className="bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 transition"
-            >
-              Add Product
-            </button>
-          )}
+          <button
+            onClick={handleAddProduct}
+            className="bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 transition"
+          >
+            {editingProduct ? "Update Product" : "Add Product"}
+          </button>
         </div>
       </div>
-      <h2 className="text-xl font-semibold mt-6">Existing Products</h2>
-      <ul>
-        {products.map((product) => (
-          <li
-            key={product._id}
-            className="p-2 border-b flex justify-between items-center"
-          >
-            <span>
-              {product.name} - ${product.price}
-            </span>
-            <div>
-              <button
-                onClick={() => handleEditProduct(product)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDeleteProduct(product._id)}
-                className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-600 transition"
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

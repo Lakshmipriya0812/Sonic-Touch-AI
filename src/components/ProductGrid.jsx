@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductGrid = ({ categoryType }) => {
@@ -13,11 +14,19 @@ const ProductGrid = ({ categoryType }) => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+
+        // ✅ Format categoryType to match database case
+        const formattedCategory =
+          categoryType.charAt(0).toUpperCase() + categoryType.slice(1);
+
         const response = await axios.get(
-          `${API_URL}/api/products?category=${categoryType}`
+          `${API_URL}/api/products?category=${formattedCategory}`
         );
+
+        console.log("Fetched Products:", response.data.products); // ✅ Debugging Line
         setProducts(response.data.products);
       } catch (err) {
+        console.error("Failed to fetch products:", err);
         setError("Failed to fetch products.");
       } finally {
         setLoading(false);

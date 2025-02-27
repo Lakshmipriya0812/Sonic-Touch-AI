@@ -3,23 +3,30 @@ const Product = require("../models/Product");
 exports.getAllProducts = async (req, res) => {
   try {
     let query = {};
+
     if (req.query.category) {
-      query.category = req.query.category;
+      query.category = { $regex: new RegExp(`^${req.query.category}$`, "i") }; // ✅ Case-insensitive match
     }
     if (req.query.subcategory) {
-      query.subcategory = req.query.subcategory;
+      query.subcategory = {
+        $regex: new RegExp(`^${req.query.subcategory}$`, "i"),
+      };
+    }
+    if (req.query.subsubcategory) {
+      query.subsubcategory = {
+        $regex: new RegExp(`^${req.query.subsubcategory}$`, "i"),
+      };
     }
     if (req.query.search) {
       query.name = { $regex: new RegExp(req.query.search, "i") };
     }
 
-    let sortOption = {};
-    if (req.query.sort === "price_asc") {
-      sortOption.price = 1;
-    } else if (req.query.sort === "price_desc") {
-      sortOption.price = -1;
-    }
-    const products = await Product.find(query).sort(sortOption);
+    console.log("Product Query:", query); // ✅ Debugging Line
+
+    const products = await Product.find(query);
+
+    console.log("Found Products:", products); // ✅ Debugging Line
+
     res.status(200).json({ success: true, products });
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -30,10 +37,11 @@ exports.getAllProducts = async (req, res) => {
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product)
+    if (!product) {
       return res
         .status(404)
         .json({ success: false, message: "Product not found" });
+    }
 
     res.status(200).json({ success: true, product });
   } catch (error) {
@@ -43,12 +51,33 @@ exports.getProductById = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   try {
-    const { name, price, image, category, description, stock } = req.body;
+    const {
+      name,
+      price,
+      image,
+      category,
+      subcategory,
+      subsubcategory,
+      description,
+      stock,
+      size,
+      color,
+      material,
+    } = req.body;
 
-    if (!name || !price || !image || !category || !description || !stock) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All fields are required" });
+    if (
+      !name ||
+      !price ||
+      !image ||
+      !category ||
+      !subcategory ||
+      !description ||
+      !stock
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "All required fields must be provided",
+      });
     }
 
     const newProduct = new Product({
@@ -56,11 +85,16 @@ exports.createProduct = async (req, res) => {
       price,
       image,
       category,
+      subcategory,
+      subsubcategory,
       description,
       stock,
+      size: category === "Clothing" ? size || [] : undefined,
+      color: category === "Clothing" ? color || [] : undefined,
+      material: category === "Clothing" ? material || null : undefined,
     });
-    await newProduct.save();
 
+    await newProduct.save();
     res.status(201).json({ success: true, product: newProduct });
   } catch (error) {
     console.error("Error creating product:", error);
@@ -76,10 +110,11 @@ exports.updateProduct = async (req, res) => {
       { new: true }
     );
 
-    if (!updatedProduct)
+    if (!updatedProduct) {
       return res
         .status(404)
         .json({ success: false, message: "Product not found" });
+    }
 
     res.status(200).json({ success: true, product: updatedProduct });
   } catch (error) {
