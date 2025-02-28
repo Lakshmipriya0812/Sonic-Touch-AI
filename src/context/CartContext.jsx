@@ -6,28 +6,34 @@ export const CartContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
 
 const CartProvider = ({ children, navigate }) => {
-  // Now we can access navigate here
   const [cart, setCart] = useState([]);
   const token = localStorage.getItem("token");
   const [isModalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
   useEffect(() => {
-    if (!token) {
+    if (token) {
+      fetchCart();
+    } else {
       const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
       setCart(localCart);
-    } else {
-      fetchCart();
     }
   }, [token]);
 
   const fetchCart = async () => {
+    if (!token) {
+      return;
+    }
+
     try {
       const response = await axios.get(`${API_URL}/api/cart`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       setCart(response.data.items);
     } catch (error) {
-      console.error("Error fetching cart:", error);
+      console.error("Error fetching cart:", error.response?.data || error);
     }
   };
 
@@ -58,7 +64,7 @@ const CartProvider = ({ children, navigate }) => {
 
       localStorage.setItem("guestCart", JSON.stringify(localCart));
       setCart(localCart);
-      setModalOpen(true);
+      openModal();
     } else {
       try {
         const response = await axios.post(
@@ -72,7 +78,7 @@ const CartProvider = ({ children, navigate }) => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setCart(response.data.cart.items);
-        setModalOpen(true);
+        openModal();
       } catch (error) {
         console.error("Error adding to cart:", error);
       }
@@ -121,62 +127,40 @@ const CartProvider = ({ children, navigate }) => {
       return updatedCart;
     });
   };
+  const mergeGuestCart = async () => {
+    if (!token) return;
 
-  const closeModal = () => {
-    setModalOpen(false);
+    const guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+    if (guestCart.length === 0) return;
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/cart/merge`,
+        { items: guestCart },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setCart(response.data.cart.items);
+      localStorage.removeItem("guestCart");
+    } catch (error) {
+      console.error(" Error merging guest cart:", error);
+    }
   };
 
   return (
     <CartContext.Provider
       value={{
         cart,
+        fetchCart,
         addToCart,
         removeFromCart,
         incrementQuantity,
         decrementQuantity,
+        isModalOpen,
         closeModal,
+        mergeGuestCart,
       }}
     >
       {children}
-
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center relative">
-            <h2 className="text-xl font-bold mb-4">✅ Added to Cart!</h2>
-            <p className="text-gray-600">
-              Your item has been added to the cart.
-            </p>
-
-            <div className="flex justify-center gap-4 mt-4">
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-                onClick={() => {
-                  navigate("/cart");
-                  closeModal();
-                }}
-              >
-                🛒 Go to Cart
-              </button>
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
-                onClick={() => {
-                  navigate("/checkout");
-                  closeModal();
-                }}
-              >
-                ✅ Proceed to Checkout
-              </button>
-            </div>
-
-            <button
-              className="absolute top-3 right-4 text-gray-600 hover:text-gray-900 text-xl"
-              onClick={closeModal}
-            >
-              ❌
-            </button>
-          </div>
-        </div>
-      )}
     </CartContext.Provider>
   );
 };

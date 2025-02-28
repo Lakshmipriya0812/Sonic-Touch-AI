@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { CartContext } from "../../context/CartContext";
 
 const HeaderBeforeLogin = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -8,7 +9,8 @@ const HeaderBeforeLogin = () => {
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const { cart } = useContext(CartContext);
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
   useEffect(() => {
     setIsDropdownOpen(false);
   }, [location.pathname]);
@@ -140,7 +142,11 @@ const HeaderBeforeLogin = () => {
             >
               <div className="relative p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300 transition duration-300">
                 <FaShoppingCart className="text-gray-700 text-2xl" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5"></span>
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
+                    {cartCount}
+                  </span>
+                )}
               </div>
             </Link>
 

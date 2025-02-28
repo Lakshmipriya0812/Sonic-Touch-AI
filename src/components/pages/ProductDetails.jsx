@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { CartContext } from "../../context/CartContext"; // ✅ Import Cart Context
+import { CartContext } from "../../context/CartContext";
+import CartModal from "../CartModal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useContext(CartContext); // ✅ Get `addToCart` from context
+  const { addToCart, isModalOpen, closeModal } = useContext(CartContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -62,14 +63,12 @@ const ProductDetail = () => {
             {product.stock > 0 ? `${product.stock} available` : "Out of stock"}
           </p>
 
-          {/* ✅ Display Material (if applicable) */}
           {product.material && (
             <p className="text-gray-500 mt-2">
               <strong>Material:</strong> {product.material}
             </p>
           )}
 
-          {/* ✅ Display Size Options (if applicable) */}
           {product.size && product.size.length > 0 && (
             <div className="mt-4">
               <label className="block text-gray-600 font-semibold">
@@ -90,7 +89,6 @@ const ProductDetail = () => {
             </div>
           )}
 
-          {/* ✅ Display Color Options (if applicable) */}
           {product.color && product.color.length > 0 && (
             <div className="mt-4">
               <label className="block text-gray-600 font-semibold">
@@ -111,7 +109,6 @@ const ProductDetail = () => {
             </div>
           )}
 
-          {/* ✅ Add to Cart Button */}
           <button
             className="bg-blue-500 text-white px-6 py-3 rounded-md mt-4 hover:bg-blue-600 transition"
             onClick={handleAddToCart}
@@ -132,6 +129,7 @@ const ProductDetail = () => {
           </button>
         </div>
       )}
+      <CartModal isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
+import axios from "axios";
 
 export const signupUser = async (name, email, password) => {
   try {
@@ -27,7 +28,6 @@ export const loginUser = async (email, password) => {
 
     if (data.token) {
       localStorage.setItem("token", data.token);
-      // Merge guest cart into user cart
       mergeGuestCart();
     }
 
@@ -38,19 +38,23 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// ✅ Merge Guest Cart with User Cart
 const mergeGuestCart = async () => {
   const guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
   if (guestCart.length === 0) return;
 
   const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found. Can't merge guest cart.");
+    return;
+  }
+
   try {
     await axios.post(
       `${API_URL}/api/cart/merge`,
       { items: guestCart },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    localStorage.removeItem("guestCart"); // Clear guest cart after merging
+    localStorage.removeItem("guestCart");
   } catch (error) {
     console.error("Error merging guest cart:", error);
   }

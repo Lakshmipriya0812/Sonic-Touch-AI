@@ -37,7 +37,6 @@ const Cart = () => {
                   <p className="text-gray-600">
                     ${item.price ? item.price.toFixed(2) : "0.00"}
                   </p>
-                  {/* Display quantity */}
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"

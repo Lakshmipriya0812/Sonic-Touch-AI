@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
+import { CartContext } from "../../context/CartContext";
 
 const HeaderAfterLogin = ({ setIsAuthenticated }) => {
   const [user, setUser] = useState(null);
@@ -8,6 +9,8 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { cart } = useContext(CartContext);
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -150,9 +153,16 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
             </Link>
             <Link
               to="/cart"
-              className="text-gray-700 text-xl hover:text-gray-900"
+              className="relative text-gray-500 text-xl hover:text-gray-900 transition duration-300"
             >
-              <FaShoppingCart />
+              <div className="relative p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300 transition duration-300">
+                <FaShoppingCart className="text-gray-700 text-2xl" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
             </Link>
             <div className="relative group">
               <button className="text-gray-700 text-xl focus:outline-none">
