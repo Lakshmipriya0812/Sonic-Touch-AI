@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser } from "../../api/auth";
 
 const Login = ({ setIsAuthenticated }) => {
@@ -7,7 +7,7 @@ const Login = ({ setIsAuthenticated }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -19,7 +19,11 @@ const Login = ({ setIsAuthenticated }) => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
         setIsAuthenticated(true);
-        navigate("/");
+        if (location.state?.from === "checkout") {
+          navigate("/checkout");
+        } else {
+          navigate("/");
+        }
       } else {
         setError(data.message || "Invalid email or password.");
       }
@@ -35,6 +39,10 @@ const Login = ({ setIsAuthenticated }) => {
         <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">
           Welcome Back
         </h3>
+
+        {location.state?.message && (
+          <p className="text-red-500 text-center">{location.state.message}</p>
+        )}
 
         {error && <p className="text-red-500 text-center">{error}</p>}
 
@@ -58,16 +66,7 @@ const Login = ({ setIsAuthenticated }) => {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             autoComplete="current-password"
           />
-          {/* 
-          <div className="text-right">
-            <a
-              href="/forgot-password"
-              className="text-blue-600 text-sm hover:underline"
-            >
-              Forgot Password?
-            </a>
-          </div>
-*/}
+
           <button
             type="submit"
             className="w-full bg-gray-700 text-white py-3 rounded-md font-semibold hover:bg-gray-900 transition"

@@ -6,7 +6,7 @@ const {
   mergeGuestCart,
 } = require("../controllers/cartController");
 
-const protect = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 

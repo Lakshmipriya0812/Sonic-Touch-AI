@@ -150,6 +150,7 @@ const CartProvider = ({ children, navigate }) => {
     <CartContext.Provider
       value={{
         cart,
+        setCart,
         fetchCart,
         addToCart,
         removeFromCart,

@@ -1,14 +1,24 @@
 import React, { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cart, removeFromCart, incrementQuantity, decrementQuantity } =
     useContext(CartContext);
-
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   if (!cart) {
     return <div>Loading...</div>;
   }
-
+  const handleProceedToCheckout = () => {
+    if (!token) {
+      navigate("/login", {
+        state: { message: "Please log in to proceed to checkout." },
+      });
+      return;
+    }
+    navigate("/checkout");
+  };
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-3xl font-bold mb-4 text-gray-900">
@@ -67,7 +77,10 @@ const Cart = () => {
 
       {cart.length > 0 && (
         <div className="mt-6 text-center">
-          <button className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition">
+          <button
+            onClick={handleProceedToCheckout}
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+          >
             Proceed to Checkout
           </button>
         </div>

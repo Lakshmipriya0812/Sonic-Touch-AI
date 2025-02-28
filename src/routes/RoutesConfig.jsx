@@ -20,10 +20,21 @@ import SearchResults from "../components/pages/SearchResults";
 import ProductDetails from "../components/pages/ProductDetails";
 import Cart from "../components/pages/Cart";
 import SubsubcategoryPage from "../components/pages/Explore/SubsubcategoryPage";
+import OrderSummary from "../components/pages/OrderSummary";
+import Checkout from "../components/pages/Checkout";
+import Orders from "../components/pages/Orders";
 
 const RoutesConfig = ({ setIsAuthenticated }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const isAdmin = user?.isAdmin;
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || null;
+    } catch (error) {
+      console.error("Error parsing user from localStorage:", error);
+      return null;
+    }
+  });
+
+  const isAdmin = user?.isAdmin || false;
 
   return (
     <Routes>
@@ -38,6 +49,7 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
+
       <Route path="/clothing" element={<Clothing />} />
       <Route path="/clothing/men" element={<Men />} />
       <Route path="/clothing/women" element={<Women />} />
@@ -51,6 +63,13 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
         element={<SubsubcategoryPage />}
       />
 
+      <Route path="/search" element={<SearchResults />} />
+      <Route path="/product/:id" element={<ProductDetails />} />
+
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/order-summary" element={<OrderSummary />} />
+      <Route path="/orders" element={<Orders />} />
       <Route
         path="/admin/login"
         element={<AdminLogin setIsAuthenticated={setIsAuthenticated} />}
@@ -71,9 +90,6 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
           isAdmin ? <AdminProductManagement /> : <Navigate to="/admin/login" />
         }
       />
-      <Route path="/search" element={<SearchResults />} />
-      <Route path="/product/:id" element={<ProductDetails />} />
-      <Route path="/cart" element={<Cart />} />
     </Routes>
   );
 };

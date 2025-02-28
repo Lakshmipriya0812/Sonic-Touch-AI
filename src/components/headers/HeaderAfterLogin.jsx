@@ -34,6 +34,7 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
     localStorage.removeItem("user");
     setUser(null);
     setIsAuthenticated(false);
+    navigate("/clothing");
   };
 
   const handleSearch = (e) => {

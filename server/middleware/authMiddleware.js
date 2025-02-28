@@ -22,11 +22,16 @@ const protect = async (req, res, next) => {
       console.error("Error in authMiddleware:", error);
       return res.status(401).json({ message: "Not authorized, token failed" });
     }
-  }
-
-  if (!token) {
+  } else {
     return res.status(401).json({ message: "Not authorized, no token" });
   }
 };
 
-module.exports = protect;
+const adminProtect = (req, res, next) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ message: "Access denied. Admins only." });
+  }
+  next();
+};
+
+module.exports = { protect, adminProtect };
