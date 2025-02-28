@@ -33,42 +33,6 @@ This project is **developed on Ubuntu (Linux)** and has not yet been set up or v
     - Environment variables may need to be set manually.
     - MongoDB may require additional setup if running locally.
 
-## 📦 Installed Dependencies
-
-To check installed dependencies, run:
-
-```sh
-npm list --depth=0
-```
-
-### Dependencies
-
-```
-axios
-react
-react-dom
-react-icons
-react-router-dom
-```
-
-### Dev Dependencies
-
-```
-@eslint/js
-@types/react
-@types/react-dom
-@vitejs/plugin-react
-autoprefixer
-eslint
-eslint-plugin-react
-eslint-plugin-react-hooks
-eslint-plugin-react-refresh
-globals
-postcss
-tailwindcss
-vite
-```
-
 ## 🔧 Setup Instructions
 
 1. **Clone the Repository**
@@ -110,6 +74,42 @@ vite
      ```
    - If port `5000` is not assigned automatically, manually specify the port in `server.js`.
 
+## 📦 Installed Dependencies
+
+To check installed dependencies, run:
+
+```sh
+npm list --depth=0
+```
+
+### Dependencies
+
+```
+axios
+react
+react-dom
+react-icons
+react-router-dom
+```
+
+### Dev Dependencies
+
+```
+@eslint/js
+@types/react
+@types/react-dom
+@vitejs/plugin-react
+autoprefixer
+eslint
+eslint-plugin-react
+eslint-plugin-react-hooks
+eslint-plugin-react-refresh
+globals
+postcss
+tailwindcss
+vite
+```
+
 ## 📂 Project Structure
 
 ```
@@ -142,6 +142,8 @@ vite
 ├── package.json
 ├── postcss.config.js
 ├── README.md
+├── tailwind.config.js
+├── vite.config.js
 
 ```
 

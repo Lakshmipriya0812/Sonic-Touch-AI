@@ -5,20 +5,19 @@ import HeaderBeforeLogin from "./components/headers/HeaderBeforeLogin";
 import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
 import Footer from "./components/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
-import CartProvider from "./context/CartContext"; // Import CartProvider
+import CartProvider from "./context/CartContext";
 
 function App() {
   return (
     <Router>
       <AppWithCartProvider />{" "}
-      {/* Ensure AppWithCartProvider is inside Router */}
     </Router>
   );
 }
 
 function AppWithCartProvider() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate(); // Initialize the navigate hook here
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedIn = localStorage.getItem("token") !== null;
@@ -28,7 +27,6 @@ function AppWithCartProvider() {
   return (
     <CartProvider navigate={navigate}>
       {" "}
-      {/* Pass navigate as a prop */}
       <div className="min-h-screen flex flex-col">
         {isAuthenticated ? (
           <HeaderAfterLogin setIsAuthenticated={setIsAuthenticated} />

@@ -4,15 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  const isAdmin = user?.isAdmin;
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("isAdmin");
-    navigate("/login");
-    window.location.reload();
-  };
 
   return (
     <footer className="bg-gray-100 text-gray-800 py-8 mt-4 w-full font-lato border-t border-gray-300">
