@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# 
+
 def initialize_llm(llm_model_path, max_new_tokens=768, max_length=4096):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -42,7 +42,7 @@ def create_prompt_template(web_json,question):
 
     Command: {question}
 
-    Response: Only provide the URL of the webpage that best matches the command.
+    Response: Only provide the URL of the webpage that best matches the command. Give us the page we need to navigate.
     """
     return prompt_template
 
