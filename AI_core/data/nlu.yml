@@ -1,91 +1,196 @@
 version: "3.1"
 
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - good morning
+      - good evening
 
-- intent: goodbye
-  examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you later
+      - talk to you soon
 
-- intent: affirm
-  examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+  - intent: inquire_products
+    examples: |
+      - What products do you have?
+      - Can you show me some items?
+      - What do you sell?
+      - I want to browse products
+      - Tell me about your store
 
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+  - intent: navigate_home
+    examples: |
+      - Go to the home page
+      - Take me home
+      - Show me the homepage
+      - Navigate to home
 
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+  - intent: navigate_about
+    examples: |
+      - What is this website about?
+      - Tell me about your store
+      - I want to know more about your business
+      - Navigate to the about page
 
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+  - intent: navigate_contact
+    examples: |
+      - How can I contact you?
+      - Show me the contact details
+      - I need customer support
+      - Navigate to the contact page
 
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+  - intent: navigate_login
+    examples: |
+      - I want to log in
+      - Take me to the login page
+      - Where can I sign in?
+      - Navigate to login
+
+  - intent: navigate_signup
+    examples: |
+      - I want to create an account
+      - Take me to the signup page
+      - Register me
+      - Navigate to signup
+
+  - intent: navigate_clothing
+    examples: |
+      - Show me clothing options
+      - I want to see clothing items
+      - Navigate to the clothing section
+      - Go to the clothing page
+
+  - intent: navigate_men_clothing
+    examples: |
+      - Show me men's clothing
+      - I want to see clothes for men
+      - Take me to the men's section
+      - Navigate to men's clothing
+
+  - intent: navigate_women_clothing
+    examples: |
+      - Show me women's clothing
+      - I want to see clothes for women
+      - Take me to the women's section
+      - Navigate to women's clothing
+
+  - intent: navigate_baby_clothing
+    examples: |
+      - Show me baby clothes
+      - I need clothes for my baby
+      - Take me to baby clothing
+      - Navigate to baby section
+
+  - intent: navigate_pets
+    examples: |
+      - Show me pet supplies
+      - Take me to the pet store
+      - I need pet products
+      - Navigate to pet section
+
+  - intent: navigate_dogs
+    examples: |
+      - Show me dog products
+      - I need food for my dog
+      - Take me to the dog supplies
+      - Navigate to dog products
+
+  - intent: navigate_cats
+    examples: |
+      - Show me cat products
+      - I need food for my cat
+      - Take me to the cat supplies
+      - Navigate to cat products
+
+  - intent: navigate_birds
+    examples: |
+      - Show me bird products
+      - I need food for my bird
+      - Take me to the bird supplies
+      - Navigate to bird products
+
+  - intent: navigate_cart
+    examples: |
+      - Show me my cart
+      - Take me to the cart
+      - Navigate to the shopping cart
+      - What do I have in my cart?
+
+  - intent: navigate_checkout
+    examples: |
+      - Proceed to checkout
+      - Take me to the checkout page
+      - I want to buy my items
+      - Navigate to payment section
+
+  - intent: navigate_orders
+    examples: |
+      - Show me my orders
+      - I want to see my order history
+      - Navigate to my past orders
+      - Where can I check my previous purchases?
+
+  - intent: navigate_admin_login
+    examples: |
+      - Take me to the admin login page
+      - How do I access the admin panel?
+      - I want to log in as admin
+      - Navigate to the admin login
+
+  - intent: navigate_admin_dashboard
+    examples: |
+      - Show me the admin dashboard
+      - Take me to the admin panel
+      - I need access to the admin dashboard
+      - Navigate to admin homepage
+
+  - intent: navigate_admin_products
+    examples: |
+      - Show me product management
+      - I want to manage the products
+      - Navigate to admin product section
+      - Take me to admin product control
+
+  - intent: ask_last_page
+    examples: |
+      - What was the last page I visited?
+      - Where was I before this?
+      - Can you remind me where I was?
+      - What was my last visited page?
+
+  - intent: search_products
+    examples: |
+      - Show me [red](color) [shirts](subsubcategory)
+      - I want a [blue](color) [dress](subsubcategory)
+      - Find me [medium](size) [t-shirts](subsubcategory)
+      - Do you have [winterwear](subsubcategory) in [black](color)?
+      - I need a [large](size) [coat](subsubcategory)
+      - Show me [dog](subcategory) [food](subsubcategory)
+      - I want [toys](subsubcategory) for my [cat](subcategory)
+
+  - intent: recommend_products
+    examples: |
+      - Can you suggest something similar to [dresses](subsubcategory)?
+      - Recommend me some [dog food](subsubcategory)
+      - What else do you have in [coats](subsubcategory)?
+      - Show me related items to [pants](subsubcategory)
+      - What other colors are available for [t-shirts](subsubcategory)?
+
+  - intent: ask_product_info
+    examples: |
+      - What is the cheapest item?
+      - What is the most expensive product?
+      - Show me all the products.
+      - What is the price of [Amazon Essentials Jacket](product_name)?
+      - Compare the price of [DKNY Coat](product_name) and [Eddie Bauer Jacket](product_name).
+      - What material is [WULFUL Coat](product_name) made of?
+      - Which product is the best value for money?
+      - Give me details about [The Children's Place Jacket](product_name).
+      - What is the average price of all coats?
+      - Tell me about the most durable material.

@@ -1,13 +1,41 @@
 version: "3.1"
 
 rules:
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+  - rule: Say 'I am a bot' anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
 
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - rule: Greet the user on startup
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Handle navigation request
+    steps:
+      - intent: navigate_home
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/"
+
+  - rule: Handle navigation request for categories
+    steps:
+      - intent: navigate_clothing
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/clothing"
+
+  - rule: Fallback when AI doesn't understand
+    steps:
+      - intent: nlu_fallback
+      - action: action_default_fallback
+
+  - rule: Call LLM API for product questions
+    steps:
+      - intent: ask_product_info
+      - action: action_query_llm

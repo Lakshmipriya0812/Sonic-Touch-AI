@@ -6,6 +6,9 @@ import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
 import Footer from "./components/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
 import CartProvider from "./context/CartContext";
+import VoiceInput from "./components/VoiceInput";
+//import ChatbotComponent from "./components/ChatbotComponent";
+//import VoiceAssistant from "./components/VoiceAssistance";
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function AppWithCartProvider() {
           <HeaderBeforeLogin setIsAuthenticated={setIsAuthenticated} />
         )}
         <main>
+          {/* <VoiceAssistant />*/}
+          {/*<ChatbotComponent />*/}
+          <VoiceInput />
           <RoutesConfig setIsAuthenticated={setIsAuthenticated} />
         </main>
         <Footer />

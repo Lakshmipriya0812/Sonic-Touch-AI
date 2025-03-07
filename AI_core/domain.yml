@@ -3,32 +3,165 @@ version: "3.1"
 intents:
   - greet
   - goodbye
+  - inquire_products
   - affirm
   - deny
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - navigate_home
+  - navigate_about
+  - navigate_contact
+  - navigate_clothing
+  - navigate_men_clothing
+  - navigate_women_clothing
+  - navigate_baby_clothing
+  - navigate_pets
+  - navigate_dogs
+  - navigate_cats
+  - navigate_birds
+  - navigate_orders
+  - navigate_admin_login
+  - navigate_admin_dashboard
+  - navigate_admin_products
+  - navigate_cart
+  - ask_last_page
+  - navigate_checkout
+  - navigate_login
+  - navigate_signup
+  - search_products
+  - recommend_products
+  - navigate
+  - ask_product_info
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
+    - text: "Welcome to Sonic Touch E-commerce! 🛍 How can I assist you today?"
 
   utter_goodbye:
-  - text: "Bye"
+    - text: "Goodbye! Have a great day!"
 
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+    - text: "I am a bot, powered by Rasa."
+
+  utter_show_products:
+    - text: "We have a wide range of products, including clothing, pet supplies. What are you looking for?"
+
+  utter_navigate_home:
+    - text: "Navigating to Home..."
+
+  utter_navigate_about:
+    - text: "Navigating to About Page..."
+
+  utter_navigate_contact:
+    - text: "Taking you to the Contact Page..."
+
+  utter_navigate_clothing:
+    - text: "Redirecting to the Clothing section..."
+
+  utter_navigate_men_clothing:
+    - text: "Taking you to Men's Clothing..."
+
+  utter_navigate_women_clothing:
+    - text: "Here are all Women's Clothing items..."
+
+  utter_navigate_baby_clothing:
+    - text: "Showing Baby Clothing collection..."
+
+  utter_navigate_pets:
+    - text: "Navigating to the Pet Supplies section..."
+
+  utter_navigate_dogs:
+    - text: "Here are the available products for dogs..."
+
+  utter_navigate_cats:
+    - text: "Here are the available products for cats..."
+
+  utter_navigate_birds:
+    - text: "Here are the available products for birds..."
+
+  utter_navigate_orders:
+    - text: "Taking you to your Orders page..."
+
+  utter_navigate_admin_login:
+    - text: "Redirecting to Admin Login..."
+
+  utter_navigate_admin_dashboard:
+    - text: "Opening the Admin Dashboard..."
+
+  utter_navigate_admin_products:
+    - text: "Taking you to the Admin Product Management section..."
+
+  utter_navigate_cart:
+    - text: "Opening your Cart..."
+
+  utter_navigate_checkout:
+    - text: "Proceeding to Checkout..."
+
+  utter_navigate_login:
+    - text: "Taking you to the Login page..."
+
+  utter_navigate_signup:
+    - text: "Redirecting to the Signup page..."
+
+  utter_last_page:
+    - text: "I remember your last visited page. Would you like to go back?"
+
+  utter_product_not_found:
+    - text: "Sorry, I couldn't find any products matching your request."
+
+  utter_recommend_products:
+    - text: "Here are some similar products you might like: {recommendations}"
+
+  utter_navigate:
+    - text: "Navigating to your requested section..."
+
+  utter_fallback:
+    - text: "I'm sorry, I didn't understand that. Could you rephrase it?"
+
+  utter_help_prompt:
+    - text: "You can ask me to navigate to different sections, check products, or manage your orders. Try saying 'Show me men's clothing' or 'Go to my cart'."
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+slots:
+  last_page:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  subcategory:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: subcategory
+
+  subsubcategory:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: subsubcategory
+
+  color:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: color
+
+  size:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: size
+
+actions:
+  - action_navigate
+  - action_remember_last_page
+  - action_query_llm

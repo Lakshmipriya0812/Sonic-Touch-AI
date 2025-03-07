@@ -1,3 +1,7 @@
+// ✅ Import regenerator-runtime correctly (ES Module syntax)
+import "regenerator-runtime/runtime";
+
+// ✅ Continue with your existing imports
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";

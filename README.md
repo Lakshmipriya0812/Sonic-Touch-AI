@@ -110,43 +110,6 @@ tailwindcss
 vite
 ```
 
-## 📂 Project Structure
-
-```
-├── node_modules/
-├── public/
-├── server/ (Node.js Backend)
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── node_modules/
-│   ├── routes/
-│   ├── .env
-│   ├── createAdmin.js
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── server.js
-├── src/ (React Vite Frontend)
-│   ├── api/
-│   ├── components/
-│   ├── context/
-│   ├── routes/
-│   ├── App.jsx
-│   ├── index.css
-│   ├── main.jsx
-├── .env
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── README.md
-├── tailwind.config.js
-├── vite.config.js
-
-```
-
 ## 🛠 Additional Commands
 
 - **Run Frontend:** `npm run dev`
