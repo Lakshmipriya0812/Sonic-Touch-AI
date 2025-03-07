@@ -73,7 +73,7 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-52 object-cover rounded-md"
+                    className="w-full h-52 object-contain rounded-md"
                   />
                   <div className="mt-4 text-center">
                     <h5 className="font-semibold text-lg text-gray-900">
