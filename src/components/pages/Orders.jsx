@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { cancelOrder } from "../api/orderApi";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -43,6 +44,22 @@ const Orders = () => {
 
     fetchOrders();
   }, [navigate]);
+
+  // handle Cancel Order
+  const handleCancelOrder = async (orderId) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    if (!window.confirm("Are you sure you want to cancel this order?")) return;
+
+    try {
+      await cancelOrder(orderId, token);
+      alert("Order canceled successfully!");
+      setOrders(orders.filter(order => order._id !== orderId));
+    } catch (error) {
+      alert("Failed to cancel order. Try again later.");
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
@@ -93,6 +110,27 @@ const Orders = () => {
                 <p className="text-gray-500">No items found.</p>
               )}
             </ul>
+
+            {/* buttom */}
+            <div className="mt-4 flex space-x-4">
+              {/* cancel order */}
+              {order.status === "Pending" && (
+                <button
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+                  onClick={() => handleCancelOrder(order._id)}
+                >
+                  ❌ Cancel Order
+                </button>
+              )}
+
+              {/* order details */}
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                onClick={() => navigate(`/order/${order._id}`, { state: { orderDetails: order } })}
+              >
+                🔍 View Details
+              </button>
+            </div>
           </div>
         ))
       )}

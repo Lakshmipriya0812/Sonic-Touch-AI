@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import HeaderBeforeLogin from "./components/headers/HeaderBeforeLogin";
 import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
 import Footer from "./components/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
 import CartProvider from "./context/CartContext";
+import OrderDetails from "./pages/OrderDetails"; // 导入订单详情组件
 
 function App() {
   return (
     <Router>
-      <AppWithCartProvider />{" "}
+      <AppWithCartProvider />
     </Router>
   );
 }
@@ -26,7 +27,6 @@ function AppWithCartProvider() {
 
   return (
     <CartProvider navigate={navigate}>
-      {" "}
       <div className="min-h-screen flex flex-col">
         {isAuthenticated ? (
           <HeaderAfterLogin setIsAuthenticated={setIsAuthenticated} />
@@ -34,7 +34,10 @@ function AppWithCartProvider() {
           <HeaderBeforeLogin setIsAuthenticated={setIsAuthenticated} />
         )}
         <main>
-          <RoutesConfig setIsAuthenticated={setIsAuthenticated} />
+          <Routes>
+            <Route path="/*" element={<RoutesConfig setIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="/order/:orderId" element={<OrderDetails />} />
+          </Routes>
         </main>
         <Footer />
       </div>

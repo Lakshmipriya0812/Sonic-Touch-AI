@@ -89,6 +89,7 @@ const Footer = () => {
             </div>
           )}
 
+          {/* My Account Section (only if user is logged in) */}
           {user && (
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-2">

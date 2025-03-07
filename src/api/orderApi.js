@@ -27,3 +27,15 @@ export const getUserOrders = async (token) => {
     throw error;
   }
 };
+
+export const cancelOrder = async (orderId, token) => {
+  try {
+    const response = await axios.delete(`${API_URL}/api/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error canceling order:", error.response?.data || error);
+    throw error;
+  }
+};
