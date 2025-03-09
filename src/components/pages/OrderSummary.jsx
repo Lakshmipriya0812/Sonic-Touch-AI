@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { cancelOrder } from "../api/orderApi"; // 导入取消订单的 API
-
+import { cancelOrder } from "../api/orderApi"; 
 const OrderSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,7 +25,6 @@ const OrderSummary = () => {
     );
   }
 
-  // 处理取消订单
   const handleCancelOrder = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -36,7 +34,7 @@ const OrderSummary = () => {
     try {
       await cancelOrder(orderDetails._id, token);
       alert("Order canceled successfully!");
-      navigate("/orders"); // 取消成功后返回订单列表
+      navigate("/orders");
     } catch (error) {
       alert("Failed to cancel order. Try again later.");
     }
@@ -89,9 +87,7 @@ const OrderSummary = () => {
         <span className="text-green-600">${orderDetails.totalPrice.toFixed(2)}</span>
       </h3>
 
-      {/* 按钮区 */}
       <div className="mt-6 text-center flex justify-center space-x-4">
-        {/* 取消订单按钮（仅 Pending 状态可取消） */}
         {orderDetails.status === "Pending" && (
           <button
             className="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
@@ -101,7 +97,6 @@ const OrderSummary = () => {
           </button>
         )}
 
-        {/* 返回订单列表按钮 */}
         <button
           className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition"
           onClick={() => navigate("/orders")}
