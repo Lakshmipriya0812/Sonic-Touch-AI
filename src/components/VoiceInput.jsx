@@ -236,8 +236,149 @@
 
 // export default VoiceInput;
 
+// import React, { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom"; // ✅ Import navigation hook
+// import SpeechRecognition, {
+//   useSpeechRecognition,
+// } from "react-speech-recognition";
+
+// const VoiceInput = () => {
+//   const { transcript, resetTranscript, listening } = useSpeechRecognition();
+//   const [isSpeaking, setIsSpeaking] = useState(false);
+//   const [responseText, setResponseText] = useState("");
+//   const [conversationLog, setConversationLog] = useState([]);
+//   const navigate = useNavigate(); // ✅ React Router Navigation
+
+//   useEffect(() => {
+//     fetchWelcomeMessage(); // ✅ Fetch AI greeting on startup
+//   }, []);
+
+//   // ✅ Don't send empty messages at start
+//   useEffect(() => {
+//     if (
+//       !isSpeaking &&
+//       transcript.trim() !== "" &&
+//       !transcript.includes("Navigating to")
+//     ) {
+//       setConversationLog((prevLog) => [
+//         ...prevLog,
+//         { sender: "user", message: transcript.trim() },
+//       ]);
+//       sendMessageToRasa(transcript.trim());
+//       resetTranscript();
+//     }
+//   }, [transcript]);
+
+//   const fetchWelcomeMessage = async () => {
+//     try {
+//       const response = await fetch("http://localhost:5000/api/chat", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ message: "greet" }),
+//       });
+
+//       if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+//       const data = await response.json();
+//       handleRasaResponse(data.message);
+//     } catch (error) {
+//       console.error("🔴 Error fetching welcome message:", error);
+//     }
+//   };
+
+//   const sendMessageToRasa = async (message) => {
+//     try {
+//       const response = await fetch("http://localhost:5000/api/chat", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ message }),
+//       });
+
+//       if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+//       const data = await response.json();
+//       handleRasaResponse(data.message);
+//     } catch (error) {
+//       console.error("🔴 Error sending message to Rasa:", error);
+//     }
+//   };
+
+//   // ✅ Handle AI Response & Navigation
+//   const handleRasaResponse = (message) => {
+//     setResponseText(message);
+//     setConversationLog((prevLog) => [...prevLog, { sender: "AI", message }]);
+//     speak(message);
+
+//     // ✅ Prevent immediate navigation on startup
+//     if (
+//       message.toLowerCase().includes("navigating to") &&
+//       transcript.trim() !== ""
+//     ) {
+//       const route = extractRouteFromMessage(message);
+//       console.log("🔵 Navigating to:", route);
+//       navigate(route);
+//     }
+//   };
+
+//   // ✅ Extract Path from Rasa Message
+//   const extractRouteFromMessage = (message) => {
+//     const regex = /\/[a-zA-Z0-9-_/]+/; // Find "/clothing", "/electronics", etc.
+//     const match = message.match(regex);
+//     return match ? match[0] : "/"; // Default to home if no route found
+//   };
+
+//   const speak = (text) => {
+//     const speech = new SpeechSynthesisUtterance(text);
+//     speech.lang = "en-US";
+//     speech.rate = 0.85; // ✅ Slower speed for natural tone
+//     speech.pitch = 1;
+//     speech.volume = 1;
+
+//     // ✅ Pause listening while AI speaks
+//     SpeechRecognition.stopListening();
+
+//     speech.onstart = () => {
+//       setIsSpeaking(true);
+//     };
+
+//     speech.onend = () => {
+//       setIsSpeaking(false);
+
+//       // ✅ Add a slight delay before restarting listening
+//       setTimeout(() => {
+//         SpeechRecognition.startListening({
+//           continuous: true,
+//           language: "en-US",
+//         });
+//       }, 1000);
+//     };
+
+//     window.speechSynthesis.speak(speech);
+//   };
+
+//   return (
+//     <div className="fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-80">
+//       <h2 className="text-lg font-bold">🎙️ AI Assistant</h2>
+//       <p>{listening ? "Listening..." : "Click to start listening"}</p>
+//       <p className="text-sm text-gray-400">
+//         Try saying: "Hey Assistant, navigate to men clothing"
+//       </p>
+//       <div className="mt-4">
+//         <p className="text-lg">
+//           <span className="text-gray-400">You said: </span>
+//           {transcript || "..."}
+//         </p>
+//         <p className="mt-2 text-lg">
+//           <span className="text-gray-400">AI Response: </span>
+//           {responseText || "..."}
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default VoiceInput;
+
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import navigation hook
+import { useNavigate } from "react-router-dom";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -247,13 +388,13 @@ const VoiceInput = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [responseText, setResponseText] = useState("");
   const [conversationLog, setConversationLog] = useState([]);
-  const navigate = useNavigate(); // ✅ React Router Navigation
+  const [isMinimized, setIsMinimized] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchWelcomeMessage(); // ✅ Fetch AI greeting on startup
+    fetchWelcomeMessage();
   }, []);
 
-  // ✅ Don't send empty messages at start
   useEffect(() => {
     if (
       !isSpeaking &&
@@ -301,13 +442,11 @@ const VoiceInput = () => {
     }
   };
 
-  // ✅ Handle AI Response & Navigation
   const handleRasaResponse = (message) => {
     setResponseText(message);
     setConversationLog((prevLog) => [...prevLog, { sender: "AI", message }]);
     speak(message);
 
-    // ✅ Prevent immediate navigation on startup
     if (
       message.toLowerCase().includes("navigating to") &&
       transcript.trim() !== ""
@@ -318,21 +457,19 @@ const VoiceInput = () => {
     }
   };
 
-  // ✅ Extract Path from Rasa Message
   const extractRouteFromMessage = (message) => {
-    const regex = /\/[a-zA-Z0-9-_/]+/; // Find "/clothing", "/electronics", etc.
+    const regex = /\/[a-zA-Z0-9-_/]+/;
     const match = message.match(regex);
-    return match ? match[0] : "/"; // Default to home if no route found
+    return match ? match[0] : "/";
   };
 
   const speak = (text) => {
     const speech = new SpeechSynthesisUtterance(text);
     speech.lang = "en-US";
-    speech.rate = 0.85; // ✅ Slower speed for natural tone
+    speech.rate = 0.85;
     speech.pitch = 1;
     speech.volume = 1;
 
-    // ✅ Pause listening while AI speaks
     SpeechRecognition.stopListening();
 
     speech.onstart = () => {
@@ -342,7 +479,6 @@ const VoiceInput = () => {
     speech.onend = () => {
       setIsSpeaking(false);
 
-      // ✅ Add a slight delay before restarting listening
       setTimeout(() => {
         SpeechRecognition.startListening({
           continuous: true,
@@ -354,23 +490,42 @@ const VoiceInput = () => {
     window.speechSynthesis.speak(speech);
   };
 
+  const toggleMinimize = () => {
+    setIsMinimized((prev) => !prev);
+  };
+
   return (
-    <div className="fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-80">
-      <h2 className="text-lg font-bold">🎙️ AI Assistant</h2>
-      <p>{listening ? "Listening..." : "Click to start listening"}</p>
-      <p className="text-sm text-gray-400">
-        Try saying: "Hey Assistant, navigate to men clothing"
-      </p>
-      <div className="mt-4">
-        <p className="text-lg">
-          <span className="text-gray-400">You said: </span>
-          {transcript || "..."}
-        </p>
-        <p className="mt-2 text-lg">
-          <span className="text-gray-400">AI Response: </span>
-          {responseText || "..."}
-        </p>
-      </div>
+    <div
+      className={`fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-80 transition-all duration-300 ${
+        isMinimized ? "h-16 w-16" : "w-80"
+      } z-50`}
+    >
+      <button
+        onClick={toggleMinimize}
+        className="absolute top-0 right-0 text-white text-lg font-bold bg-gray-700 rounded-full p-2"
+      >
+        {isMinimized ? "➕" : "➖"}
+      </button>
+
+      {!isMinimized && (
+        <div>
+          <h2 className="text-lg font-bold">🎙️ AI Assistant</h2>
+          <p>{listening ? "Listening..." : "Click to start listening"}</p>
+          <p className="text-sm text-gray-400">
+            Try saying: "Hey Assistant, navigate to men clothing"
+          </p>
+          <div className="mt-4">
+            <p className="text-lg">
+              <span className="text-gray-400">You said: </span>
+              {transcript || "..."}
+            </p>
+            <p className="mt-2 text-lg">
+              <span className="text-gray-400">AI Response: </span>
+              {responseText || "..."}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

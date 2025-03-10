@@ -44,59 +44,82 @@ const HeaderBeforeLogin = () => {
                 Explore
               </button>
               {isDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2">
-                  <Link
-                    to="/clothing"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    All Clothing
-                  </Link>
-                  <Link
-                    to="/clothing/men"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Men
-                  </Link>
-                  <Link
-                    to="/clothing/women"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Women
-                  </Link>
-                  <Link
-                    to="/clothing/baby"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Baby
-                  </Link>
+                <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md py-2 z-10">
+                  <h2 className="px-4 py-2 text-gray-800 font-bold border-b">
+                    <Link
+                      to="/categorylandingpage"
+                      className="block hover:bg-gray-100 px-4 py-2"
+                    >
+                      All Category
+                    </Link>
+                  </h2>
+                  <div className="px-4 py-2">
+                    <h3 className="text-gray-800 font-semibold mb-2">
+                      Clothing
+                    </h3>
+                    <Link
+                      to="/clothing"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      All Clothing
+                    </Link>
+                    <Link
+                      to="/clothing/men"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Men
+                    </Link>
+                    <Link
+                      to="/clothing/women"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Women
+                    </Link>
+                    <Link
+                      to="/clothing/baby"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Baby
+                    </Link>
+                    <Link
+                      to="/clothing/teen"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Teen
+                    </Link>
+                  </div>
+
                   <div className="border-t my-2"></div>
-                  <h3 className="px-4 py-2 text-gray-700 font-semibold">
-                    Pet Supplies
-                  </h3>
-                  <Link
-                    to="/pets"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    All Pet Supplies
-                  </Link>
-                  <Link
-                    to="/pets/cats"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Cats
-                  </Link>
-                  <Link
-                    to="/pets/dogs"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Dogs
-                  </Link>
-                  <Link
-                    to="/pets/birds"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Birds
-                  </Link>
+
+                  <div className="px-4 py-2">
+                    <h3 className="text-gray-800 font-semibold mb-2">
+                      Pet Supplies
+                    </h3>
+                    <Link
+                      to="/pets"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      All Pet Supplies
+                    </Link>
+                    <Link
+                      to="/pets/cats"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Cats
+                    </Link>
+                    <Link
+                      to="/pets/dogs"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Dogs
+                    </Link>
+                    <Link
+                      to="/pets/birds"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Birds
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>

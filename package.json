@@ -13,6 +13,7 @@
     "axios": "^1.8.1",
     "core-js": "^3.40.0",
     "fs": "^0.0.1-security",
+    "lottie-react": "^2.4.1",
     "mongoose": "^8.11.0",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
