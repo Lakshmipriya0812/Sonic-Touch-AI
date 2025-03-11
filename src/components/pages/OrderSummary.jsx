@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { cancelOrder } from "../api/orderApi"; 
+import { cancelOrder } from "../../api/orderApi";
 const OrderSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,20 +61,32 @@ const OrderSummary = () => {
         </span>
       </p>
 
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">📦 Shipping Details</h3>
-      <p className="text-gray-700"><strong>Name:</strong> {orderDetails.shippingAddress.fullName}</p>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+        📦 Shipping Details
+      </h3>
       <p className="text-gray-700">
-        <strong>Address:</strong> {orderDetails.shippingAddress.address}, {orderDetails.shippingAddress.city},{" "}
-        {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.country}
+        <strong>Name:</strong> {orderDetails.shippingAddress.fullName}
+      </p>
+      <p className="text-gray-700">
+        <strong>Address:</strong> {orderDetails.shippingAddress.address},{" "}
+        {orderDetails.shippingAddress.city},{" "}
+        {orderDetails.shippingAddress.postalCode},{" "}
+        {orderDetails.shippingAddress.country}
       </p>
 
-      <h3 className="text-xl font-semibold text-gray-800 mt-4">🛍️ Order Items</h3>
+      <h3 className="text-xl font-semibold text-gray-800 mt-4">
+        🛍️ Order Items
+      </h3>
       <div className="border-b pb-4 mb-4">
         {orderDetails.items.length > 0 ? (
           orderDetails.items.map((item) => (
             <div key={item.productId} className="flex justify-between py-2">
-              <p className="text-gray-700">{item.name} (x{item.quantity})</p>
-              <p className="text-gray-700">${(item.price * item.quantity).toFixed(2)}</p>
+              <p className="text-gray-700">
+                {item.name} (x{item.quantity})
+              </p>
+              <p className="text-gray-700">
+                ${(item.price * item.quantity).toFixed(2)}
+              </p>
             </div>
           ))
         ) : (
@@ -84,7 +96,9 @@ const OrderSummary = () => {
 
       <h3 className="text-xl font-semibold mt-4 text-gray-800">
         💰 Total:{" "}
-        <span className="text-green-600">${orderDetails.totalPrice.toFixed(2)}</span>
+        <span className="text-green-600">
+          ${orderDetails.totalPrice.toFixed(2)}
+        </span>
       </h3>
 
       <div className="mt-6 text-center flex justify-center space-x-4">

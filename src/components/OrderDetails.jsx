@@ -43,17 +43,25 @@ const OrderDetails = () => {
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl font-bold mb-4">Order Details</h1>
-      <p><strong>Status:</strong> {order.status}</p>
-      <p><strong>Products:</strong></p>
+      <p>
+        <strong>Status:</strong> {order.status}
+      </p>
+      <p>
+        <strong>Products:</strong>
+      </p>
       <ul>
         {order.items.map((item, index) => (
-          <li key={index}>{item.name} - {item.quantity}</li>
+          <li key={index}>
+            {item.name} - {item.quantity}
+          </li>
         ))}
       </ul>
-      <p><strong>Shipping Address:</strong> {order.shippingAddress}</p>
-      
+      <p>
+        <strong>Shipping Address:</strong> {order.shippingAddress}
+      </p>
+
       {order.status === "Pending" && (
-        <button 
+        <button
           className="bg-red-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-red-700"
           onClick={cancelOrder}
         >

@@ -39,8 +39,14 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-      <Route path="/signup" element={<Signup setIsAuthenticated={setIsAuthenticated} />} />
+      <Route
+        path="/login"
+        element={<Login setIsAuthenticated={setIsAuthenticated} />}
+      />
+      <Route
+        path="/signup"
+        element={<Signup setIsAuthenticated={setIsAuthenticated} />}
+      />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
 
@@ -52,7 +58,10 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       <Route path="/pets/dogs" element={<Dogs />} />
       <Route path="/pets/cats" element={<Cats />} />
       <Route path="/pets/birds" element={<Birds />} />
-      <Route path="/:category/:subcategory/:subsubcategory" element={<SubsubcategoryPage />} />
+      <Route
+        path="/:category/:subcategory/:subsubcategory"
+        element={<SubsubcategoryPage />}
+      />
 
       <Route path="/search" element={<SearchResults />} />
       <Route path="/product/:id" element={<ProductDetails />} />
@@ -60,11 +69,28 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/orders" element={<Orders />} />
-      <Route path="/order/:id" element={<OrderSummary />} /> {/* ✅ New order page */}
+      <Route path="/order/:id" element={<OrderSummary />} />
 
-      <Route path="/admin/login" element={<AdminLogin setIsAuthenticated={setIsAuthenticated} />} />
-      <Route path="/admin/dashboard" element={isAdmin ? <AdminDashboard setIsAuthenticated={setIsAuthenticated} /> : <Navigate to="/admin/login" />} />
-      <Route path="/admin/products" element={isAdmin ? <AdminProductManagement /> : <Navigate to="/admin/login" />} />
+      <Route
+        path="/admin/login"
+        element={<AdminLogin setIsAuthenticated={setIsAuthenticated} />}
+      />
+      <Route
+        path="/admin/dashboard"
+        element={
+          isAdmin ? (
+            <AdminDashboard setIsAuthenticated={setIsAuthenticated} />
+          ) : (
+            <Navigate to="/admin/login" />
+          )
+        }
+      />
+      <Route
+        path="/admin/products"
+        element={
+          isAdmin ? <AdminProductManagement /> : <Navigate to="/admin/login" />
+        }
+      />
     </Routes>
   );
 };

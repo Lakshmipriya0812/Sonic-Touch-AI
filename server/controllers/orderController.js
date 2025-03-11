@@ -100,7 +100,9 @@ const cancelOrder = async (req, res) => {
     const order = await Order.findById(orderId);
 
     if (!order) {
-      return res.status(404).json({ success: false, message: "Order not found!" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found!" });
     }
 
     if (order.userId.toString() !== userId) {
@@ -108,14 +110,43 @@ const cancelOrder = async (req, res) => {
     }
 
     if (order.status !== "Pending") {
-      return res.status(400).json({ success: false, message: "Only pending orders can be canceled!" });
+      return res.status(400).json({
+        success: false,
+        message: "Only pending orders can be canceled!",
+      });
     }
 
     await Order.findByIdAndDelete(orderId);
 
-    res.status(200).json({ success: true, message: "Order canceled successfully!" });
+    res
+      .status(200)
+      .json({ success: true, message: "Order canceled successfully!" });
   } catch (error) {
     console.error("Error canceling order:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+const getOrderDetails = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const userId = req.user.id;
+
+    const order = await Order.findById(orderId).populate("items.productId");
+
+    if (!order) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found!" });
+    }
+
+    // Ensure the user is authorized to view the order
+    if (order.userId.toString() !== userId) {
+      return res.status(403).json({ success: false, message: "Unauthorized!" });
+    }
+
+    res.status(200).json({ success: true, order });
+  } catch (error) {
+    console.error("Error fetching order details:", error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -126,4 +157,5 @@ module.exports = {
   getAllOrders,
   updateOrderStatus,
   cancelOrder,
+  getOrderDetails,
 };
