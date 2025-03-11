@@ -26,3 +26,11 @@ dist-ssr
 /server/.env
 /.env
 /server/createAdmin.js
+
+# AI 
+AI_core/__pycache__/
+AI_core/rasa_env/
+AI_core/models/
+AI_core/credentials.yml
+AI_core/endpoints.yml
+AI_core/.rasa/cache
