@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     image: { type: String, required: true },
     description: { type: String },
-    stock: { type: Number, default: 1 },
+    stock: { type: Number, default: 10 },
     category: {
       type: String,
       enum: ["Clothing", "PetSupplies"],
@@ -78,6 +78,15 @@ const productSchema = new mongoose.Schema(
         "Silk",
         "Linen",
         "Synthetic",
+        "Recycled cotton",
+        "Viscose rayon",
+        "Spandex",
+        "Rayon",
+        "Viscose",
+        "Lyocell",
+        "Nylon",
+        "Elastane",
+        "Lyocell"
       ],
       required: function () {
         return this.category === "Clothing";

@@ -88,6 +88,34 @@ For the frontend to connect to the backend, create a `.env` file in the root dir
      ```
    - If port `5000` is not assigned automatically, manually specify the port in port forwarding.
 
+6. **The steps to run the script(import-csv.js) that first connects to your MongoDB, checks if the "products" collection in the "sonic-touch" database is empty, and only then iterates over CSV files in the "mongodb-data" folder to run the mongoimport commands**
+
+    1.	Install MongoDB Database Tools if not installed already and the necessary
+
+    https://www.mongodb.com/try/download/database-tools
+
+    ```sh
+    npm install csvtojson mongodb
+    ```
+    2.	Add MongoDB Tools to Your PATH:
+
+      - After installation, locate the directory where mongoimport.exe is installed (commonly something like C:\Program Files\MongoDB\Tools\bin).
+      - Add this directory to your system’s PATH environment variable.
+      - Restart your terminal or command prompt for the changes to take effect.
+
+    3.	Verify Installation:
+
+    ```sh
+    mongoimport --version
+    ```
+
+    4.	Run preprocess-import.js Script
+
+    ```sh
+    node preprocess-import.js
+    ```
+
+
 ## 📦 Installed Dependencies
 
 After installing all the packages, verify that you have the following dependencies:
