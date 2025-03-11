@@ -23,6 +23,8 @@ import SubsubcategoryPage from "../components/pages/Explore/SubsubcategoryPage";
 import OrderSummary from "../components/pages/OrderSummary";
 import Checkout from "../components/pages/Checkout";
 import Orders from "../components/pages/Orders";
+import CategoryLandingPage from "../components/pages/Explore/CategoryLandingPage";
+import Teen from "../components/pages/Explore/Clothing/Teen";
 
 const RoutesConfig = ({ setIsAuthenticated }) => {
   const [user, setUser] = useState(() => {
@@ -49,11 +51,12 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-
+      <Route path="/categorylandingpage" element={<CategoryLandingPage />} />
       <Route path="/clothing" element={<Clothing />} />
       <Route path="/clothing/men" element={<Men />} />
       <Route path="/clothing/women" element={<Women />} />
       <Route path="/clothing/baby" element={<Baby />} />
+      <Route path="/clothing/teen" element={<Teen />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pets/dogs" element={<Dogs />} />
       <Route path="/pets/cats" element={<Cats />} />
