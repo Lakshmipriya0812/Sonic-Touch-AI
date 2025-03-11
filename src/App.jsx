@@ -11,7 +11,11 @@ import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
 import Footer from "./components/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
 import CartProvider from "./context/CartContext";
-import OrderDetails from "./components/pages/OrderDetails";
+import VoiceInput from "./components/VoiceInput";
+//import ChatbotComponent from "./components/ChatbotComponent";
+//import VoiceAssistant from "./components/VoiceAssistance";
+import BackToTop from "./components/BackToTop";
+import BackToPreviousPage from "./components/BackToPreviousPage";
 
 function App() {
   return (
@@ -39,15 +43,14 @@ function AppWithCartProvider() {
           <HeaderBeforeLogin setIsAuthenticated={setIsAuthenticated} />
         )}
         <main>
-          <Routes>
-            <Route
-              path="/*"
-              element={<RoutesConfig setIsAuthenticated={setIsAuthenticated} />}
-            />
-            <Route path="/order/:orderId" element={<OrderDetails />} />
-          </Routes>
+          {/* <VoiceAssistant />*/}
+          {/*<ChatbotComponent />*/}
+          <VoiceInput />
+          <RoutesConfig setIsAuthenticated={setIsAuthenticated} />
         </main>
         <Footer />
+        <BackToTop />
+        <BackToPreviousPage />
       </div>
     </CartProvider>
   );

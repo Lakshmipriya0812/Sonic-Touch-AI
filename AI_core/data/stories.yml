@@ -1,0 +1,173 @@
+version: "3.1"
+
+stories:
+  - story: Greet, inquire about products, and say goodbye
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: inquire_products
+      - action: utter_show_products
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: User navigates to home
+    steps:
+      - intent: navigate_home
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/"
+
+  - story: User navigates to about page
+    steps:
+      - intent: navigate_about
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/about"
+
+  - story: User navigates to contact page
+    steps:
+      - intent: navigate_contact
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/contact"
+
+  - story: User navigates to login page
+    steps:
+      - intent: navigate_login
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/login"
+
+  - story: User navigates to signup page
+    steps:
+      - intent: navigate_signup
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/signup"
+
+  - story: User navigates to clothing section
+    steps:
+      - intent: navigate_clothing
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/clothing"
+
+  - story: User navigates to men's clothing
+    steps:
+      - intent: navigate_men_clothing
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/clothing/men"
+
+  - story: User navigates to women's clothing
+    steps:
+      - intent: navigate_women_clothing
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/clothing/women"
+
+  - story: User navigates to baby clothing
+    steps:
+      - intent: navigate_baby_clothing
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/clothing/baby"
+
+  - story: User navigates to pet supplies
+    steps:
+      - intent: navigate_pets
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/pets"
+
+  - story: User navigates to dog products
+    steps:
+      - intent: navigate_dogs
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/pets/dogs"
+
+  - story: User navigates to cat products
+    steps:
+      - intent: navigate_cats
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/pets/cats"
+
+  - story: User navigates to bird products
+    steps:
+      - intent: navigate_birds
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/pets/birds"
+
+  - story: User navigates to cart
+    steps:
+      - intent: navigate_cart
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/cart"
+
+  - story: User proceeds to checkout
+    steps:
+      - intent: navigate_checkout
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/checkout"
+
+  - story: User checks orders
+    steps:
+      - intent: navigate_orders
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/orders"
+
+  - story: User navigates to admin login
+    steps:
+      - intent: navigate_admin_login
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/admin/login"
+
+  - story: User navigates to admin dashboard
+    steps:
+      - intent: navigate_admin_dashboard
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/admin/dashboard"
+
+  - story: User navigates to admin product management
+    steps:
+      - intent: navigate_admin_products
+      - action: action_navigate
+      - slot_was_set:
+          - last_page: "/admin/products"
+
+  - story: User asks about last visited page
+    steps:
+      - intent: ask_last_page
+      - action: action_remember_last_page
+
+  - story: User asks about product details
+    steps:
+      - intent: ask_product_info
+      - action: action_query_llm
+
+  - story: User compares product prices
+    steps:
+      - intent: ask_product_info
+      - action: action_query_llm
+
+  - story: User asks multiple product-related questions
+    steps:
+      - intent: ask_product_info
+      - action: action_query_llm
+      - intent: ask_product_info
+      - action: action_query_llm
+
+  - story: User mixes questions and instructions
+    steps:
+      - intent: ask_product_info
+      - action: action_query_llm
+      - intent: ask_product_info
+      - action: action_query_llm

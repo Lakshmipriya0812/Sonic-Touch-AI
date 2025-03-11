@@ -2,7 +2,8 @@ export const categoryData = {
   clothing: [
     { name: "Men", icon: "👔", path: "/clothing/men" },
     { name: "Women", icon: "👗", path: "/clothing/women" },
-    { name: "Baby", icon: "🧒", path: "/clothing/baby" },
+    { name: "Baby", icon: "👶🏻", path: "/clothing/baby" },
+    { name: "Teen", icon: "🧒", path: "/clothing/teen" },
   ],
   men: [
     { name: "Shirts", icon: "👕", path: "/clothing/men/shirts" },
@@ -24,6 +25,10 @@ export const categoryData = {
     { name: "Baby Boy", icon: "👶🏻", path: "/clothing/baby/boy" },
     { name: "Baby Girl", icon: "👶🏼", path: "/clothing/baby/girl" },
     { name: "Unisex", icon: "🍼", path: "/clothing/baby/unisex" },
+  ],
+  teen: [
+    { name: "Teen Boy", icon: "👦🏼", path: "/clothing/teen/boy" },
+    { name: "Teen Girl", icon: "👧🏼", path: "/clothing/teen/girl" },
   ],
   pets: [
     { name: "Dogs", icon: "🐶", path: "/pets/dogs" },
