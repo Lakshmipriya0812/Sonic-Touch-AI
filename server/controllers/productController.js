@@ -4,20 +4,47 @@ exports.getAllProducts = async (req, res) => {
   try {
     let query = {};
 
-    if (req.query.category) {
-      query.category = req.query.category;
-    }
-    if (req.query.subcategory) {
-      query.subcategory = req.query.subcategory;
-    }
-    if (req.query.subsubcategory) {
+    if (req.query.category) query.category = req.query.category;
+    if (req.query.subcategory) query.subcategory = req.query.subcategory;
+    if (req.query.subsubcategory)
       query.subsubcategory = req.query.subsubcategory;
-    }
-    if (req.query.search) {
-      query.name = { $regex: new RegExp(req.query.search, "i") };
+    if (req.query.minPrice || req.query.maxPrice) {
+      query.price = {};
+      if (req.query.minPrice) query.price.$gte = Number(req.query.minPrice);
+      if (req.query.maxPrice) query.price.$lte = Number(req.query.maxPrice);
     }
 
-    const products = await Product.find(query);
+    if (req.query.size) {
+      query.size = req.query.size;
+    }
+    if (req.query.search) {
+      const searchQuery = req.query.search;
+      query.$or = [
+        { name: { $regex: searchQuery, $options: "i" } },
+        { category: { $regex: searchQuery, $options: "i" } },
+        { description: { $regex: searchQuery, $options: "i" } },
+      ];
+    }
+    let sortQuery = {};
+    if (req.query.sort) {
+      switch (req.query.sort) {
+        case "priceAsc":
+          sortQuery.price = 1;
+          break;
+        case "priceDesc":
+          sortQuery.price = -1;
+          break;
+        case "mostPopular":
+          sortQuery.popularity = -1;
+          break;
+        case "newest":
+          sortQuery.createdAt = -1;
+          break;
+      }
+    }
+
+    const products = await Product.find(query).sort(sortQuery);
+
     res.status(200).json({ success: true, products });
   } catch (error) {
     console.error("Error fetching products:", error);

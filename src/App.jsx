@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import HeaderBeforeLogin from "./components/headers/HeaderBeforeLogin";
 import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
 import Footer from "./components/Footer";
@@ -11,6 +16,7 @@ import VoiceInput from "./components/VoiceInput";
 //import VoiceAssistant from "./components/VoiceAssistance";
 import BackToTop from "./components/BackToTop";
 import BackToPreviousPage from "./components/BackToPreviousPage";
+import Accessibility from "./components/Accessibility";
 
 function App() {
   return (
@@ -38,6 +44,9 @@ function AppWithCartProvider() {
           <HeaderBeforeLogin setIsAuthenticated={setIsAuthenticated} />
         )}
         <main>
+          <Accessibility />
+
+          {/* Voice input and other components */}
           {/* <VoiceAssistant />*/}
           {/*<ChatbotComponent />*/}
           <VoiceInput />

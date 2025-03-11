@@ -7,47 +7,42 @@ const API_URL = import.meta.env.VITE_API_URL;
 const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [sortOption, setSortOption] = useState("");
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const queryParams = new URLSearchParams();
+
+      if (categoryType) queryParams.append("category", categoryType);
+      if (subcategoryProp) queryParams.append("subcategory", subcategoryProp);
+      if (subsubcategory) queryParams.append("subsubcategory", subsubcategory);
+      if (minPrice) queryParams.append("minPrice", Number(minPrice));
+      if (maxPrice) queryParams.append("maxPrice", Number(maxPrice));
+      if (selectedSize) queryParams.append("size", selectedSize);
+      if (sortOption) queryParams.append("sort", sortOption);
+
+      const response = await axios.get(
+        `${API_URL}/api/products?${queryParams.toString()}`
+      );
+      setProducts(response.data.products);
+    } catch (err) {
+      console.error("Failed to fetch products:", err);
+      setError("Failed to fetch products.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const formattedCategory =
-          categoryType && categoryType.length > 0
-            ? categoryType.charAt(0).toUpperCase() + categoryType.slice(1)
-            : "";
-
-        const formattedSubcategory =
-          subcategoryProp && subcategoryProp.length > 0
-            ? subcategoryProp.charAt(0).toUpperCase() + subcategoryProp.slice(1)
-            : "";
-
-        const formattedSubsubcategory =
-          subsubcategory && subsubcategory.length > 0
-            ? subsubcategory.charAt(0).toUpperCase() + subsubcategory.slice(1)
-            : "";
-        const queryParams = new URLSearchParams();
-        if (formattedCategory)
-          queryParams.append("category", formattedCategory);
-        if (formattedSubcategory)
-          queryParams.append("subcategory", formattedSubcategory);
-        if (formattedSubsubcategory)
-          queryParams.append("subsubcategory", formattedSubsubcategory);
-
-        const response = await axios.get(
-          `${API_URL}/api/products?${queryParams.toString()}`
-        );
-        setProducts(response.data.products);
-      } catch (err) {
-        console.error("Failed to fetch products:", err);
-        setError("Failed to fetch products.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchProducts();
   }, [categoryType, subcategoryProp, subsubcategory]);
 
@@ -57,6 +52,57 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
         <h2 className="text-center text-3xl font-bold text-gray-900 mb-8 font-lato">
           Explore Our Products
         </h2>
+
+        <div className="mb-6 flex flex-wrap justify-center gap-4">
+          <input
+            type="number"
+            placeholder="Min Price"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            className="border p-2 rounded-md"
+          />
+          <input
+            type="number"
+            placeholder="Max Price"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            className="border p-2 rounded-md"
+          />
+
+          {categoryType === "Clothing" && (
+            <select
+              value={selectedSize}
+              onChange={(e) => setSelectedSize(e.target.value)}
+              className="border p-2 rounded-md"
+            >
+              <option value="">All Sizes</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          )}
+
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="border p-2 rounded-md"
+          >
+            <option value="">Sort By</option>
+            <option value="priceAsc">Price: Low to High</option>
+            <option value="priceDesc">Price: High to Low</option>
+          </select>
+
+          <button
+            onClick={fetchProducts}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+          >
+            Search
+          </button>
+        </div>
+
         {loading && (
           <p className="text-center text-gray-500">Loading products...</p>
         )}

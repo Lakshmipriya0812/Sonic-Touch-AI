@@ -6,7 +6,7 @@ const About = ({ isAuthenticated }) => {
       <div className="w-full max-w-7xl bg-white shadow-xl rounded-lg p-10 relative">
         <div className="w-[250px] h-[250px] bg-gray-200 rounded-lg overflow-hidden float-right ml-6 mb-4">
           <img
-            src="path/to/your/logo.png"
+            src="icon.jpg"
             alt="Sonic Touch Logo"
             className="w-full h-full object-contain"
           />

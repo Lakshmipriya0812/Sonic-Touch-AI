@@ -61,8 +61,28 @@ const Orders = () => {
       ) : (
         orders.map((order, index) => (
           <div key={index} className="border p-4 rounded-md mb-4 shadow-sm">
-            <h3 className="text-lg font-semibold">Order ID: {order._id}</h3>
-            <p className="text-gray-600">
+            <h3 className="font-semibold mt-4 text-xl">🛍️ Items:</h3>
+            <ul className="list-disc pl-5">
+              {order.items?.length > 0 ? (
+                order.items.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex justify-between items-center text-lg"
+                  >
+                    <span>
+                      {item.name} (x{item.quantity}) -{" "}
+                      <span className="text-green-600">
+                        ${item.price.toFixed(2)}
+                      </span>
+                    </span>
+                  </li>
+                ))
+              ) : (
+                <p className="text-gray-500">No items found.</p>
+              )}
+            </ul>
+            <h2 className="text font-light mt-2">Order ID: {order._id}</h2>
+            <p className="text-gray-600 mt-4">
               Status:{" "}
               <span
                 className={`font-semibold ${
@@ -74,25 +94,19 @@ const Orders = () => {
                 {order.status}
               </span>
             </p>
-            <p className="text-gray-600">
-              Total Price:{" "}
-              <span className="text-green-600">
-                ${order.totalPrice.toFixed(2)}
-              </span>
-            </p>
 
-            <h4 className="font-semibold mt-2">🛍️ Items:</h4>
-            <ul className="list-disc pl-6">
-              {order.items?.length > 0 ? (
-                order.items.map((item, i) => (
-                  <li key={i}>
-                    {item.name} (x{item.quantity}) - ${item.price.toFixed(2)}
-                  </li>
-                ))
-              ) : (
-                <p className="text-gray-500">No items found.</p>
-              )}
-            </ul>
+            <div className="mt-4 flex space-x-4">
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md shadow-md hover:bg-gray-400 transition"
+                onClick={() =>
+                  navigate(`/order/${order._id}`, {
+                    state: { orderDetails: order },
+                  })
+                }
+              >
+                🔍 View Details
+              </button>
+            </div>
           </div>
         ))
       )}

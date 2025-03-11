@@ -24,6 +24,7 @@ const SearchResults = () => {
         );
         setProducts(response.data.products);
       } catch (err) {
+        console.error(err);
         setError("Failed to fetch products.");
       } finally {
         setLoading(false);
@@ -63,7 +64,13 @@ const SearchResults = () => {
                     <h5 className="font-semibold text-lg text-gray-900">
                       {product.name}
                     </h5>
-                    <p className="text-gray-600 text-lg mt-2">
+                    <p className="text-gray-600 text-sm mt-1">
+                      {product.category}
+                    </p>
+                    <p className="text-gray-600 text-sm mt-1">
+                      {product.description.substring(0, 50)}...
+                    </p>
+                    <p className="text-green-600 text-lg font-semibold mt-2">
                       ${product.price.toFixed(2)}
                     </p>
                   </div>
