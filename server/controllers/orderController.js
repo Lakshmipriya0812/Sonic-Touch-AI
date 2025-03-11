@@ -1,45 +1,55 @@
+const mongoose = require("mongoose");
 const Order = require("../models/Order");
-const Cart = require("../models/Cart");
+const Product = require("../models/Product");
 
 const createOrder = async (req, res) => {
   try {
-    const { shippingAddress } = req.body;
+    const { shippingAddress, items, totalPrice } = req.body;
     const userId = req.user.id;
 
-    const cart = await Cart.findOne({ userId }).populate("items.productId");
-    if (!cart || cart.items.length === 0) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Cart is empty!" });
+    if (!items || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Order must contain at least one item!",
+      });
     }
 
-    const totalPrice = cart.items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
+    const orderItems = [];
+    for (let item of items) {
+      const product = await Product.findById(item.productId);
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: `Product with ID ${item.productId} not found!`,
+        });
+      }
+      orderItems.push({
+        ...item,
+        productId: new mongoose.Types.ObjectId(item.productId),
+      });
+    }
 
     const order = new Order({
       userId,
-      items: cart.items.map((item) => ({
-        productId: item.productId._id,
-        name: item.productId.name,
-        price: item.price,
-        quantity: item.quantity,
-      })),
+      items: orderItems,
       shippingAddress,
       totalPrice,
       status: "Pending",
     });
 
     await order.save();
-    await Cart.findOneAndUpdate({ userId }, { items: [] });
 
-    res
-      .status(201)
-      .json({ success: true, message: "Order placed successfully!", order });
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully!",
+      order,
+    });
   } catch (error) {
     console.error("Error creating order:", error);
-    res.status(500).json({ success: false, message: "Server Error" });
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Server Error",
+    });
   }
 };
 
@@ -73,6 +83,20 @@ const updateOrderStatus = async (req, res) => {
     const { orderId } = req.params;
     const { status } = req.body;
 
+    const validStatuses = [
+      "Pending",
+      "Processing",
+      "Shipped",
+      "Delivered",
+      "Cancelled",
+    ];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid status. Allowed values: ${validStatuses.join(", ")}`,
+      });
+    }
+
     const order = await Order.findById(orderId);
     if (!order) {
       return res
@@ -95,72 +119,59 @@ const updateOrderStatus = async (req, res) => {
 const cancelOrder = async (req, res) => {
   try {
     const { orderId } = req.params;
-    const userId = req.user.id;
-
     const order = await Order.findById(orderId);
-
     if (!order) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Order not found!" });
-    }
-
-    if (order.userId.toString() !== userId) {
-      return res.status(403).json({ success: false, message: "Unauthorized!" });
-    }
-
-    if (order.status !== "Pending") {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
-        message: "Only pending orders can be canceled!",
+        message: `Order with ID ${orderId} not found!`,
       });
     }
 
-    await Order.findByIdAndDelete(orderId);
+    order.status = "Cancelled";
+    await order.save();
 
-    res
-      .status(200)
-      .json({ success: true, message: "Order canceled successfully!" });
+    res.status(200).json({
+      success: true,
+      message: "Order has been cancelled successfully!",
+      order,
+    });
   } catch (error) {
     console.error("Error canceling order:", error);
-    res.status(500).json({ success: false, message: "Server Error" });
+    return res.status(500).json({
+      success: false,
+      message: "Server error while canceling the order.",
+    });
   }
 };
+
 const getOrderDetails = async (req, res) => {
   try {
     const { orderId } = req.params;
-    const userId = req.user.id;
 
-    const order = await Order.findById(orderId).populate("items.productId");
+    const order = await Order.findById(orderId)
+      .populate("userId", "name email")
+      .populate({
+        path: "items.productId",
+        select: "name price description",
+      });
 
     if (!order) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Order not found!" });
-    }
-
-    if (order.userId.toString() !== userId) {
-      return res.status(403).json({ success: false, message: "Unauthorized!" });
+      return res.status(404).json({
+        success: false,
+        message: "Order not found!",
+      });
     }
 
     res.status(200).json({
       success: true,
-      order: {
-        _id: order._id,
-        status: order.status,
-        items: order.items.map((item) => ({
-          productId: item.productId._id,
-          name: item.productId.name,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-        shippingAddress: order.shippingAddress,
-        totalPrice: order.totalPrice,
-      },
+      order,
     });
   } catch (error) {
     console.error("Error fetching order details:", error);
-    res.status(500).json({ success: false, message: "Server Error" });
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 };
 
