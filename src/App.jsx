@@ -16,7 +16,7 @@ import VoiceInput from "./components/VoiceInput";
 //import VoiceAssistant from "./components/VoiceAssistance";
 import BackToTop from "./components/BackToTop";
 import BackToPreviousPage from "./components/BackToPreviousPage";
-import Accessibility from "./components/Accessibility"; // Import the Accessibility Component
+import Accessibility from "./components/Accessibility";
 
 function App() {
   return (
@@ -44,7 +44,6 @@ function AppWithCartProvider() {
           <HeaderBeforeLogin setIsAuthenticated={setIsAuthenticated} />
         )}
         <main>
-          {/* Accessibility Component (Handles High Contrast Mode & Large Text Size) */}
           <Accessibility />
 
           {/* Voice input and other components */}
