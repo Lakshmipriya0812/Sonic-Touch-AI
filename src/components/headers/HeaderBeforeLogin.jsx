@@ -27,8 +27,11 @@ const HeaderBeforeLogin = () => {
     };
   }, []);
   const handleSearch = (e) => {
-    if (e.key === "Enter" && searchQuery.trim() !== "") {
-      navigate(`/search?q=${searchQuery}`);
+    if (
+      (e.key === "Enter" || e.type === "click") &&
+      searchQuery.trim() !== ""
+    ) {
+      navigate(`/search?q=${searchQuery.trim()}`);
     }
   };
   return (
@@ -156,7 +159,10 @@ const HeaderBeforeLogin = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleSearch}
               />
-              <FaSearch className="text-gray-500" />
+              <FaSearch
+                className="text-gray-500 cursor-pointer hover:text-gray-700 transition"
+                onClick={handleSearch}
+              />
             </div>
 
             <Link

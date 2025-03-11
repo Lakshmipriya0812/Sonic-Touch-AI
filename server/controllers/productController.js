@@ -17,7 +17,14 @@ exports.getAllProducts = async (req, res) => {
     if (req.query.size) {
       query.size = req.query.size;
     }
-
+    if (req.query.search) {
+      const searchQuery = req.query.search;
+      query.$or = [
+        { name: { $regex: searchQuery, $options: "i" } },
+        { category: { $regex: searchQuery, $options: "i" } },
+        { description: { $regex: searchQuery, $options: "i" } },
+      ];
+    }
     let sortQuery = {};
     if (req.query.sort) {
       switch (req.query.sort) {
