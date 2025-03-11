@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../components/pages/Home";
 import About from "../components/pages/About";
 import Contact from "../components/pages/Contact";
+import Profile from "../components/pages/Profile";
 import Login from "../components/pages/Login";
 import Signup from "../components/pages/Signup";
 import Clothing from "../components/pages/Explore/Clothing/Clothing";
@@ -51,6 +52,7 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/categorylandingpage" element={<CategoryLandingPage />} />
       <Route path="/clothing" element={<Clothing />} />
       <Route path="/clothing/men" element={<Men />} />

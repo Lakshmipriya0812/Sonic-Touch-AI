@@ -210,10 +210,10 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
                   <>
                     <p className="text-blue-400 block px-4 py-2">{user.name}</p>
                     <Link
-                      to="/account"
+                      to="/profile"
                       className="block px-4 py-2 hover:bg-gray-100"
                     >
-                      My Account
+                      My Profile
                     </Link>
                     <Link
                       to="/orders"
