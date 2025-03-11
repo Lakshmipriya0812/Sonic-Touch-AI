@@ -6,11 +6,16 @@ import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
 import Footer from "./components/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
 import CartProvider from "./context/CartContext";
+import VoiceInput from "./components/VoiceInput";
+//import ChatbotComponent from "./components/ChatbotComponent";
+//import VoiceAssistant from "./components/VoiceAssistance";
+import BackToTop from "./components/BackToTop";
+import BackToPreviousPage from "./components/BackToPreviousPage";
 
 function App() {
   return (
     <Router>
-      <AppWithCartProvider />{" "}
+      <AppWithCartProvider />
     </Router>
   );
 }
@@ -26,7 +31,6 @@ function AppWithCartProvider() {
 
   return (
     <CartProvider navigate={navigate}>
-      {" "}
       <div className="min-h-screen flex flex-col">
         {isAuthenticated ? (
           <HeaderAfterLogin setIsAuthenticated={setIsAuthenticated} />
@@ -34,9 +38,14 @@ function AppWithCartProvider() {
           <HeaderBeforeLogin setIsAuthenticated={setIsAuthenticated} />
         )}
         <main>
+          {/* <VoiceAssistant />*/}
+          {/*<ChatbotComponent />*/}
+          <VoiceInput />
           <RoutesConfig setIsAuthenticated={setIsAuthenticated} />
         </main>
         <Footer />
+        <BackToTop />
+        <BackToPreviousPage />
       </div>
     </CartProvider>
   );
