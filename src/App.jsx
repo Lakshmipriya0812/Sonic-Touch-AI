@@ -11,7 +11,7 @@ import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
 import Footer from "./components/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
 import CartProvider from "./context/CartContext";
-import OrderDetails from "./components/OrderDetails";
+import OrderDetails from "./components/pages/OrderDetails";
 
 function App() {
   return (

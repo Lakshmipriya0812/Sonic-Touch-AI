@@ -139,12 +139,25 @@ const getOrderDetails = async (req, res) => {
         .json({ success: false, message: "Order not found!" });
     }
 
-    // Ensure the user is authorized to view the order
     if (order.userId.toString() !== userId) {
       return res.status(403).json({ success: false, message: "Unauthorized!" });
     }
 
-    res.status(200).json({ success: true, order });
+    res.status(200).json({
+      success: true,
+      order: {
+        _id: order._id,
+        status: order.status,
+        items: order.items.map((item) => ({
+          productId: item.productId._id,
+          name: item.productId.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        shippingAddress: order.shippingAddress,
+        totalPrice: order.totalPrice,
+      },
+    });
   } catch (error) {
     console.error("Error fetching order details:", error);
     res.status(500).json({ success: false, message: "Server Error" });
