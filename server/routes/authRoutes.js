@@ -3,6 +3,7 @@ const {
   registerUser,
   loginUser,
   loginAdmin,
+  logout
 } = require("../controllers/authController");
 const { protect } = require("../middleware/authMiddleware");
 const User = require("../models/User");
@@ -13,6 +14,7 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/admin/login", loginAdmin);
+router.post("/logout", protect, logout);
 
 router.get("/profile", protect, async (req, res) => {
   try {

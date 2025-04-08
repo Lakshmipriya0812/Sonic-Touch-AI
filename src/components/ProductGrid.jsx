@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useWishlist } from "../context/WishlistContext";
+import WishlistModal from "./WishlistModal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
   const navigate = useNavigate();
+  const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -45,6 +48,15 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
   useEffect(() => {
     fetchProducts();
   }, [categoryType, subcategoryProp, subsubcategory]);
+
+  const handleWishlistClick = async (e, product) => {
+    e.stopPropagation(); 
+    if (isInWishlist(product._id)) {
+      await removeFromWishlist(product._id);
+    } else {
+      await addToWishlist(product._id);
+    }
+  };
 
   return (
     <div className="bg-gray-100 py-12 mt-4">
@@ -113,9 +125,42 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
               products.map((product) => (
                 <div
                   key={product._id}
-                  className="bg-white shadow-md rounded-lg p-5 cursor-pointer transition-transform transform hover:shadow-lg hover:scale-105"
+                  className="bg-white shadow-md rounded-lg p-5 cursor-pointer transition-transform transform hover:shadow-lg hover:scale-105 relative"
                   onClick={() => navigate(`/product/${product._id}`)}
                 >
+                  <button
+                    onClick={(e) => handleWishlistClick(e, product)}
+                    className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition"
+                    title={isInWishlist(product._id) ? "Remove from Wishlist" : "Add to Wishlist"}
+                  >
+                    {isInWishlist(product._id) ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 text-pink-500"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 text-gray-400 hover:text-pink-300 transition-colors duration-300"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </button>
                   <img
                     src={product.image}
                     alt={product.name}
@@ -139,6 +184,7 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
           </div>
         )}
       </div>
+      <WishlistModal />
     </div>
   );
 };
