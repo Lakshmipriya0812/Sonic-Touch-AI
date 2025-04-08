@@ -13,6 +13,9 @@ const CartSchema = new mongoose.Schema({
       price: Number,
       image: String,
       quantity: { type: Number, default: 1 },
+      size: { type: String, default: null },
+      color: { type: String, default: null },
+      brand: { type: String, default: "Unknown Brand" }
     },
   ],
 });

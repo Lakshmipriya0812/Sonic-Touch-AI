@@ -26,6 +26,16 @@ import Checkout from "../components/pages/Checkout";
 import Orders from "../components/pages/Orders";
 import CategoryLandingPage from "../components/pages/Explore/CategoryLandingPage";
 import Teen from "../components/pages/Explore/Clothing/Teen";
+import Wishlist from "../components/pages/Wishlist";
+import { useAuth } from "../context/AuthContext";
+
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
 
 const RoutesConfig = ({ setIsAuthenticated }) => {
   const [user, setUser] = useState(() => {
@@ -52,7 +62,14 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route 
+        path="/profile" 
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } 
+      />
       <Route path="/categorylandingpage" element={<CategoryLandingPage />} />
       <Route path="/clothing" element={<Clothing />} />
       <Route path="/clothing/men" element={<Men />} />
@@ -75,6 +92,7 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/orders" element={<Orders />} />
       <Route path="/order/:id" element={<OrderSummary />} />
+      <Route path="/wishlist" element={<Wishlist />} />
 
       <Route
         path="/admin/login"

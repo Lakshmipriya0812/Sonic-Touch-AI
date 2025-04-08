@@ -2,14 +2,18 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
 import { CartContext } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { useWishlist } from "../../context/WishlistContext";
 
-const HeaderAfterLogin = ({ setIsAuthenticated }) => {
+const HeaderAfterLogin = () => {
   const [user, setUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-  const { cart } = useContext(CartContext);
+  const { cart, handleLogout } = useContext(CartContext);
+  const { setIsAuthenticated } = useAuth();
+  const { wishlistCount } = useWishlist();
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
@@ -28,16 +32,17 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  useEffect(() => {
-    setIsDropdownOpen(false);
-  }, [location.pathname]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    setIsAuthenticated(false);
-    navigate("/clothing");
+  const onLogout = async () => {
+    try {
+      await handleLogout();
+      setUser(null);
+      setIsAuthenticated(false);
+      localStorage.removeItem("user");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const handleSearch = (e) => {
@@ -181,9 +186,14 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
             </div>
             <Link
               to="/wishlist"
-              className="text-gray-700 text-xl hover:text-gray-900"
+              className="text-gray-700 text-xl hover:text-gray-900 relative"
             >
               <FaHeart />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
             <Link
               to="/cart"
@@ -223,7 +233,7 @@ const HeaderAfterLogin = ({ setIsAuthenticated }) => {
                     </Link>
                     <hr />
                     <button
-                      onClick={handleLogout}
+                      onClick={onLogout}
                       className="block px-4 py-2 hover:bg-gray-100 w-full text-left"
                     >
                       Logout

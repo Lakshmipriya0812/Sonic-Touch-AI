@@ -1,10 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 
 const Checkout = () => {
   const { cart, setCart } = useContext(CartContext);
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const [shippingInfo, setShippingInfo] = useState({
@@ -18,6 +20,19 @@ const Checkout = () => {
   const [error, setError] = useState("");
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderId, setOrderId] = useState(null);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setError("Please log in to place your order");
+      navigate('/login', { 
+        state: { 
+          from: '/checkout',
+          message: 'Please log in to complete your checkout'
+        }
+      });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     setShippingInfo({ ...shippingInfo, [e.target.name]: e.target.value });
@@ -25,6 +40,17 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isAuthenticated) {
+      setError("Please log in to place your order");
+      navigate('/login', { 
+        state: { 
+          from: '/checkout',
+          message: 'Please log in to complete your checkout'
+        }
+      });
+      return;
+    }
 
     if (
       !shippingInfo.fullName ||
@@ -51,31 +77,116 @@ const Checkout = () => {
     };
 
     try {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        console.error("No auth token found!");
-        setError("Unauthorized: Please log in again.");
-        return;
-      }
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/orders`,
         orderDetails,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+          headers: {
+            'Accept': 'application/json'
+          }
         }
       );
 
       if (response.data.success) {
-        setOrderId(response.data.order._id);
         setOrderPlaced(true);
+        setOrderId(response.data.order._id);
         setCart([]);
+        setShowSuccessPopup(true);
+      } else {
+        setError(response.data.message || "Failed to place order");
       }
     } catch (error) {
       console.error("Error placing order:", error);
-      setError("Failed to place order. Please try again.");
+      if (error.response?.status === 401) {
+        setError("Please log in to place your order.");
+        navigate('/login', { 
+          state: { 
+            from: '/checkout',
+            message: 'Please log in to complete your checkout'
+          }
+        });
+      } else {
+        setError(error.response?.data?.message || "Failed to place order. Please try again.");
+      }
     }
   };
+
+  const handleViewOrders = () => {
+    navigate('/orders');
+  };
+
+  const handleContinueShopping = () => {
+    navigate('/');
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-4 text-gray-900">🔒 Login Required</h2>
+          <p className="text-gray-600 mb-6">Please log in to place your order.</p>
+          <button
+            onClick={() => navigate('/login', { 
+              state: { 
+                from: '/checkout',
+                message: 'Please log in to complete your checkout'
+              }
+            })}
+            className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (showSuccessPopup) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full mx-4">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-8 h-8 text-green-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Order Placed Successfully!
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Thank you for your purchase. Your order has been confirmed.
+            </p>
+            <div className="space-y-3">
+              <button
+                onClick={handleViewOrders}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+              >
+                View Orders
+              </button>
+              <button
+                onClick={handleContinueShopping}
+                className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 transition duration-200"
+              >
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
@@ -204,34 +315,6 @@ const Checkout = () => {
           🛒 Place Order
         </button>
       </form>
-
-      {orderPlaced && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h3 className="text-2xl font-bold text-green-600">
-              🎉 Order Placed!
-            </h3>
-            <p className="text-gray-700">
-              Your order has been successfully placed.
-            </p>
-
-            <div className="mt-4 flex justify-center space-x-4">
-              <button
-                onClick={() => navigate("/orders")}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-              >
-                View My Orders
-              </button>
-              <button
-                onClick={() => navigate("/explore")}
-                className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-700"
-              >
-                Continue Shopping
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

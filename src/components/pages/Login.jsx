@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser } from "../../api/auth";
+import { useAuth } from "../../context/AuthContext";
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { setIsAuthenticated, setUser } = useAuth();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -15,11 +18,12 @@ const Login = ({ setIsAuthenticated }) => {
     try {
       const data = await loginUser(email, password);
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
+      if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
         setIsAuthenticated(true);
-        if (location.state?.from === "checkout") {
+        const from = location.state?.from;
+        if (from === '/checkout') {
           navigate("/checkout");
         } else {
           navigate("/");
@@ -41,10 +45,16 @@ const Login = ({ setIsAuthenticated }) => {
         </h3>
 
         {location.state?.message && (
-          <p className="text-red-500 text-center">{location.state.message}</p>
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+            <p className="text-blue-700">{location.state.message}</p>
+          </div>
         )}
 
-        {error && <p className="text-red-500 text-center">{error}</p>}
+        {error && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+            <p className="text-red-700">{error}</p>
+          </div>
+        )}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <input
@@ -56,7 +66,6 @@ const Login = ({ setIsAuthenticated }) => {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             autoComplete="username"
           />
-
           <input
             type="password"
             placeholder="Password"
@@ -66,10 +75,9 @@ const Login = ({ setIsAuthenticated }) => {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             autoComplete="current-password"
           />
-
           <button
             type="submit"
-            className="w-full bg-gray-700 text-white py-3 rounded-md font-semibold hover:bg-gray-900 transition"
+            className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition duration-200"
           >
             Login
           </button>

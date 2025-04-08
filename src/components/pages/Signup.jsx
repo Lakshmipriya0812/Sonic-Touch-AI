@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupUser } from "../../api/auth";
+import { signupUser, loginUser } from "../../api/auth";
 
 const Signup = ({ setIsAuthenticated }) => {
   const [name, setName] = useState("");
@@ -14,15 +14,20 @@ const Signup = ({ setIsAuthenticated }) => {
     setError(null);
 
     try {
-      const data = await signupUser(name, email, password);
+      const signupData = await signupUser(name, email, password);
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setIsAuthenticated(true);
-        navigate("/");
+      if (signupData.message === "User registered successfully") {
+        const loginData = await loginUser(email, password);
+
+        if (loginData.user) {
+          localStorage.setItem("user", JSON.stringify(loginData.user));
+          setIsAuthenticated(true);
+          navigate("/");
+        } else {
+          setError(loginData.message || "Registration successful but login failed. Please try logging in manually.");
+        }
       } else {
-        setError(data.message || "Signup failed. Try again.");
+        setError(signupData.message || "Signup failed. Try again.");
       }
     } catch (err) {
       console.error("Signup error:", err);
@@ -38,7 +43,7 @@ const Signup = ({ setIsAuthenticated }) => {
             Create an Account
           </h3>
 
-          {error && <p className="text-green-600 text-center">{error}</p>}
+          {error && <p className="text-red-600 text-center">{error}</p>}
 
           <form onSubmit={handleSignup} className="space-y-4">
             <input
@@ -69,17 +74,7 @@ const Signup = ({ setIsAuthenticated }) => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
               autoComplete="new-password"
             />
-            {/* 
-            <input
-              type="password"
-              placeholder="rewrite-Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-              autoComplete="new-password"
-            />
-*/}
+            
             <button
               type="submit"
               className="w-full bg-gray-700 text-white py-3 rounded-md font-semibold hover:bg-gray-900 transition"

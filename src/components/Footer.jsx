@@ -89,16 +89,15 @@ const Footer = () => {
             </div>
           )}
 
-          {/* My Account Section (only if user is logged in) */}
           {user && (
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                My Account
+                My Profile
               </h3>
               <ul className="space-y-2">
                 <li>
                   <Link
-                    to="/account"
+                    to="/profile"
                     className="hover:text-blue-600 transition duration-300 block"
                   >
                     Profile
