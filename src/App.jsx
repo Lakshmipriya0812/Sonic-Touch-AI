@@ -6,22 +6,21 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import HeaderBeforeLogin from "./components/headers/HeaderBeforeLogin";
-import HeaderAfterLogin from "./components/headers/HeaderAfterLogin";
-import Footer from "./components/Footer";
+import HeaderBeforeLogin from "./components/layout/HeaderBeforeLogin";
+import HeaderAfterLogin from "./components/layout/HeaderAfterLogin";
+import Footer from "./components/layout/Footer";
 import RoutesConfig from "./routes/RoutesConfig";
 import CartProvider from "./context/CartContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import VoiceInput from "./components/VoiceInput";
+import VoiceInput from "./components/features/voice/VoiceInput";
 //import ChatbotComponent from "./components/ChatbotComponent";
 //import VoiceAssistant from "./components/VoiceAssistance";
-import BackToTop from "./components/BackToTop";
-import BackToPreviousPage from "./components/BackToPreviousPage";
-import Accessibility from "./components/Accessibility";
+import BackToTop from "./components/layout/BackToTop";
+import BackToPreviousPage from "./components/layout/BackToPreviousPage";
+import Accessibility from "./components/features/accessibility/Accessibility";
 import axios from "axios";
-import { WishlistProvider } from './context/WishlistContext';
-import Wishlist from './components/pages/Wishlist';
-import WishlistModal from './components/WishlistModal';
+import { WishlistProvider } from "./context/WishlistContext";
+import WishlistModal from "./components/features/wishlist/WishlistModal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -43,10 +42,10 @@ const AppContent = () => {
         const response = await axios.get(`${API_URL}/api/auth/profile`, {
           withCredentials: true,
           headers: {
-            'Accept': 'application/json'
-          }
+            Accept: "application/json",
+          },
         });
-        
+
         if (response.data.user) {
           setUser(response.data.user);
           setIsAuthenticated(true);

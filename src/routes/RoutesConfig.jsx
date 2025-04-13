@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "../components/pages/Home";
-import About from "../components/pages/About";
-import Contact from "../components/pages/Contact";
-import Profile from "../components/pages/Profile";
-import Login from "../components/pages/Login";
-import Signup from "../components/pages/Signup";
-import Clothing from "../components/pages/Explore/Clothing/Clothing";
-import Men from "../components/pages/Explore/Clothing/Men";
-import Women from "../components/pages/Explore/Clothing/Women";
-import Pets from "../components/pages/Explore/Pets/PetSupplies";
-import Dogs from "../components/pages/Explore/Pets/Dogs";
-import Cats from "../components/pages/Explore/Pets/Cats";
-import Birds from "../components/pages/Explore/Pets/Birds";
-import Baby from "../components/pages/Explore/Clothing/Baby";
-import AdminLogin from "../components/pages/admin/AdminLogin";
-import AdminDashboard from "../components/pages/admin/AdminDashboard";
-import AdminProductManagement from "../components/pages/admin/AdminProductManagement";
-import SearchResults from "../components/pages/SearchResults";
-import ProductDetails from "../components/pages/ProductDetails";
-import Cart from "../components/pages/Cart";
-import SubsubcategoryPage from "../components/pages/Explore/SubsubcategoryPage";
-import OrderSummary from "../components/pages/OrderSummary";
-import Checkout from "../components/pages/Checkout";
-import Orders from "../components/pages/Orders";
-import CategoryLandingPage from "../components/pages/Explore/CategoryLandingPage";
-import Teen from "../components/pages/Explore/Clothing/Teen";
-import Wishlist from "../components/pages/Wishlist";
+import Home from "../pages/Home";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Profile from "../pages/Profile";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
+import Clothing from "../pages/Explore/Clothing/Clothing";
+import Men from "../pages/Explore/Clothing/Men";
+import Women from "../pages/Explore/Clothing/Women";
+import Pets from "../pages/Explore/Pets/PetSupplies";
+import Dogs from "../pages/Explore/Pets/Dogs";
+import Cats from "../pages/Explore/Pets/Cats";
+import Birds from "../pages/Explore/Pets/Birds";
+import Baby from "../pages/Explore/Clothing/Baby";
+import AdminLogin from "../pages/admin/AdminLogin";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminProductManagement from "../pages/admin/AdminProductManagement";
+import SearchResults from "../pages/SearchResults";
+import ProductDetails from "../pages/ProductDetails";
+import Cart from "../pages/Cart";
+import SubsubcategoryPage from "../pages/Explore/SubsubcategoryPage";
+import OrderSummary from "../pages/OrderSummary";
+import Checkout from "../pages/Checkout";
+import Orders from "../pages/Orders";
+import CategoryLandingPage from "../pages/Explore/CategoryLandingPage";
+import Teen from "../pages/Explore/Clothing/Teen";
+import WishlistPage from "../pages/WishlistPage";
 import { useAuth } from "../context/AuthContext";
 
 const ProtectedRoute = ({ children }) => {
@@ -92,7 +92,7 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/orders" element={<Orders />} />
       <Route path="/order/:id" element={<OrderSummary />} />
-      <Route path="/wishlist" element={<Wishlist />} />
+      <Route path="/wishlist" element={<WishlistPage />} />
 
       <Route
         path="/admin/login"
