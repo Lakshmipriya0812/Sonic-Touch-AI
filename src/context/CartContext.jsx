@@ -21,7 +21,7 @@ const CartProvider = ({ children }) => {
     const auth = useAuth();
     isAuthenticated = auth.isAuthenticated;
   } catch (error) {
-    console.log("AuthContext not available yet");
+    console.error("Error", error);
   }
 
   const openModal = () => setModalOpen(true);
@@ -75,7 +75,7 @@ const CartProvider = ({ children }) => {
           Accept: "application/json",
         },
       });
-      
+
       if (response.data.success) {
         setCart(response.data.items);
       } else {
