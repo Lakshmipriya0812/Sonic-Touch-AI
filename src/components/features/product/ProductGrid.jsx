@@ -21,13 +21,29 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      setError(null);
+      const formattedCategory =
+        categoryType && categoryType.length > 0
+          ? categoryType.charAt(0).toUpperCase() + categoryType.slice(1)
+          : "";
+
+      const formattedSubcategory =
+        subcategoryProp && subcategoryProp.length > 0
+          ? subcategoryProp.charAt(0).toUpperCase() + subcategoryProp.slice(1)
+          : "";
+
+      const formattedSubsubcategory =
+        subsubcategory && subsubcategory.length > 0
+          ? subsubcategory.charAt(0).toUpperCase() + subsubcategory.slice(1)
+          : "";
 
       const queryParams = new URLSearchParams();
 
-      if (categoryType) queryParams.append("category", categoryType);
-      if (subcategoryProp) queryParams.append("subcategory", subcategoryProp);
-      if (subsubcategory) queryParams.append("subsubcategory", subsubcategory);
+      if (formattedCategory) queryParams.append("category", formattedCategory);
+      if (formattedSubcategory)
+        queryParams.append("subcategory", formattedSubcategory);
+      if (formattedSubsubcategory)
+        queryParams.append("subsubcategory", formattedSubsubcategory);
+
       if (minPrice) queryParams.append("minPrice", Number(minPrice));
       if (maxPrice) queryParams.append("maxPrice", Number(maxPrice));
       if (selectedSize) queryParams.append("size", selectedSize);

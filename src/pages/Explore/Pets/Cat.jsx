@@ -4,7 +4,7 @@ import HeroSection from "../../../components/common/HeroSection";
 import CategoryList from "../../../components/features/product/CategoryList";
 import ProductGrid from "../../../components/features/product/ProductGrid";
 
-const Cats = () => {
+const Cat = () => {
   const { subsubcategory } = useParams();
 
   return (
@@ -13,7 +13,7 @@ const Cats = () => {
         title="Cat Supplies"
         subtitle="Find everything your cat needs!"
       />
-      <CategoryList categoryType="cats" />
+      <CategoryList categoryType="cat" />
       <ProductGrid
         categoryType="PetSupplies"
         subcategoryProp="Cat"
@@ -23,4 +23,4 @@ const Cats = () => {
   );
 };
 
-export default Cats;
+export default Cat;

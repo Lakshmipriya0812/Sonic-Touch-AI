@@ -86,7 +86,7 @@ const productSchema = new mongoose.Schema(
         "Lyocell",
         "Nylon",
         "Elastane",
-        "Lyocell"
+        "Lyocell",
       ],
       required: function () {
         return this.category === "Clothing";

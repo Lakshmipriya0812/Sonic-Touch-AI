@@ -105,22 +105,22 @@ const HeaderBeforeLogin = () => {
                       All Pet Supplies
                     </Link>
                     <Link
-                      to="/pets/cats"
+                      to="/pets/cat"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
-                      Cats
+                      Cat
                     </Link>
                     <Link
-                      to="/pets/dogs"
+                      to="/pets/dog"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
-                      Dogs
+                      Dog
                     </Link>
                     <Link
-                      to="/pets/birds"
+                      to="/pets/bird"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
-                      Birds
+                      Bird
                     </Link>
                   </div>
                 </div>
