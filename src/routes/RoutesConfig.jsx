@@ -10,9 +10,9 @@ import Clothing from "../pages/Explore/Clothing/Clothing";
 import Men from "../pages/Explore/Clothing/Men";
 import Women from "../pages/Explore/Clothing/Women";
 import Pets from "../pages/Explore/Pets/PetSupplies";
-import Dogs from "../pages/Explore/Pets/Dogs";
-import Cats from "../pages/Explore/Pets/Cats";
-import Birds from "../pages/Explore/Pets/Birds";
+import Dog from "../pages/Explore/Pets/Dog";
+import Cat from "../pages/Explore/Pets/Cat";
+import Bird from "../pages/Explore/Pets/Bird";
 import Baby from "../pages/Explore/Clothing/Baby";
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -62,13 +62,13 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-      <Route 
-        path="/profile" 
+      <Route
+        path="/profile"
         element={
           <ProtectedRoute>
             <Profile />
           </ProtectedRoute>
-        } 
+        }
       />
       <Route path="/categorylandingpage" element={<CategoryLandingPage />} />
       <Route path="/clothing" element={<Clothing />} />
@@ -77,9 +77,9 @@ const RoutesConfig = ({ setIsAuthenticated }) => {
       <Route path="/clothing/baby" element={<Baby />} />
       <Route path="/clothing/teen" element={<Teen />} />
       <Route path="/pets" element={<Pets />} />
-      <Route path="/pets/dogs" element={<Dogs />} />
-      <Route path="/pets/cats" element={<Cats />} />
-      <Route path="/pets/birds" element={<Birds />} />
+      <Route path="/pets/dog" element={<Dog />} />
+      <Route path="/pets/cat" element={<Cat />} />
+      <Route path="/pets/bird" element={<Bird />} />
       <Route
         path="/:category/:subcategory/:subsubcategory"
         element={<SubsubcategoryPage />}

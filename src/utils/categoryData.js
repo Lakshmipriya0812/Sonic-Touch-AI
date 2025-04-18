@@ -22,8 +22,8 @@ export const categoryData = {
     { name: "Winter wear", icon: "🧥", path: "/clothing/women/winterWear" },
   ],
   baby: [
-    { name: "Baby Boy", icon: "👶🏻", path: "/clothing/baby/boy" },
-    { name: "Baby Girl", icon: "👶🏼", path: "/clothing/baby/girl" },
+    { name: "Boy", icon: "👶🏻", path: "/clothing/baby/boy" },
+    { name: "Girl", icon: "👶🏼", path: "/clothing/baby/girl" },
     { name: "Unisex", icon: "🍼", path: "/clothing/baby/unisex" },
   ],
   teen: [
@@ -31,20 +31,20 @@ export const categoryData = {
     { name: "Teen Girl", icon: "👧🏼", path: "/clothing/teen/girl" },
   ],
   pets: [
-    { name: "Dogs", icon: "🐶", path: "/pets/dogs" },
-    { name: "Cats", icon: "🐱", path: "/pets/cats" },
-    { name: "Birds", icon: "🐦", path: "/pets/birds" },
+    { name: "Dog", icon: "🐶", path: "/pets/dog" },
+    { name: "Cat", icon: "🐱", path: "/pets/cat" },
+    { name: "Bird", icon: "🐦", path: "/pets/bird" },
   ],
-  dogs: [
-    { name: "Food", icon: "🍖", path: "/pets/dogs/food" },
-    { name: "Toys", icon: "🦴", path: "/pets/dogs/toys" },
+  dog: [
+    { name: "Food", icon: "🍖", path: "/pets/dog/food" },
+    { name: "Toys", icon: "🦴", path: "/pets/dog/toys" },
   ],
-  cats: [
-    { name: "Food", icon: "🥩", path: "/pets/cats/food" },
-    { name: "Toys", icon: "🐾", path: "/pets/cats/toys" },
+  cat: [
+    { name: "Food", icon: "🥩", path: "/pets/cat/food" },
+    { name: "Toys", icon: "🐾", path: "/pets/cat/toys" },
   ],
-  birds: [
-    { name: "Food", icon: "🌾", path: "/pets/birds/food" },
-    { name: "Toys", icon: "🎊", path: "/pets/birds/toys" },
+  bird: [
+    { name: "Food", icon: "🌾", path: "/pets/bird/food" },
+    { name: "Toys", icon: "🎊", path: "/pets/bird/toys" },
   ],
 };

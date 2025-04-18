@@ -4,23 +4,23 @@ import HeroSection from "../../../components/common/HeroSection";
 import CategoryList from "../../../components/features/product/CategoryList";
 import ProductGrid from "../../../components/features/product/ProductGrid";
 
-const Dogs = () => {
+const Bird = () => {
   const { subsubcategory } = useParams();
 
   return (
     <div className="container mx-auto px-4">
       <HeroSection
-        title="Dog Supplies"
-        subtitle="Find everything your dog needs!"
+        title="Bird Supplies"
+        subtitle="Find everything your feathered friend needs!"
       />
-      <CategoryList categoryType="dogs" />
+      <CategoryList categoryType="bird" />
       <ProductGrid
         categoryType="PetSupplies"
-        subcategoryProp="Dog"
+        subcategoryProp="Bird"
         subsubcategory={subsubcategory}
       />
     </div>
   );
 };
 
-export default Dogs;
+export default Bird;
