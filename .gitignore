@@ -29,8 +29,12 @@ dist-ssr
 
 # AI 
 AI_core/__pycache__/
-AI_core/rasa_env/
+*.pyc
+*.pyo
+*.pyd
+AI_core/venv/
 AI_core/models/
-AI_core/credentials.yml
-AI_core/endpoints.yml
+AI_core/logs/
+AI_core/.db/
 AI_core/.rasa/cache
+.python_version
