@@ -171,3 +171,39 @@ stories:
       - action: action_query_llm
       - intent: ask_product_info
       - action: action_query_llm
+
+  - story: User navigates to men's t-shirts
+    steps:
+      - intent: navigate_subsubcategory
+        entities:
+          - subcategory: "men"
+          - subsubcategory: "t-shirts"
+      - action: action_navigate
+      - slot_was_set:
+          - subcategory: "men"
+          - subsubcategory: "t-shirts"
+          - last_page: "/clothing/men/t-shirts"
+
+  - story: User navigates to women's dresses
+    steps:
+      - intent: navigate_subsubcategory
+        entities:
+          - subcategory: "women"
+          - subsubcategory: "dresses"
+      - action: action_navigate
+      - slot_was_set:
+          - subcategory: "women"
+          - subsubcategory: "dresses"
+          - last_page: "/clothing/women/dresses"
+
+  - story: User navigates to dog toys
+    steps:
+      - intent: navigate_subsubcategory
+        entities:
+          - subcategory: "dogs"
+          - subsubcategory: "toys"
+      - action: action_navigate
+      - slot_was_set:
+          - subcategory: "dogs"
+          - subsubcategory: "toys"
+          - last_page: "/pets/dogs/toys"

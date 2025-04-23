@@ -33,6 +33,12 @@ intents:
   - recommend_products
   - navigate
   - ask_product_info
+  - navigate_subsubcategory
+
+entities:
+  - category
+  - subcategory
+  - subsubcategory
 
 responses:
   utter_greet:
@@ -122,6 +128,9 @@ responses:
   utter_help_prompt:
     - text: "You can ask me to navigate to different sections, check products, or manage your orders. Try saying 'Show me men's clothing' or 'Go to my cart'."
 
+  utter_navigate_subsubcategory:
+    - text: "Navigating to the {subcategory} {subsubcategory} section..."
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
@@ -133,35 +142,25 @@ slots:
     mappings:
       - type: custom
 
+  category:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: category
   subcategory:
     type: text
-    influence_conversation: false
     mappings:
       - type: from_entity
         entity: subcategory
-
   subsubcategory:
     type: text
-    influence_conversation: false
     mappings:
       - type: from_entity
         entity: subsubcategory
-
-  color:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: color
-
-  size:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: size
 
 actions:
   - action_navigate
   - action_remember_last_page
   - action_query_llm
+  - action_ask_for_category
+  - action_navigate_subsubcategory

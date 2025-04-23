@@ -157,6 +157,80 @@ nlu:
       - Navigate to admin product section
       - Take me to admin product control
 
+  - intent: navigate_subsubcategory
+    examples: |
+      - show me [men](subcategory) [t-shirts](subsubcategory)
+      - I want to see [men](subcategory) [t-shirts](subsubcategory)
+      - take me to [men](subcategory) [t-shirts](subsubcategory)
+      - browse [men](subcategory) [t-shirts](subsubcategory)
+      - shop for [men](subcategory) [t-shirts](subsubcategory)
+      - do you have [men](subcategory) [t-shirts](subsubcategory)?
+
+      - show me [men](subcategory) [shirts](subsubcategory)
+      - I want to see [men](subcategory) [shirts](subsubcategory)
+      - browse [men](subcategory) [shirts](subsubcategory)
+
+      - show me [men](subcategory) [pants](subsubcategory)
+      - I want to see [men](subcategory) [pants](subsubcategory)
+      - take me to [men](subcategory) [pants](subsubcategory)
+
+      - show me [men](subcategory) [trousers](subsubcategory)
+      - I want [men](subcategory) [trousers](subsubcategory)
+
+      - show me [men](subcategory) [coats](subsubcategory)
+      - open [men](subcategory) [coats](subsubcategory)
+
+      - show me [men](subcategory) [blazers](subsubcategory)
+      - show me [women](subcategory) [t-shirts](subsubcategory)
+      - I want to browse [women](subcategory) [t-shirts](subsubcategory)
+
+      - show me [women](subcategory) [tops](subsubcategory)
+      - I want to see [women](subcategory) [tops](subsubcategory)
+
+      - show me [women](subcategory) [dresses](subsubcategory)
+      - I want [women](subcategory) [dresses](subsubcategory)
+      - take me to [women](subcategory) [dresses](subsubcategory)
+
+      - show me [women](subcategory) [bottoms](subsubcategory)
+
+      - show me [women](subcategory) [sleepwear](subsubcategory)
+
+      - show me [women](subcategory) [winterWear](subsubcategory)
+      - show me [baby](subcategory) [boy](subsubcategory)
+      - take me to [baby](subcategory) [boy](subsubcategory)
+      - I want [baby](subcategory) [boy](subsubcategory) clothes
+
+      - show me [baby](subcategory) [girl](subsubcategory)
+      - I need [baby](subcategory) [girl](subsubcategory) outfits
+
+      - show me [baby](subcategory) [unisex](subsubcategory)
+
+      - show me [teen](subcategory) [boy](subsubcategory)
+      - I want [teen](subcategory) [boy](subsubcategory) fashion
+
+      - show me [teen](subcategory) [girl](subsubcategory)
+      - take me to [teen](subcategory) [girl](subsubcategory)
+
+      - show me [bird](subcategory) [toy](subsubcategory)
+      - I want [bird](subcategory) [toy](subsubcategory)
+
+      - show me [bird](subcategory) [food](subsubcategory)
+
+      - show me [dog](subcategory) [toy](subsubcategory)
+      - find [dog](subcategory) [toy](subsubcategory)
+
+      - show me [dog](subcategory) [food](subsubcategory)
+      - I want [dog](subcategory) [food](subsubcategory)
+
+      - show me [cat](subcategory) [toy](subsubcategory)
+      - I need [cat](subcategory) [toy](subsubcategory)
+
+      - show me [cat](subcategory) [food](subsubcategory)
+      - take me to [women](subcategory) [dresses](subsubcategory)
+      - open [baby](subcategory) [boy](subsubcategory)
+      - navigate to [pets](category)
+      - browse [clothing](category)
+
   - intent: ask_last_page
     examples: |
       - What was the last page I visited?
@@ -194,3 +268,49 @@ nlu:
       - Give me details about [The Children's Place Jacket](product_name).
       - What is the average price of all coats?
       - Tell me about the most durable material.
+
+  - lookup: category
+    examples: |
+      - clothing
+      - pets
+
+  - lookup: subcategory
+    examples: |
+      - men
+      - women
+      - teen
+      - baby
+      - bird
+      - dog
+      - cat
+
+  - lookup: subsubcategory
+    examples: |
+      - t-shirts
+      - shirts
+      - pants
+      - trousers
+      - coats
+      - blazers
+      - dresses
+      - tops
+      - bottoms
+      - sleepwear
+      - winterWear
+      - boy
+      - girl
+      - unisex
+      - food
+      - toys
+
+  - synonym: t-shirts
+    examples: |
+      - tee
+      - tshirts
+      - tees
+
+  - synonym: coats
+    examples: |
+      - jacket
+      - outerwear
+      - overcoat

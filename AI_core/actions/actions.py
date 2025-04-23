@@ -1,4 +1,4 @@
-from typing import Any, Dict, Text, List
+from typing import Any, Dict, Text, List, Tuple
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
@@ -7,8 +7,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ActionNavigate(Action):
-    """Handles page navigation by sending a navigation event to the frontend."""
-
     def name(self) -> Text:
         return "action_navigate"
 
@@ -16,10 +14,10 @@ class ActionNavigate(Action):
         self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
 
-        # Get the last user intent
         intent = tracker.latest_message.get("intent", {}).get("name", "")
-        
-        # Define navigation mappings
+        subcategory = tracker.get_slot("subcategory")
+        subsubcategory = tracker.get_slot("subsubcategory")
+
         navigation_links = {
             "navigate_home": "/",
             "navigate_about": "/about",
@@ -42,25 +40,62 @@ class ActionNavigate(Action):
             "navigate_admin_products": "/admin/products",
         }
 
+        valid_combinations: List[Tuple[str, str]] = [
+            ("men", "t-shirts"), ("men", "shirts"), ("men", "pants"), ("men", "trousers"), ("men", "coats"), ("men", "blazers"),
+            ("women", "t-shirts"), ("women", "tops"), ("women", "dresses"), ("women", "bottoms"), ("women", "sleepwear"), ("women", "winterWear"),
+            ("baby", "boy"), ("baby", "girl"), ("baby", "unisex"),
+            ("teen", "boy"), ("teen", "girl"),
+
+            ("bird", "toy"), ("bird", "food"),
+            ("dog", "toy"), ("dog", "food"),
+            ("cat", "toy"), ("cat", "food")
+        ]
+
+        if subcategory and subsubcategory:
+            if (subcategory, subsubcategory) in valid_combinations:
+                if subcategory in ["men", "women", "baby", "teen"]:
+                    url = f"/clothing/{subcategory}/{subsubcategory}"
+                elif subcategory in ["dog", "cat", "bird"]:
+                    url = f"/pets/{subcategory}/{subsubcategory}"
+                else:
+                    url = "/"
+
+                dispatcher.utter_message(
+                    text=f"Navigating to {url}...",
+                    metadata={"navigate_to": url}
+                )
+                logger.info(f"User navigated to: {url}")
+                return [SlotSet("last_page", url),
+                    SlotSet("subcategory", None),
+                    SlotSet("subsubcategory", None)
+                    ]
+
+            else:
+                dispatcher.utter_message(
+                    text=f"Sorry, '{subcategory} {subsubcategory}' is not a valid section. Please try again with a valid combination."
+                )
+                logger.warning(f"Invalid navigation: ({subcategory}, {subsubcategory})")
+                return []
+
         if intent in navigation_links:
             url = navigation_links[intent]
-            
-            # ✅ Send structured response for frontend
             dispatcher.utter_message(
                 text=f"Navigating to {url}...",
                 metadata={"navigate_to": url}
             )
-            
-            logger.info(f"✅ User navigated to: {url}")  # ✅ Log navigation
-            return [SlotSet("last_page", url)]  # ✅ Store last visited page
+            logger.info(f"User navigated to: {url}")
+            return [SlotSet("last_page", url),
+                    SlotSet("subcategory", None),
+                    SlotSet("subsubcategory", None)
+                    ]
 
         else:
-            logger.warning(f"⚠️ Unknown navigation intent: {intent}")  # ✅ Log missing intents
             dispatcher.utter_message(text="I'm not sure where to take you. Can you specify the section?")
+            logger.warning(f"Unknown navigation intent: {intent}")
             return []
 
+
 class ActionRememberLastPage(Action):
-    """Tells the user their last visited page"""
 
     def name(self) -> Text:
         return "action_remember_last_page"
@@ -74,7 +109,7 @@ class ActionRememberLastPage(Action):
         if last_page:
             response = f"The last page you visited was {last_page}. Would you like to go back?"
             dispatcher.utter_message(text=response, metadata={"navigate_to": last_page})
-            logger.info(f"✅ Remembering last page: {last_page}")
+            logger.info(f"Remembering last page: {last_page}")
         else:
             response = (
                 "I don't remember the last page you visited. "
