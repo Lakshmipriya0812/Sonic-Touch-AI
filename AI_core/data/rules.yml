@@ -39,3 +39,8 @@ rules:
     steps:
       - intent: ask_product_info
       - action: action_query_llm
+
+  - rule: Handle subsubcategory navigation (general)
+    steps:
+      - intent: navigate_subsubcategory
+      - action: action_navigate
