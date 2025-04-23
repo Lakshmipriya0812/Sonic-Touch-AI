@@ -40,3 +40,5 @@ AI_core/logs/
 AI_core/.db/
 AI_core/.rasa/cache
 .python_version
+
+AI_core/endpoints.yml
