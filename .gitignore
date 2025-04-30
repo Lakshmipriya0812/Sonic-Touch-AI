@@ -28,17 +28,17 @@ dist-ssr
 /server/createAdmin.js
 
 # AI 
-AI_core/__pycache__/
-AI_core/actions/__pycache__/__init__.cpython-310.pyc
-AI_core/actions/__pycache__/actions.cpython-310.pyc
+rasa/__pycache__/
+rasa/actions/__pycache__/__init__.cpython-310.pyc
+rasa/actions/__pycache__/actions.cpython-310.pyc
 *.pyc
 *.pyo
 *.pyd
-AI_core/venv/
-AI_core/models/
-AI_core/logs/
-AI_core/.db/
-AI_core/.rasa/cache
+rasa/venv/
+rasa/models/
+rasa/logs/
+rasa/.db/
+rasa/.rasa/cache
 .python_version
 
-AI_core/endpoints.yml
+rasa/endpoints.yml
