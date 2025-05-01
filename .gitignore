@@ -7,6 +7,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+/dist
+
 node_modules
 dist
 dist-ssr
@@ -28,13 +30,15 @@ dist-ssr
 /server/createAdmin.js
 
 # AI 
-AI_core/__pycache__/
+rasa/__pycache__/
+rasa/actions/__init__.py
+rasa/actions/actions.py
 *.pyc
 *.pyo
 *.pyd
-AI_core/venv/
-AI_core/models/
-AI_core/logs/
-AI_core/.db/
-AI_core/.rasa/cache
+rasa/venv/
+rasa/models/
+rasa/logs/
+rasa/.db/
+rasa/.rasa/cache
 .python_version
