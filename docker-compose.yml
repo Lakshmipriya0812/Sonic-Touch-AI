@@ -1,0 +1,73 @@
+version: "3.9"
+
+services:
+  client:
+    build: ./client
+    image: sonictouch/frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - appnet
+
+  server:
+    build: ./server
+    image: sonictouch/backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/mongodb-data:/app/mongodb-data
+    networks:
+      - appnet
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/sonic-touch
+
+  rasa:
+    build: ./rasa
+    image: sonictouch/rasa
+    ports:
+      - "5005:5005"
+    networks:
+      - appnet
+    depends_on:
+      - actions
+
+  actions:
+    build:
+      context: .
+      dockerfile: ./rasa/actions/Dockerfile
+    image: sonictouch/rasa-actions
+    ports:
+      - "5055:5055"
+    networks:
+      - appnet
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - appnet
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - client
+      - server
+      - rasa
+      - actions
+    networks:
+      - appnet
+
+volumes:
+  mongodb_data:
+
+networks:
+  appnet:
