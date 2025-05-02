@@ -3,7 +3,7 @@ const path = require("path");
 const csv = require("csvtojson");
 const { MongoClient } = require("mongodb");
 
-const mongoURL = "mongodb://localhost:27018";
+const mongoURL = "mongodb://mongodb:27017";
 const dbName = "sonic-touch";
 const collectionName = "products";
 
