@@ -74,22 +74,22 @@ docker-compose up --build
 
 This will start all services:
 
-- 🌐 Frontend → [http://localhost:8080](http://localhost:8080)
-- ⚙️ Backend API → [http://localhost:5000](http://localhost:5000)
-- 🤖 Rasa Assistant → [http://localhost:5005](http://localhost:5005)
-- 🔁 NGINX (optional if configured) → Handles routing
+- Frontend → [http://localhost:8080](http://localhost:8080)
+- Backend API → [http://localhost:5000](http://localhost:5000)
+- Rasa Assistant → [http://localhost:5005](http://localhost:5005)
+- NGINX (optional if configured) → Handles routing
 
 ---
 
-## 🎙️ AI & Voice Features
+##  AI & Voice Features
 
-- 🗣️ Voice-enabled conversational shopping via Rasa
-- 💬 NLP support for intent recognition and guided interactions
-- ♿ Accessibility-first design for inclusive UX
+- Voice-enabled conversational shopping via Rasa
+- NLP support for intent recognition and guided interactions
+- Accessibility-first design for inclusive UX
 
 ---
 
-## 💡 Developer Notes
+## Developer Notes
 
 - Frontend is served via NGINX using the production `dist` build
 - Backend connects to MongoDB inside the Docker network
@@ -98,26 +98,16 @@ This will start all services:
 
 ---
 
-## 📂 Docker Volumes Used
+## Docker Volumes Used
 
 - `mongodb_data` — Persistent MongoDB storage
 - `rasa/models` — Mounted model directory for Rasa
 
 ---
 
-## 🤝 Contributions
+## Contributions
 
 We welcome improvements in accessibility, features, and performance.
 Feel free to fork, create issues, or open a pull request.
 
 ---
-
-## 📄 License
-
-MIT License
-© 2025 Sonic Touch Contributors
-
-```
-
----
-```
