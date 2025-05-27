@@ -1,121 +1,123 @@
 # Sonic Touch
 
-Sonic Touch is an AI-powered, voice-controlled e-commerce platform designed for accessibility, especially for visually impaired users. It combines modern full-stack technologies and conversational AI to deliver an inclusive online shopping experience.
+**Sonic Touch** is a voice-enabled, AI-powered e-commerce platform designed with accessibility at its core — especially for visually impaired users. The system runs entirely on Docker for consistent, portable development and deployment.
+
+---
+
+## Tech Stack
+
+- **Frontend:** React (Vite) + Tailwind CSS
+- **Backend:** Node.js + Express
+- **Database:** MongoDB
+- **AI Assistant:** Rasa (Conversational AI & Voice Support)
+- **Reverse Proxy:** NGINX
+- **Containerization:** Docker & Docker Compose
 
 ---
 
 ## Project Structure
 
 ```
+
 sonic-touch/
-├── client/        # Frontend (React + Vite + Tailwind CSS)
-├── server/        # Backend (Node.js + Express + MongoDB)
-├── rasa/          # Conversational AI (Rasa)
+├── client/        # React frontend
+├── server/        # Node.js backend
+├── rasa/          # Rasa assistant
+├── nginx/         # NGINX reverse proxy config
 ├── docker-compose.yml
-├── .env           # Environment config (not committed)
-└── README.md
+
 ```
-
----
-
-## Tech Stack
-
-- **Frontend:** React (Vite), Tailwind CSS
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB
-- **AI Integration:** Rasa (Conversational AI)
-- **Accessibility Feature:** Voice-controlled shopping assistant
 
 ---
 
 ## Prerequisites
 
-Ensure the following are installed on your system:
-
-| Tool                    | Recommended Version |
-| ----------------------- | ------------------- |
-| Node.js                 | v20.18.3            |
-| NPM                     | v10.8.2             |
-| MongoDB                 | v7.0.17             |
-| Docker & Docker Compose | Latest              |
+> 🐳 You only need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/) installed. No local Node.js or MongoDB setup required.
 
 ---
 
-## Setup Instructions
+## Setup & Usage
 
 ### 1. Clone the Repository
 
 ```bash
-git clone <repo_url>
+git clone https://github.com/your-username/sonic-touch.git
 cd sonic-touch
 ```
 
----
-
 ### 2. Configure Environment Variables
 
-#### Backend (`server/.env`)
+Create the following `.env` files:
 
-Create a `.env` file in the `server/` directory:
-
-```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-PORT=5000
-```
-
-#### Frontend (`client/.env`)
-
-Create a `.env` file in the `client/` directory:
+#### `client/.env`
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
-> **Note:** Always ensure `.env` files are **not committed** to version control. Add them to `.gitignore`.
-> Create `.env.example` files in both `client/` and `server/` to document required variables.
+#### `server/.env`
+
+```env
+MONGO_URI=mongodb://mongodb:27017/sonic-touch
+JWT_SECRET=your_secret_key
+PORT=5000
+```
 
 ---
 
-### 3. Start the Application with Docker
-
-Run the full stack using Docker Compose:
+### 3. Start the Application
 
 ```bash
+docker-compose down
 docker-compose up --build
 ```
 
-This will:
+This will start all services:
 
-- Build and run the React frontend
-- Launch the Express backend with MongoDB
-- Start the Rasa AI server for conversational interaction
-
----
-
-## AI Features
-
-- **Conversational AI with Rasa:** Understands user queries via natural language.
-- **Voice Assistance :** Enables shopping using voice commands for enhanced accessibility.
+- 🌐 Frontend → [http://localhost:8080](http://localhost:8080)
+- ⚙️ Backend API → [http://localhost:5000](http://localhost:5000)
+- 🤖 Rasa Assistant → [http://localhost:5005](http://localhost:5005)
+- 🔁 NGINX (optional if configured) → Handles routing
 
 ---
 
-## Installed Frontend Dependencies
+## 🎙️ AI & Voice Features
 
-### Dependencies:
-
-- `axios`
-- `react`
-- `react-dom`
-- `react-icons`
-- `react-router-dom`
-
-### Dev Dependencies:
-
-- `@vitejs/plugin-react`
-- `@types/react`, `@types/react-dom`
-- `eslint`, `eslint-plugin-react`, etc.
-- `tailwindcss`, `postcss`, `autoprefixer`
-- `vite`
+- 🗣️ Voice-enabled conversational shopping via Rasa
+- 💬 NLP support for intent recognition and guided interactions
+- ♿ Accessibility-first design for inclusive UX
 
 ---
+
+## 💡 Developer Notes
+
+- Frontend is served via NGINX using the production `dist` build
+- Backend connects to MongoDB inside the Docker network
+- Rasa and Rasa Actions are run in separate containers and exposed via API
+- All routing can be handled through `nginx/default.conf`
+
+---
+
+## 📂 Docker Volumes Used
+
+- `mongodb_data` — Persistent MongoDB storage
+- `rasa/models` — Mounted model directory for Rasa
+
+---
+
+## 🤝 Contributions
+
+We welcome improvements in accessibility, features, and performance.
+Feel free to fork, create issues, or open a pull request.
+
+---
+
+## 📄 License
+
+MIT License
+© 2025 Sonic Touch Contributors
+
+```
+
+---
+```

@@ -207,3 +207,18 @@ stories:
           - subcategory: "dogs"
           - subsubcategory: "toys"
           - last_page: "/pets/dogs/toys"
+
+  - story: User searches for products
+    steps:
+      - intent: search_products
+      - action: utter_search_products
+
+  - story: User asks for product recommendations
+    steps:
+      - intent: recommend_products
+      - action: utter_recommend_products
+
+  - story: User uses general navigation intent
+    steps:
+      - intent: navigate
+      - action: utter_navigate

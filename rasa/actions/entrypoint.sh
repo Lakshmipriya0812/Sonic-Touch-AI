@@ -1,2 +1,2 @@
 #!/bin/bash
-exec "$@"
+exec python -m rasa_sdk --actions actions

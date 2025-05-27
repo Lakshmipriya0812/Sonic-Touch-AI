@@ -37,8 +37,10 @@ rasa/actions/__pycache__
 *.pyo
 *.pyd
 rasa/venv/
-rasa/models/
+
 rasa/logs/
 rasa/.db/
 rasa/.rasa/cache
 .python_version
+rasa/.config
+rasa/.keras

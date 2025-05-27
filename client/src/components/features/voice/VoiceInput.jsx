@@ -16,7 +16,6 @@ const VoiceInput = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Start listening on mount
   useEffect(() => {
     if (SpeechRecognition.browserSupportsSpeechRecognition()) {
       SpeechRecognition.startListening({ continuous: true, language: "en-US" });
@@ -28,7 +27,7 @@ const VoiceInput = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       if (
-        !interimTranscript && // means you're not currently speaking
+        !interimTranscript &&
         transcript.trim() !== "" &&
         transcript.trim() !== debouncedTranscript
       ) {
@@ -36,7 +35,7 @@ const VoiceInput = () => {
         sendMessageToRasa(transcript.trim());
         resetTranscript();
       }
-    }, 1200); // wait 1.2 seconds of silence
+    }, 1200);
 
     return () => clearTimeout(handler);
   }, [transcript, interimTranscript]);
@@ -47,7 +46,7 @@ const VoiceInput = () => {
 
   const fetchWelcomeMessage = async () => {
     try {
-      const response = await fetch("http://localhost:8080/rasa/api/chat", {
+      const response = await fetch("http://localhost:5000/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: "greet" }),
@@ -64,7 +63,7 @@ const VoiceInput = () => {
 
   const sendMessageToRasa = async (message) => {
     try {
-      const response = await fetch("http://localhost:8080/rasa/api/chat", {
+      const response = await fetch("http://localhost:5000/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
@@ -85,7 +84,6 @@ const VoiceInput = () => {
     setConversationLog((prevLog) => [...prevLog, { sender: "AI", message }]);
     speak(message);
 
-    // Handle navigation
     if (
       message.toLowerCase().includes("navigating to") &&
       transcript.trim() !== ""
@@ -97,19 +95,16 @@ const VoiceInput = () => {
   };
 
   const extractRouteFromMessage = (message) => {
-    // Match route-like strings that start with "/" and ignore trailing punctuation
     const regex = /\/[a-zA-Z0-9\-_/]+/g;
     const matches = message.match(regex);
     if (!matches) return "/";
 
-    // In case multiple matches (unlikely), pick the first
     const cleanPath = matches[0].replace(/[.,!?]$/, "");
     return cleanPath;
   };
 
   const speak = (text) => {
-    // Optional: Replace "/" with a space or nothing
-    const cleanedText = text.replace(/\//g, " "); // or "". If you want "signup" instead of "slash signup"
+    const cleanedText = text.replace(/\//g, " ");
 
     const speech = new SpeechSynthesisUtterance(cleanedText);
     speech.lang = "en-US";
@@ -117,7 +112,6 @@ const VoiceInput = () => {
     speech.pitch = 1;
     speech.volume = 1;
 
-    // Stop listening while speaking
     SpeechRecognition.stopListening();
 
     speech.onstart = () => {

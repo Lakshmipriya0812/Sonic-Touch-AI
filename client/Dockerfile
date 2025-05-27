@@ -1,20 +1,19 @@
-# Use node base image for building
-FROM node:20
+FROM node:20 AS builder
 
 WORKDIR /app
-COPY . .
 
-# Install dependencies
+COPY ./client . 
+
 RUN npm install
 
-# Build the app for production
 RUN npm run build
 
-# Install a static file server to serve the built app
-RUN npm install -g serve
+FROM nginx:alpine
 
-EXPOSE 5000  
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Serve the built app
-CMD ["npm", "run", "dev", "--", "--host", "--port", "3000"]
+COPY --from=builder /app/dist /usr/share/nginx/html
 
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

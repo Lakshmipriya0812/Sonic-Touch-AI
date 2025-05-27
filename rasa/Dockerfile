@@ -1,11 +1,12 @@
-FROM rasa/rasa:latest
+FROM rasa/rasa:3.6.21
 
 WORKDIR /app
 
-COPY . /app
-
-# Optional: Train model during build (or do it locally)
-# RUN rasa train
+COPY ./models ./models
+COPY ./config.yml ./
+COPY ./domain.yml ./
+COPY ./data ./data
+COPY ./endpoints.yml ./
 
 EXPOSE 5005
 

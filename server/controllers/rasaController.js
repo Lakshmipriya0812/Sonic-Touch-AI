@@ -5,7 +5,7 @@ async function sendMessageToRasa(message) {
     console.log("Sending message to Rasa:", message);
 
     const response = await axios.post(
-      "http://127.0.0.1:5005/webhooks/rest/webhook",
+      "http://rasa:5005/webhooks/rest/webhook",
       { sender: "user", message: message }
     );
 
