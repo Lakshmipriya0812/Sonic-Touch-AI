@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { sendMessageToRasa } = require("../controllers/rasaController");
 
-router.post("/chat", async (req, res) => {
+router.post("/", async (req, res) => {
   const message = req.body.message;
   console.log("Received message from frontend:", message);
 

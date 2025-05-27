@@ -22,7 +22,6 @@ nlu:
       - Can you show me some items?
       - What do you sell?
       - I want to browse products
-      - Tell me about your store
 
   - intent: navigate_home
     examples: |
@@ -165,68 +164,47 @@ nlu:
       - browse [men](subcategory) [t-shirts](subsubcategory)
       - shop for [men](subcategory) [t-shirts](subsubcategory)
       - do you have [men](subcategory) [t-shirts](subsubcategory)?
-
       - show me [men](subcategory) [shirts](subsubcategory)
       - I want to see [men](subcategory) [shirts](subsubcategory)
       - browse [men](subcategory) [shirts](subsubcategory)
-
       - show me [men](subcategory) [pants](subsubcategory)
       - I want to see [men](subcategory) [pants](subsubcategory)
       - take me to [men](subcategory) [pants](subsubcategory)
-
       - show me [men](subcategory) [trousers](subsubcategory)
       - I want [men](subcategory) [trousers](subsubcategory)
-
       - show me [men](subcategory) [coats](subsubcategory)
       - open [men](subcategory) [coats](subsubcategory)
-
       - show me [men](subcategory) [blazers](subsubcategory)
       - show me [women](subcategory) [t-shirts](subsubcategory)
       - I want to browse [women](subcategory) [t-shirts](subsubcategory)
-
       - show me [women](subcategory) [tops](subsubcategory)
       - I want to see [women](subcategory) [tops](subsubcategory)
-
       - show me [women](subcategory) [dresses](subsubcategory)
       - I want [women](subcategory) [dresses](subsubcategory)
       - take me to [women](subcategory) [dresses](subsubcategory)
-
       - show me [women](subcategory) [bottoms](subsubcategory)
-
       - show me [women](subcategory) [sleepwear](subsubcategory)
-
       - show me [women](subcategory) [winterWear](subsubcategory)
       - show me [baby](subcategory) [boy](subsubcategory)
       - take me to [baby](subcategory) [boy](subsubcategory)
       - I want [baby](subcategory) [boy](subsubcategory) clothes
-
       - show me [baby](subcategory) [girl](subsubcategory)
       - I need [baby](subcategory) [girl](subsubcategory) outfits
-
       - show me [baby](subcategory) [unisex](subsubcategory)
-
       - show me [teen](subcategory) [boy](subsubcategory)
       - I want [teen](subcategory) [boy](subsubcategory) fashion
-
       - show me [teen](subcategory) [girl](subsubcategory)
       - take me to [teen](subcategory) [girl](subsubcategory)
-
       - show me [bird](subcategory) [toy](subsubcategory)
       - I want [bird](subcategory) [toy](subsubcategory)
-
       - show me [bird](subcategory) [food](subsubcategory)
-
       - show me [dog](subcategory) [toy](subsubcategory)
       - find [dog](subcategory) [toy](subsubcategory)
-
       - show me [dog](subcategory) [food](subsubcategory)
       - I want [dog](subcategory) [food](subsubcategory)
-
       - show me [cat](subcategory) [toy](subsubcategory)
       - I need [cat](subcategory) [toy](subsubcategory)
-
       - show me [cat](subcategory) [food](subsubcategory)
-      - take me to [women](subcategory) [dresses](subsubcategory)
       - open [baby](subcategory) [boy](subsubcategory)
       - navigate to [pets](category)
       - browse [clothing](category)
@@ -261,13 +239,70 @@ nlu:
       - What is the cheapest item?
       - What is the most expensive product?
       - Show me all the products.
-      - What is the price of [Amazon Essentials Jacket](product_name)?
-      - Compare the price of [DKNY Coat](product_name) and [Eddie Bauer Jacket](product_name).
+      - What is the price of [Coat](product_name)?
+      - Compare the price of [DKNY Coat](product_name) and [Eddie Bauer Coat](product_name).
       - What material is [WULFUL Coat](product_name) made of?
       - Which product is the best value for money?
       - Give me details about [The Children's Place Jacket](product_name).
       - What is the average price of all coats?
       - Tell me about the most durable material.
+
+  - intent: affirm
+    examples: |
+      - yes
+      - yeah
+      - absolutely
+      - of course
+      - sure
+      - definitely
+      - that works
+      - okay
+
+  - intent: deny
+    examples: |
+      - no
+      - nope
+      - never
+      - not really
+      - I don't think so
+      - absolutely not
+      - no way
+
+  - intent: bot_challenge
+    examples: |
+      - are you a bot?
+      - are you human?
+      - who made you?
+      - what are you?
+      - is this a real person?
+
+  - intent: mood_great
+    examples: |
+      - I'm feeling great
+      - I'm happy
+      - I'm doing well
+      - everything's good
+      - I'm fantastic
+      - life is good
+      - couldn't be better
+
+  - intent: mood_unhappy
+    examples: |
+      - I'm feeling down
+      - I'm not okay
+      - I'm sad
+      - I'm upset
+      - bad day
+      - things aren't going well
+      - I'm frustrated
+
+  - intent: navigate
+    examples: |
+      - I want to navigate
+      - help me move around the site
+      - how do I go to another page?
+      - where should I go next?
+      - take me somewhere
 
   - lookup: category
     examples: |
@@ -311,6 +346,5 @@ nlu:
 
   - synonym: coats
     examples: |
-      - jacket
       - outerwear
       - overcoat

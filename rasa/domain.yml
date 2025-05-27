@@ -131,6 +131,9 @@ responses:
   utter_navigate_subsubcategory:
     - text: "Navigating to the {subcategory} {subsubcategory} section..."
 
+  utter_search_products:
+    - text: "What kind of products are you looking for?"
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

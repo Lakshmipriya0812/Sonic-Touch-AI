@@ -32,13 +32,15 @@ dist-ssr
 # AI 
 rasa/__pycache__/
 rasa/actions/__init__.py
-rasa/actions/actions.py
+rasa/actions/__pycache__
 *.pyc
 *.pyo
 *.pyd
 rasa/venv/
-rasa/models/
+
 rasa/logs/
 rasa/.db/
 rasa/.rasa/cache
 .python_version
+rasa/.config
+rasa/.keras
