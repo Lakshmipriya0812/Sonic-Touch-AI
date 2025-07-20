@@ -23,7 +23,7 @@ const Contact = () => {
 
   return (
     <div className="container mx-auto my-10 px-4">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-sm shadow-lg rounded-lg overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="p-6">
             <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
@@ -80,7 +80,7 @@ const Contact = () => {
             </form>
           </div>
 
-          <div className="flex flex-col justify-center items-center bg-gray-100 p-6">
+          <div className="flex flex-col justify-center items-center bg-gray-100/80 backdrop-blur-sm p-6">
             <Lottie animationData={animationData} className="w-80 h-80 mb-3" />
             <p className="text-gray-600 text-center">
               Need help? Get in touch with us today!

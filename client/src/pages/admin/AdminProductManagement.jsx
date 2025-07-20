@@ -48,25 +48,30 @@ const AdminProductManagement = () => {
     }
 
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.post(`${API_URL}/api/products`, newProduct, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+        headers: {
+          Accept: "application/json",
+        },
       });
 
-      setProducts([...products, response.data.product]);
-      setNewProduct({
-        name: "",
-        price: "",
-        category: "",
-        subcategory: "",
-        subsubcategory: "",
-        image: "",
-        description: "",
-        stock: "",
-        size: [],
-        color: [],
-        material: "",
-      });
+      if (response.data.success) {
+        alert("Product added successfully!");
+        setNewProduct({
+          name: "",
+          price: "",
+          category: "",
+          subcategory: "",
+          subsubcategory: "",
+          image: "",
+          description: "",
+          stock: "",
+          size: [],
+          color: [],
+          material: "",
+        });
+        fetchProducts();
+      }
     } catch (error) {
       console.error(
         "Error adding product:",

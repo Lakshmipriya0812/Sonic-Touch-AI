@@ -13,47 +13,29 @@ const OrderSummary = () => {
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
-      if (location.state?.orderDetails) {
-        setOrder(location.state.orderDetails);
-        setLoading(false);
-        return;
-      }
-
-      if (!orderId) {
-        setError("Invalid order ID");
-        setLoading(false);
-        navigate("/orders");
-        return;
-      }
+      setLoading(true);
+      setError("");
 
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/orders/${orderId}`,
-          {
-            withCredentials: true,
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}`, {
+          withCredentials: true,
+          headers: {
+            Accept: "application/json",
+          },
+        });
 
-        if (response.data.success) {
-          setOrder(response.data.order);
-        } else {
-          setError("Failed to fetch order details");
-          navigate("/orders");
+        if (!response.data?.order) {
+          throw new Error("Invalid order data received");
         }
+
+        setOrder(response.data.order);
       } catch (error) {
         console.error("Error fetching order details:", error);
         if (error.response?.status === 401) {
-          setError("Please log in to view order details");
+          setError("Unauthorized access. Please log in.");
           navigate("/login");
-        } else if (error.response?.status === 404) {
-          setError("Order not found");
-          navigate("/orders");
         } else {
-          setError("Failed to fetch order details. Please try again later.");
-          navigate("/orders");
+          setError(error.message || "Failed to load order details.");
         }
       } finally {
         setLoading(false);
@@ -61,7 +43,7 @@ const OrderSummary = () => {
     };
 
     fetchOrderDetails();
-  }, [orderId, location.state, navigate]);
+  }, [orderId, navigate]);
 
   if (loading) {
     return (

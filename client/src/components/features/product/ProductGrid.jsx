@@ -75,7 +75,7 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
   };
 
   return (
-    <div className="bg-gray-100 py-12 mt-4">
+    <div className="py-12 mt-4">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-center text-3xl font-bold text-gray-900 mb-8 font-lato">
           Explore Our Products
@@ -141,7 +141,7 @@ const ProductGrid = ({ categoryType, subcategoryProp, subsubcategory }) => {
               products.map((product) => (
                 <div
                   key={product._id}
-                  className="bg-white shadow-md rounded-lg p-5 cursor-pointer transition-transform transform hover:shadow-lg hover:scale-105 relative"
+                  className="bg-white/80 backdrop-blur-sm shadow-md rounded-lg p-5 cursor-pointer transition-transform transform hover:shadow-lg hover:scale-105 relative"
                   onClick={() => navigate(`/product/${product._id}`)}
                 >
                   <button

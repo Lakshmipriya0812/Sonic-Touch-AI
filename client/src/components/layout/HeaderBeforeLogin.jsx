@@ -36,9 +36,9 @@ const HeaderBeforeLogin = () => {
   };
   return (
     <>
-      <nav className="bg-gray-100 text-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 py-4 font-lato w-full relative">
-        <div className="container mx-auto flex justify-between items-center px-6 h-20">
-          <div className="flex items-center space-x-6">
+      <nav className="w-full z-40 bg-white/60 backdrop-blur-md shadow-md border-b border-white/30 transition-all duration-300 py-2 font-lato">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 h-20 relative z-50">
+          <div className="flex items-center space-x-6 flex-1">
             <div className="relative z-50" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -47,11 +47,12 @@ const HeaderBeforeLogin = () => {
                 Explore
               </button>
               {isDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md py-2 z-10">
+                <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md py-2 z-50">
                   <h2 className="px-4 py-2 text-gray-800 font-bold border-b">
                     <Link
                       to="/categorylandingpage"
                       className="block hover:bg-gray-100 px-4 py-2"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       All Category
                     </Link>
@@ -63,30 +64,35 @@ const HeaderBeforeLogin = () => {
                     <Link
                       to="/clothing"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       All Clothing
                     </Link>
                     <Link
                       to="/clothing/men"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       Men
                     </Link>
                     <Link
                       to="/clothing/women"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       Women
                     </Link>
                     <Link
                       to="/clothing/baby"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       Baby
                     </Link>
                     <Link
                       to="/clothing/teen"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       Teen
                     </Link>
@@ -101,24 +107,28 @@ const HeaderBeforeLogin = () => {
                     <Link
                       to="/pets"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       All Pet Supplies
                     </Link>
                     <Link
                       to="/pets/cat"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       Cat
                     </Link>
                     <Link
                       to="/pets/dog"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       Dog
                     </Link>
                     <Link
                       to="/pets/bird"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
                       Bird
                     </Link>
@@ -141,15 +151,15 @@ const HeaderBeforeLogin = () => {
             </Link>
           </div>
 
-          <Link to="/" className="mx-auto">
+          <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
             <img
               src="/icon.jpg"
               alt="SonicTouch Logo"
-              className="h-28 w-auto"
+              className="h-14 w-14 object-contain rounded-full bg-white shadow border border-gray-200"
             />
           </Link>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 flex-1 justify-end">
             <div className="relative w-56 flex items-center border rounded-md bg-gray-100 px-3">
               <input
                 type="search"

@@ -154,7 +154,7 @@ const VoiceInput = () => {
 
   return (
     <div
-      className={`fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-80 transition-all duration-300 ${
+      className={`fixed bottom-5 right-20 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-80 transition-all duration-300 ${
         isMinimized ? "h-16 w-16" : "w-80"
       } z-50`}
     >
@@ -168,9 +168,9 @@ const VoiceInput = () => {
       {!isMinimized && (
         <div>
           <h2 className="text-lg font-bold">🎙️ AI Assistant</h2>
-          <p>{listening ? "Listening..." : "Not listening. Click below 👇"}</p>
+          <p>{listening ? "Listening..." : "Not listening."}</p>
           <p className="text-sm text-gray-400">
-            Try saying: "Hey Assistant, navigate to men clothing"
+            Try saying: "Navigate to men clothing"
           </p>
 
           <div className="mt-4">
@@ -193,7 +193,7 @@ const VoiceInput = () => {
               })
             }
           >
-            🔁 Start Listening
+            🔁 Listening
           </button>
 
           {renderErrorMessage()}

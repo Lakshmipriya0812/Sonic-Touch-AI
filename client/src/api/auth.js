@@ -33,7 +33,6 @@ export const signupUser = async (name, email, password) => {
 
 export const loginUser = async (email, password) => {
   try {
-    console.log("Attempting login for:", email);
     const response = await fetch(`${API_URL}/api/auth/login`, {
       ...fetchOptions,
       method: "POST",
@@ -46,10 +45,8 @@ export const loginUser = async (email, password) => {
     }
 
     const data = await response.json();
-    console.log("Login response:", data);
 
     if (data.user) {
-      console.log("Login successful, restoring cart");
       await mergeGuestCart();
     }
 

@@ -30,12 +30,11 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/auth/profile`,
           {
+            withCredentials: true,
             headers: {
-              Authorization: `Bearer ${token}`,
               Accept: "application/json",
             },
           }
@@ -60,13 +59,12 @@ const Profile = () => {
 
   const handleSaveProfile = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/api/auth/profile`,
         { [fieldToEdit]: newValue },
         {
+          withCredentials: true,
           headers: {
-            Authorization: `Bearer ${token}`,
             Accept: "application/json",
           },
         }
@@ -98,7 +96,6 @@ const Profile = () => {
     }
 
     try {
-      const token = localStorage.getItem("token");
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/auth/profile`,
         {
@@ -107,8 +104,8 @@ const Profile = () => {
           updateType: "password",
         },
         {
+          withCredentials: true,
           headers: {
-            Authorization: `Bearer ${token}`,
             Accept: "application/json",
           },
         }

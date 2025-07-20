@@ -2,9 +2,11 @@ FROM node:20 AS builder
 
 WORKDIR /app
 
-COPY ./client . 
+COPY ./client/package*.json ./
 
 RUN npm install
+
+COPY ./client .
 
 RUN npm run build
 

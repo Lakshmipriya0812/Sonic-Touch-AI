@@ -6,8 +6,8 @@ const Footer = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <footer className="bg-gray-100 text-gray-800 py-8 mt-4 w-full font-lato border-t border-gray-300">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center">
+    <footer className="w-full z-40 bg-white/90 border-t border-gray-200 shadow-lg py-4 font-lato">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-6 relative z-50">
         <div className="md:w-1/3 space-y-3">
           <img src="/icon.jpg" alt="Company Logo" className="w-32" />
           <p className="text-sm text-gray-600">
