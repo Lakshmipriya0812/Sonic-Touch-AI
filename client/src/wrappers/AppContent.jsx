@@ -10,6 +10,7 @@ import BackToPreviousPage from "../components/layout/BackToPreviousPage";
 import Accessibility from "../components/features/accessibility/Accessibility";
 import VoiceInput from "../components/features/voice/VoiceInput";
 import WishlistModal from "../components/features/wishlist/WishlistModal";
+import ScrollToTop from "../components/layout/ScrollToTop";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -65,16 +66,34 @@ const AppContent = () => {
   }
 
   return (
-    <>
-      {isAuthenticated ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
-      <RoutesConfig isAuthenticated={isAuthenticated} />
-      <Footer />
-      <BackToTop />
-      <BackToPreviousPage />
-      <Accessibility />
-      <VoiceInput />
-      <WishlistModal />
-    </>
+    <div className="flex flex-col min-h-screen relative">
+      {/* Global Background Image */}
+      <div
+        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1708724195876-1156245fce21?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          filter: "brightness(1) contrast(1.05)",
+        }}
+      ></div>
+      {/* Overlay */}
+      <div className="fixed inset-0 w-full h-full bg-white/60 z-10 pointer-events-none"></div>
+
+      {/* Main App Content */}
+      <div className="relative z-30 flex flex-col flex-1">
+        {isAuthenticated ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
+        <main className="flex-1 pt-24">
+          <RoutesConfig isAuthenticated={isAuthenticated} />
+        </main>
+        <Footer />
+        <ScrollToTop />
+        <BackToTop />
+        <BackToPreviousPage />
+        <Accessibility />
+        <VoiceInput />
+        <WishlistModal />
+      </div>
+    </div>
   );
 };
 

@@ -18,7 +18,7 @@ const CategoryList = ({ categoryType }) => {
   };
 
   return (
-    <div className="bg-gray-100 py-12 mt-4">
+    <div className="py-12 mt-4">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-6 font-lato">
           Browse Categories
@@ -30,7 +30,7 @@ const CategoryList = ({ categoryType }) => {
           {categories.map((category, index) => (
             <button
               key={index}
-              className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md transition-all duration-300 transform hover:shadow-lg hover:scale-105"
+              className="flex flex-col items-center bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md transition-all duration-300 transform hover:shadow-lg hover:scale-105"
               onClick={() => handleNavigation(category.path)}
             >
               <div className="text-4xl text-gray-800">{category.icon}</div>

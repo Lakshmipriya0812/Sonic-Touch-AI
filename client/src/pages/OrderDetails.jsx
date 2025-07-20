@@ -18,11 +18,11 @@ const OrderDetails = () => {
       setError("");
 
       try {
-        const token = localStorage.getItem("token");
-        if (!token) throw new Error("Unauthorized: No token provided");
-
         const response = await axios.get(`${API_URL}/api/orders/${orderId}`, {
-          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+          headers: {
+            Accept: "application/json",
+          },
         });
 
         if (!response.data?.order?.items) {
@@ -48,9 +48,11 @@ const OrderDetails = () => {
 
   const cancelOrder = async () => {
     try {
-      const token = localStorage.getItem("token");
       await axios.delete(`${API_URL}/api/orders/${orderId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+        headers: {
+          Accept: "application/json",
+        },
       });
       setIsModalOpen(false);
       navigate("/orders");

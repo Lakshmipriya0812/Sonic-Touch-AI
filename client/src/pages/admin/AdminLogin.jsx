@@ -17,6 +17,7 @@ const AdminLogin = ({ setIsAuthenticated }) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: 'include',
           body: JSON.stringify({ email, password }),
         }
       );
@@ -24,8 +25,9 @@ const AdminLogin = ({ setIsAuthenticated }) => {
       const data = await response.json();
 
       if (response.ok && data.user.isAdmin) {
-        localStorage.setItem("token", data.token);
+        // Remove token storage from localStorage - JWT should only be in httpOnly cookies
         localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("isAdmin", "true");
         setIsAuthenticated(true);
 
         navigate("/admin/dashboard");
@@ -40,8 +42,8 @@ const AdminLogin = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md w-96">
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">
           Admin Login
         </h2>

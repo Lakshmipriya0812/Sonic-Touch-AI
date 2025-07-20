@@ -44,3 +44,5 @@ rasa/.rasa/cache
 .python_version
 rasa/.config
 rasa/.keras
+
+Testing_requirements.md 

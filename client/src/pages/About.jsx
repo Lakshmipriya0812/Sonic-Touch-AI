@@ -2,8 +2,8 @@ import React from "react";
 
 const About = ({ isAuthenticated }) => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-10">
-      <div className="w-full max-w-7xl bg-white shadow-xl rounded-lg p-10 relative">
+    <div className="flex justify-center items-center min-h-screen py-10">
+      <div className="w-full max-w-7xl bg-white/80 backdrop-blur-sm shadow-xl rounded-lg p-10 relative">
         <div className="w-[250px] h-[250px] bg-gray-200 rounded-lg overflow-hidden float-right ml-6 mb-4">
           <img
             src="icon.jpg"

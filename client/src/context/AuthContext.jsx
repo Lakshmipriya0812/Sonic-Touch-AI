@@ -21,7 +21,9 @@ export const AuthProvider = ({ children }) => {
     }
   });
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return !!localStorage.getItem("token");
+    // Check if user exists in localStorage (token is now in httpOnly cookies)
+    const storedUser = localStorage.getItem("user");
+    return !!storedUser;
   });
 
   useEffect(() => {
