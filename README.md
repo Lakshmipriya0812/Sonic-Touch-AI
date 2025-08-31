@@ -82,6 +82,10 @@ PORT=5000
 
 ---
 
+## Demo Video
+
+[![Watch the video](https://youtu.be/Lt-gNI9ZyOI?feature=shared)]
+
 ## Contributions
 
 We welcome improvements in accessibility, features, and performance.
