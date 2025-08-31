@@ -58,7 +58,7 @@ VITE_API_URL=http://localhost:5000
 #### `server/.env`
 
 ```env
-MONGO_URI=mongodb://mongodb:27017/sonic-touch
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 PORT=5000
 ```
