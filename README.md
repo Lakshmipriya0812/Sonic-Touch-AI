@@ -82,9 +82,13 @@ PORT=5000
 
 ---
 
+## Demo Video
+
+[![Watch the video](https://youtu.be/Lt-gNI9ZyOI?feature=shared)]
+
 ## Contributions
 
-We welcome improvements in accessibility, features, and performance.
+We welcome improvements in accessibility, features, and performance. Improve Rasa AI usages.
 Feel free to fork, create issues, or open a pull request.
 
 ---
