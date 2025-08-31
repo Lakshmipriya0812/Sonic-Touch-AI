@@ -2,18 +2,14 @@ version: "3.9"
 
 services:
   client:
-    build:
-      context: .
-      dockerfile: ./client/Dockerfile
-    image: sonictouch/frontend
+    image: lakshmipriya08/sonic-touch-image:client
     ports:
       - "8080:80"
     networks:
       - appnet
 
   server:
-    build: ./server
-    image: sonictouch/backend
+    image: lakshmipriya08/sonic-touch-image:server
     ports:
       - "5000:5000"
     volumes:
@@ -27,8 +23,7 @@ services:
       - CLIENT_URL=http://localhost:8080
 
   rasa:
-    build: ./rasa
-    image: sonictouch/rasa
+    image: lakshmipriya08/sonic-touch-image:rasa
     ports:
       - "5005:5005"
     networks:
@@ -39,10 +34,7 @@ services:
       - ./rasa/models:/app/models
 
   actions:
-    build:
-      context: .
-      dockerfile: ./rasa/actions/Dockerfile
-    image: sonictouch/rasa-actions
+    image: lakshmipriya08/sonic-touch-image:actions
     ports:
       - "5055:5055"
     networks:

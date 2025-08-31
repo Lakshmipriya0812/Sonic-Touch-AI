@@ -15,24 +15,10 @@
 
 ---
 
-## Project Structure
-
-```
-
-sonic-touch/
-├── client/        # React frontend
-├── server/        # Node.js backend
-├── rasa/          # Rasa assistant
-├── nginx/         # NGINX reverse proxy config
-├── docker-compose.yml
-
-```
-
----
-
 ## Prerequisites
 
-> 🐳 You only need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/) installed. No local Node.js or MongoDB setup required.
+> 🐳 You only need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/) installed.
+> No need for Node.js, MongoDB, or Rasa installed locally.
 
 ---
 
@@ -47,77 +33,63 @@ cd sonic-touch
 
 ### 2. Configure Environment Variables
 
-Create the following `.env` files:
+Create `.env` files for local development. Do **not** include private credentials in the repository. Use placeholders:
 
-#### `client/.env`
+**client/.env**
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
-#### `server/.env`
+**server/.env**
 
 ```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+MONGO_URI=mongodb://<your_mongo_host>:<port>/<database_name>
+JWT_SECRET=<your_secret_key>
 PORT=5000
 ```
 
 ---
 
-### 3. Start the Application
+## 3. Deployment Options
 
-```bash
-docker-compose down
-docker-compose up --build
-```
+### **Option 1: Use your own Docker registry**
 
-This will start all services:
+## Guides
 
-- 🌐 Frontend → [http://localhost:8080](http://localhost:8080)
-- ⚙️ Backend API → [http://localhost:5000](http://localhost:5000)
-- 🤖 Rasa Assistant → [http://localhost:5005](http://localhost:5005)
-- 🔁 NGINX (optional if configured) → Handles routing
+- [Setup Own Docker Registry and use Docker compose pull & up ](docker-compose-file-own-registry.md)
+
+> This option is ideal for production or machines with limited disk space.
 
 ---
 
-## 🎙️ AI & Voice Features
+### **Option 2: Local build (development / testing)**
 
-- 🗣️ Voice-enabled conversational shopping via Rasa
-- 💬 NLP support for intent recognition and guided interactions
-- ♿ Accessibility-first design for inclusive UX
+- [Local Build & Run using Docker Compose](docker-compose-file-local-build.md)
+
+> Frontend will be available at [http://localhost:8080](http://localhost:8080)
 
 ---
 
-## 💡 Developer Notes
+## Developer Notes
 
-- Frontend is served via NGINX using the production `dist` build
+- Frontend is served via NGINX using production `dist` build
 - Backend connects to MongoDB inside the Docker network
-- Rasa and Rasa Actions are run in separate containers and exposed via API
-- All routing can be handled through `nginx/default.conf`
+- Rasa and Rasa Actions run in separate containers
+- Navigation of website pages is managed via React routing
+- Common introductory sections are prebuilt; additional pages are loaded dynamically
+- All sensitive data (like MongoDB credentials) should be kept in `.env` and not committed
 
 ---
 
-## 📂 Docker Volumes Used
-
-- `mongodb_data` — Persistent MongoDB storage
-- `rasa/models` — Mounted model directory for Rasa
-
----
-
-## 🤝 Contributions
+## Contributions
 
 We welcome improvements in accessibility, features, and performance.
 Feel free to fork, create issues, or open a pull request.
 
 ---
 
-## 📄 License
+## License
 
 MIT License
 © 2025 Sonic Touch Contributors
-
-```
-
----
-```
